@@ -1,18 +1,14 @@
-
-
-
 .container {
   .image {
     margin: 0 0 20px;
-  
+
     @media (min-width: 640px) {
       margin: 0 0 20px;
     }
   }
-  
 }
 
-.image-container{
+.image-container {
   width: fit-content !important;
   height: fit-content !important;
   @media (min-width: 960px) {
@@ -20,17 +16,13 @@
   }
 }
 
-
-
-
-.vi{
+.vi {
   &-table {
-    &__cell{
+    &__cell {
       &--flex {
         display: inline-flex;
         align-items: center;
         justify-content: flex-start;
-        
       }
     }
   }

@@ -6,12 +6,12 @@
 
   /* Text */
   --vpick--color-text-primary: #2a2f3b;
-  --vpick--color-text-regular: #656a78; 
-  --vpick--color-text-secondary: #c4c4c4; 
-  --vpick--color-placeholder: #888888; 
+  --vpick--color-text-regular: #656a78;
+  --vpick--color-text-secondary: #c4c4c4;
+  --vpick--color-placeholder: #888888;
 
   /* Borders */
-  --vpick--color-border-base: #dddddd; 
+  --vpick--color-border-base: #dddddd;
   --vpick--bolor-border-regular: #cccccc;
   --vpick--color-border-light: #ededed;
 
@@ -21,7 +21,7 @@
 
   /* Font */
   --vpick--font-family: 'Roboto', 'Arial', 'Helvetica', 'Segoe UI', sans-serif;
-    
+
   --vpick--font-default-font-weight: 400;
   --vpick--font-default-font-size: 14px;
   --vpick--font-default-line-height: 24px;
@@ -34,30 +34,49 @@
   --vpick--animation-delay: 0.3s;
 
   /* Computed */
-  --vpick--color-background-text-primary:  color-mix(
+  --vpick--color-background-text-primary: color-mix(
     in srgb,
     var(--vpick--color-text-primary) 10%,
     var(--vpick--color-white) 90%
-  ); 
+  );
 
-  --vpick--color-primary-hover: 
-    color-mix(in srgb, var(--vpick--color-primary) 90%, var(--vpick--color-white));
-  
-  --vpick--color-primary-focus: 
-    color-mix(in srgb, var(--vpick--color-primary) 85%, var(--vpick--color-dark));
-  
-  --vpick--color-primary-disabled: 
-    color-mix(in srgb, var(--vpick--color-primary) 40%, var(--vpick--color-white));
+  --vpick--color-primary-hover: color-mix(
+    in srgb,
+    var(--vpick--color-primary) 90%,
+    var(--vpick--color-white)
+  );
 
-  --vpick--color-background-blue-light: 
-    color-mix(in srgb, var(--vpick--color-primary) 20%, var(--vpick--color-white)); 
+  --vpick--color-primary-focus: color-mix(
+    in srgb,
+    var(--vpick--color-primary) 85%,
+    var(--vpick--color-dark)
+  );
 
-  --vpick--color-background-blue-hover: 
-    color-mix(in srgb, var(--vpick--color-primary) 15%, var(--vpick--color-white)); 
+  --vpick--color-primary-disabled: color-mix(
+    in srgb,
+    var(--vpick--color-primary) 40%,
+    var(--vpick--color-white)
+  );
 
-  --vpick--font-default: var(--vpick--font-default-font-weight) var(--vpick--font-default-font-size)/var(--vpick--font-default-line-height) var(--vpick--font-family);
-  
-  --vpick--font-medium: var(--vpick--font-medium-font-weight) var(--vpick--font-medium-font-size)/var(--vpick--font-medium-line-height) var(--vpick--font-family);
+  --vpick--color-background-blue-light: color-mix(
+    in srgb,
+    var(--vpick--color-primary) 20%,
+    var(--vpick--color-white)
+  );
+
+  --vpick--color-background-blue-hover: color-mix(
+    in srgb,
+    var(--vpick--color-primary) 15%,
+    var(--vpick--color-white)
+  );
+
+  --vpick--font-default: var(--vpick--font-default-font-weight)
+    var(--vpick--font-default-font-size) /
+    var(--vpick--font-default-line-height) var(--vpick--font-family);
+
+  --vpick--font-medium: var(--vpick--font-medium-font-weight)
+    var(--vpick--font-medium-font-size) / var(--vpick--font-medium-line-height)
+    var(--vpick--font-family);
 
   /* Input */
   --vpick--input-font: var(--vpick--font-default);
@@ -75,9 +94,7 @@
 
   --vpick--input-readonly-bg-color: var(--vpick--input-bg-color);
   --vpick--input-readonly-color: var(--vpick--input-color);
-  --vpick--input-readonly-border-color: var(
-    --vpick--input-border-color
-  );
+  --vpick--input-readonly-border-color: var(--vpick--input-border-color);
 
   --vpick--input-hover-bg-color: var(--vpick--input-bg-color);
   --vpick--input-hover-color: var(--vpick--input-color);
@@ -118,7 +135,9 @@
   --vpick--panel-center-control-color: var(--vpick--color-text-primary);
   --vpick--panel-center-control-hover-color: var(--vpick--color-primary);
   --vpick--panel-center-control-focus-color: var(--vpick--color-primary);
-  --vpick--panel-center-control-disabled-color: var(--vpick--color-text-primary);
+  --vpick--panel-center-control-disabled-color: var(
+    --vpick--color-text-primary
+  );
   --vpick--panel-center-control-text-transform-month: capitalize;
   --vpick--panel-margin-bottom: 4px;
 
@@ -134,10 +153,7 @@
 
   --vpick--year-table-cell-size: 58px;
   --vpick--year-table-cell-today-left: calc(
-    (
-        var(--vpick--year-table-cell-size) -
-          var(--vpick--table-cell-today-size)
-      ) /
+    (var(--vpick--year-table-cell-size) - var(--vpick--table-cell-today-size)) /
       2
   );
 
@@ -155,11 +171,8 @@
   --vpick--day-table-weekdays-text-transform: capitalize;
   --vpick--day-table-cell-size: 35px;
   --vpick--day-table-cell-today-left: calc(
-    (
-        var(--vpick--day-table-cell-size) -
-          var(--vpick--table-cell-today-size)
-      ) / var(--vpick--table-cell-border-width) * 2
-      
+    (var(--vpick--day-table-cell-size) - var(--vpick--table-cell-today-size)) /
+      var(--vpick--table-cell-border-width) * 2
   );
 
   --vpick--day-table-cell-other-month-color: var(
@@ -211,67 +224,69 @@
   --vpick--table-cell-disabled-bg-color: var(--vpick--color-white);
   --vpick--table-cell-disabled-border-color: var(--vpick--color-white);
 
-   /* TIME PICKER */
-   --vpick--time-content-margin-bottom: 8px;
+  /* TIME PICKER */
+  --vpick--time-content-margin-bottom: 8px;
 
-   --vpick--time-control-btn-size: 24px;
-   --vpick--time-control-btn-bg-color: unset;
-   --vpick--time-control-btn-icon-color: var(--vpick--color-text-primary);
- 
-   --vpick--time-control-btn-hover-bg-color: var(
-     --vpick--time-control-btn-hover-bg-color
-   );
-   --vpick--time-control-btn-hover-icon-color: var(--vpick--color-primary);
-   --vpick--time-control-btn-focus-bg-color: var(
-     --vpick--time-control-btn-hover-bg-color
-   );
-   --vpick--time-control-btn-focus-icon-color: var(
-     --vpick--time-control-btn-hover-icon-color
-   );
-   --vpick--time-control-btn-disabled-bg-color: var(
-     --vpick--time-control-btn-hover-bg-color
-   );
-   --vpick--time-control-btn-disabled-icon-color: var(--vpick--color-placeholder);
- 
-   --vpick--time-bar-gap: 8px;
-   --vpick--time-bar-content-widht: 48px;
-   --vpick--time-bar-content-height: 160px;
-   --vpick--time-bar-separator-width: 2px;
- 
-   --vpick--time-bar-item-padding-width: 16px;
-   --vpick--time-bar-item-padding-height: 8px;
-   --vpick--time-bar-item-font-size: 16px;
-   --vpick--time-bar-item-font-weight: 400;
-   --vpick--time-bar-item-color: var(--vpick--color-text-primary);
-   --vpick--time-bar-item-bg-color: transparent;
- 
-   --vpick--time-bar-item-hover-color: var(--vpick--color-primary);
-   --vpick--time-bar-item-hover-bg-color: var(--vpick--time-bar-item-bg-color);
-   --vpick--time-bar-item-selected-color: var(--vpick--color-primary);
-   --vpick--time-bar-item-selected-bg-color: var(
-     --vpick--time-bar-item-bg-color
-   );
-   --vpick--time-bar-item-disabled-color: var(--vpick--color-placeholder);
-   --vpick--time-bar-item-disabled-bg-color: var(
-     --vpick--time-bar-item-bg-color
-   );
- 
-   --vpick--time-bar-list-padding: calc(
-     (
-         (var(--vpick--time-bar-item-padding-height) * 2) +
-           var(--vpick--time-bar-item-font-size)
-       ) *
-       2
-   );
-   --vpick--time-bar-list-select-section-height: calc(
-     (var(--vpick--time-bar-item-padding-height) * 2) +
-       var(--vpick--time-bar-item-font-size)
-   );
-   --vpick--time-bar-list-select-section-border-width: 1px;
-   --vpick--time-bar-list-select-section-border-style: solid;
-   --vpick--time-bar-list-select-section-border-color: var(
-     --vpick--color-text-secondary
-   );
+  --vpick--time-control-btn-size: 24px;
+  --vpick--time-control-btn-bg-color: unset;
+  --vpick--time-control-btn-icon-color: var(--vpick--color-text-primary);
+
+  --vpick--time-control-btn-hover-bg-color: var(
+    --vpick--time-control-btn-hover-bg-color
+  );
+  --vpick--time-control-btn-hover-icon-color: var(--vpick--color-primary);
+  --vpick--time-control-btn-focus-bg-color: var(
+    --vpick--time-control-btn-hover-bg-color
+  );
+  --vpick--time-control-btn-focus-icon-color: var(
+    --vpick--time-control-btn-hover-icon-color
+  );
+  --vpick--time-control-btn-disabled-bg-color: var(
+    --vpick--time-control-btn-hover-bg-color
+  );
+  --vpick--time-control-btn-disabled-icon-color: var(
+    --vpick--color-placeholder
+  );
+
+  --vpick--time-bar-gap: 8px;
+  --vpick--time-bar-content-widht: 48px;
+  --vpick--time-bar-content-height: 160px;
+  --vpick--time-bar-separator-width: 2px;
+
+  --vpick--time-bar-item-padding-width: 16px;
+  --vpick--time-bar-item-padding-height: 8px;
+  --vpick--time-bar-item-font-size: 16px;
+  --vpick--time-bar-item-font-weight: 400;
+  --vpick--time-bar-item-color: var(--vpick--color-text-primary);
+  --vpick--time-bar-item-bg-color: transparent;
+
+  --vpick--time-bar-item-hover-color: var(--vpick--color-primary);
+  --vpick--time-bar-item-hover-bg-color: var(--vpick--time-bar-item-bg-color);
+  --vpick--time-bar-item-selected-color: var(--vpick--color-primary);
+  --vpick--time-bar-item-selected-bg-color: var(
+    --vpick--time-bar-item-bg-color
+  );
+  --vpick--time-bar-item-disabled-color: var(--vpick--color-placeholder);
+  --vpick--time-bar-item-disabled-bg-color: var(
+    --vpick--time-bar-item-bg-color
+  );
+
+  --vpick--time-bar-list-padding: calc(
+    (
+        (var(--vpick--time-bar-item-padding-height) * 2) +
+          var(--vpick--time-bar-item-font-size)
+      ) *
+      2
+  );
+  --vpick--time-bar-list-select-section-height: calc(
+    (var(--vpick--time-bar-item-padding-height) * 2) +
+      var(--vpick--time-bar-item-font-size)
+  );
+  --vpick--time-bar-list-select-section-border-width: 1px;
+  --vpick--time-bar-list-select-section-border-style: solid;
+  --vpick--time-bar-list-select-section-border-color: var(
+    --vpick--color-text-secondary
+  );
 
   /* SHORTCUT */
   --vpick--shortcut-list-width: 140px;
@@ -298,8 +313,7 @@
   --vpick--button-panel-justify-content: flex-end;
   --vpick--button-panel-gap: 10px;
   --vpick--button-panel-padding: 10px 0 0;
-  --vpick--button-panel-border-top: 1px solid
-    var(--vpick--color-border-base);
+  --vpick--button-panel-border-top: 1px solid var(--vpick--color-border-base);
 
   /* BUTTON */
   --vpick--button-font: var(--vpick--font-default);
@@ -307,24 +321,45 @@
   --vpick--button-padding: 4px 24px;
 
   --vpick--button-default-bg-color: var(--vpick--color-info);
-  --vpick--button-default-font-color: var(--vpick--color-text-regular); 
-  
-  --vpick--button-default-hover-bg-color: 
-    color-mix(in srgb, var(--vpick--color-info) 85%, var(--vpick--color-dark));
-  --vpick--button-default-hover-font-color: var(--vpick--button-default-font-color);
-  
-  --vpick--button-default-focus-bg-color: 
-    color-mix(in srgb, var(--vpick--color-info) 75%, var(--vpick--color-dark));
-  --vpick--button-default-focus-font-color: var(--vpick--button-default-font-color);
-  
-  --vpick--button-default-active-bg-color: 
-    color-mix(in srgb, var(--vpick--color-info) 65%, var(--vpick--color-dark));
-  --vpick--button-default-active-font-color: var(--vpick--button-default-font-color);
-  
-  --vpick--button-default-disabled-bg-color: 
-    color-mix(in srgb, var(--vpick--color-info) 50%, var(--vpick--color-white));
-  --vpick--button-default-disabled-font-color: 
-    color-mix(in srgb, var(--vpick--button-default-font-color) 50%, transparent);
+  --vpick--button-default-font-color: var(--vpick--color-text-regular);
+
+  --vpick--button-default-hover-bg-color: color-mix(
+    in srgb,
+    var(--vpick--color-info) 85%,
+    var(--vpick--color-dark)
+  );
+  --vpick--button-default-hover-font-color: var(
+    --vpick--button-default-font-color
+  );
+
+  --vpick--button-default-focus-bg-color: color-mix(
+    in srgb,
+    var(--vpick--color-info) 75%,
+    var(--vpick--color-dark)
+  );
+  --vpick--button-default-focus-font-color: var(
+    --vpick--button-default-font-color
+  );
+
+  --vpick--button-default-active-bg-color: color-mix(
+    in srgb,
+    var(--vpick--color-info) 65%,
+    var(--vpick--color-dark)
+  );
+  --vpick--button-default-active-font-color: var(
+    --vpick--button-default-font-color
+  );
+
+  --vpick--button-default-disabled-bg-color: color-mix(
+    in srgb,
+    var(--vpick--color-info) 50%,
+    var(--vpick--color-white)
+  );
+  --vpick--button-default-disabled-font-color: color-mix(
+    in srgb,
+    var(--vpick--button-default-font-color) 50%,
+    transparent
+  );
 
   --vpick--button-submit-bg-color: var(--vpick--color-primary);
   --vpick--button-submit-font-color: var(--vpick--color-white);
@@ -334,7 +369,9 @@
   --vpick--button-submit-focus-font-color: var(--vpick--color-white);
   --vpick--button-submit-active-bg-color: var(--vpick--color-primary-disabled);
   --vpick--button-submit-active-font-color: var(--vpick--color-white);
-  --vpick--button-submit-disabled-bg-color: var(--vpick--color-background-blue-hover);
+  --vpick--button-submit-disabled-bg-color: var(
+    --vpick--color-background-blue-hover
+  );
   --vpick--button-submit-disabled-font-color: var(--vpick--color-primary);
 
   /* POPOVER */
@@ -349,10 +386,14 @@
   --vpick--scrollbar-track-size: 15px;
   --vpick--scrollbar-active-track-opacity: 0.6;
 
-  --vpick--scrollbar-track-hover-bg-color:  var(--vpick--color-border-light);
+  --vpick--scrollbar-track-hover-bg-color: var(--vpick--color-border-light);
   --vpick--scrollbar-track-hover-opacity: 0.9;
   --vpick--scrollbar-track-hover-thumb-size: 11px;
-  --vpick--scrollbar-track-hover-thumb-bg-color: color-mix(in srgb, var(--vpick--color-border-regular) 80%, var(--vpick--color-text-secondary) 20%);
+  --vpick--scrollbar-track-hover-thumb-bg-color: color-mix(
+    in srgb,
+    var(--vpick--color-border-regular) 80%,
+    var(--vpick--color-text-secondary) 20%
+  );
 
   --vpick--scrollbar-track-focus-bg-color: var(
     --vpick--scrollbar-track-hover-bg-color
@@ -383,6 +424,9 @@
   --vpick--scrollbar-thumb-default-size: 6px;
   --vpick--scrollbar-thumb-offset: 2px;
   --vpick--scrollbar-thumb-border-radius: 6px;
-  --vpick--scrollbar-thumb-bg-color: color-mix(in srgb, var(--vpick--color-border-base) 70%, var(--vpick--color-text-regular) 30%);
-
+  --vpick--scrollbar-thumb-bg-color: color-mix(
+    in srgb,
+    var(--vpick--color-border-base) 70%,
+    var(--vpick--color-text-regular) 30%
+  );
 }

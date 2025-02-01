@@ -6,5 +6,5 @@
   "critical": true,
   "skip-dev": true,
   "package-manager": "yarn",
-  "allowlist": []
+  "allowlist": [],
 }
