@@ -19,7 +19,10 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' },
+      {
+        icon: 'github',
+        link: 'https://github.com/boichik/vue3-date-time-picker',
+      },
     ],
     outline: {
       level: [2, 3],

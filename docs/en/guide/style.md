@@ -4,6 +4,18 @@ This section is intended to show you how you can style the components to suit yo
 <br>
 For styling, <code>Vue3DateTimePicker</code> uses CSS variables, which allows you to flexibly customise them. The styling is divided into two types: basic and advanced
 
+<p>To apply your changes, you need to connect custom styles after the default ones:</p>
+
+::: tip
+If you are customising absolutely all variables, you can refuse to import the file <code>variables.css</code>
+:::
+
+```ts
+import 'vue3-date-time-picker/assets/styles.css';
+import 'vue3-date-time-picker/assets/variables.css';
+import '../styles/my-custom-styles.css';
+```
+
 ## Basic customisation
 
 This type of customisation consists of a small number of css variables that can be used to customise the appearance of components.

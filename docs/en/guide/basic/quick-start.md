@@ -15,7 +15,8 @@ You can connect components globally
 import { createApp } from 'vue';
 import App from './App.vue';
 import { AppDateTimePicker, AppTimePicker } from 'vue3-date-time-picker';
-import 'vue3-date-time-picker/lib/styles.css';
+import 'vue3-date-time-picker/assets/styles.css';
+import 'vue3-date-time-picker/assets/variables.css';
 
 const app = createApp(App);
 
@@ -38,7 +39,8 @@ You can also connect the components locally
 <script setup lang="ts">
 import { ref } from 'vue';
 import { AppDateTimePicker, AppTimePicker } from 'vue3-date-time-picker';
-import 'vue3-date-time-picker/lib/styles.css';
+import 'vue3-date-time-picker/assets/styles.css';
+import 'vue3-date-time-picker/assets/variables.css';
 
 const dateModel = ref(null);
 const timeModel = ref(null);
@@ -54,7 +56,9 @@ const timeModel = ref(null);
 
 <script>
 import { AppDateTimePicker, AppTimePicker } from 'vue3-date-time-picker';
-import 'vue3-date-time-picker/lib/styles.css';
+import 'vue3-date-time-picker/assets/styles.css';
+import 'vue3-date-time-picker/assets/variables.css';
+
 export default {
   components: { AppDateTimePicker, AppTimePicker },
   data() {

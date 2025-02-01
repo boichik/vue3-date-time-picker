@@ -1,12 +1,14 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
 hero:
   name: 'Vue3DateTimePicker'
-  text: 'component package for your vue 3 application'
+  tagline: 'Modern, lightweight, and flexible date and time picker in Vue 3. 🚀'
   actions:
     - theme: brand
       text: Get started
-      link: /en/guide/installation
+      link: /en/guide/basic/installation
+    - theme: alt
+      text: GitHub
+      link: https://github.com/boichik/vue3-date-time-picker
 ---
