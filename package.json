@@ -1,0 +1,70 @@
+{
+  "name": "vue3-date-time-picker",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./lib/index.cjs",
+  "module": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/index.cjs"
+    },
+    "./assets/style.css": "./lib/assets/index.css",
+    "./assets/variables.css": "./lib/assets/variables.css"
+  },
+  "scripts": {
+    "build": "vite build",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "lint": "eslint",
+    "lint:fix": "eslint . --ext .vue,.ts,.js --fix",
+    "format": "prettier --write .",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "pk-audit": "audit-ci --config ./audit-ci.jsonc"
+  },
+  "dependencies": {
+    "@heroicons/vue": "^2.2.0",
+    "@popperjs/core": "^2.11.8",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "es-toolkit": "^1.30.1",
+    "vue": "^3.5.12",
+    "vue-i18n": "10",
+    "vue-imask": "^7.6.1",
+    "vue3-perfect-scrollbar": "^2.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@typescript-eslint/parser": "^8.19.1",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vitest/coverage-v8": "^3.0.3",
+    "@vue/test-utils": "^2.4.6",
+    "audit-ci": "^7.1.0",
+    "css-loader": "^7.1.2",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-vitest": "^0.5.4",
+    "eslint-plugin-vue": "^9.32.0",
+    "globals": "^15.14.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "prettier": "^3.4.2",
+    "sass": "^1.80.6",
+    "sass-loader": "^16.0.3",
+    "style-loader": "^4.0.0",
+    "ts-jest": "^29.2.5",
+    "typescript": "~5.6.2",
+    "typescript-eslint": "^8.19.1",
+    "vite": "^5.4.10",
+    "vite-plugin-dts": "^4.3.0",
+    "vitepress": "^1.6.3",
+    "vitest": "^3.0.3",
+    "vue-tsc": "^2.1.10"
+  }
+}

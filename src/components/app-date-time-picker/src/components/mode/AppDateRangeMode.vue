@@ -1,0 +1,241 @@
+<template>
+  <div class="ui-date-range-mode">
+    <div class="ui-date-range-mode__section">
+      <AppDateTimeController
+        v-model="startDateDisplay"
+        :selected-date="selectedStartDate"
+        mode="day"
+      />
+    </div>
+    <div class="ui-date-range-mode__section">
+      <AppDateTimeController
+        v-model="endDateDisplay"
+        :selected-date="selectedEndDate"
+        mode="day"
+      />
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import AppDateTimeController from '../controller/AppDateTimeController.vue';
+import type { AppDateTimePickerComponentData } from '../../interfaces';
+import type { ComputedRef } from 'vue';
+import { inject, provide, ref, watch } from 'vue';
+import { isBefore, addMonths, isSameDay, isDate } from 'date-fns';
+import { setTime } from '../../utils';
+import {
+  AppDateTimePickerComponentDataProvide,
+  AppDateTimePickerTableComponentDataProvide,
+} from '../../const';
+
+const emit = defineEmits(['update:model-value', 'changeMode']);
+const props = defineProps<{ modelValue?: undefined[] | Date[] }>();
+
+const appDateTimePickerComponentData =
+  inject<ComputedRef<AppDateTimePickerComponentData> | null>(
+    AppDateTimePickerComponentDataProvide,
+    null
+  );
+
+const selectedStartDate = ref<Date | undefined>(
+  parseModel(props.modelValue, 0)
+);
+const selectedEndDate = ref<Date | undefined>(parseModel(props.modelValue, 1));
+const hoverDateRange = ref<Date | null>(null);
+const isInternalUpdate = ref<boolean>(false);
+
+const startDateDisplay = ref(
+  selectedStartDate.value || setTimeForSelectedDate(new Date(), true)
+);
+const endDateDisplay = ref(
+  getEndDateDisplay(selectedStartDate.value, selectedEndDate.value)
+);
+
+watch(
+  () => props.modelValue,
+  val => {
+    if (isInternalUpdate.value) {
+      isInternalUpdate.value = false;
+      return;
+    }
+    const startDate = parseModel(val, 0);
+    const endDate = parseModel(val, 1);
+
+    if (!!startDate) {
+      startDateDisplay.value = startDate as Date;
+    }
+
+    if (!!endDate) {
+      endDateDisplay.value = getEndDateDisplay(startDate, endDate);
+    }
+
+    selectedStartDate.value = startDate;
+    selectedEndDate.value = endDate;
+  }
+);
+
+watch([selectedStartDate, selectedEndDate], ([newStart, newEnd]) => {
+  if (!!newStart && !!newEnd) {
+    isInternalUpdate.value = true;
+    emit('update:model-value', [newStart, newEnd]);
+  }
+});
+
+watch(startDateDisplay, (newStartDate: Date) => {
+  if (
+    isBefore(endDateDisplay.value, newStartDate) ||
+    isSameDay(newStartDate, endDateDisplay.value)
+  ) {
+    endDateDisplay.value = addMonths(newStartDate, 1);
+  }
+});
+
+watch(endDateDisplay, (newEndDate: Date) => {
+  if (
+    isBefore(newEndDate, startDateDisplay.value) ||
+    isSameDay(newEndDate, startDateDisplay.value)
+  ) {
+    startDateDisplay.value = addMonths(newEndDate, -1);
+  }
+});
+
+function parseModel(val: undefined | undefined[] | Date[], index: number) {
+  if (Array.isArray(val) && val[index] && isDate(val[index])) {
+    return val[index];
+  }
+
+  return undefined;
+}
+
+function getEndDateDisplay(
+  startDate: Date | undefined,
+  endDate: Date | undefined
+) {
+  if (endDate) {
+    if (
+      startDate &&
+      (isBefore(endDate, startDate) || isSameDay(startDate, endDate))
+    ) {
+      return setTimeForSelectedDate(addMonths(startDate, 1), true);
+    }
+    return endDate;
+  }
+
+  return setTimeForSelectedDate(addMonths(startDateDisplay.value, 1), true);
+}
+
+function setTimeForSelectedDate(date: Date, isEndDate?: boolean) {
+  const index = isEndDate ? 1 : 0;
+
+  return setTime(
+    date,
+    appDateTimePickerComponentData?.value.defaultTime,
+    index
+  );
+}
+
+function selectDate(date: Date) {
+  if (!selectedStartDate.value) {
+    selectedStartDate.value = setTimeForSelectedDate(date);
+  } else if (!selectedEndDate.value) {
+    selectedEndDate.value = setTimeForSelectedDate(date, true);
+    if (isBefore(selectedEndDate.value, selectedStartDate.value)) {
+      [selectedStartDate.value, selectedEndDate.value] = [
+        selectedEndDate.value,
+        selectedStartDate.value,
+      ];
+    }
+  } else {
+    selectedStartDate.value = setTimeForSelectedDate(date);
+    selectedEndDate.value = undefined;
+  }
+  hoverDateRange.value = null;
+}
+
+function isSelectedDate(date: Date, isOtherMonth: boolean) {
+  if (isOtherMonth) return null;
+
+  const startDate = selectedStartDate.value;
+  const endDate = selectedEndDate.value;
+  const hoverDate = hoverDateRange.value;
+
+  if (startDate && hoverDate) {
+    if (isSameDay(hoverDate, date)) {
+      return isSameDay(startDate, hoverDate)
+        ? 'center'
+        : startDate > hoverDate
+          ? 'left'
+          : 'right';
+    }
+    if (isSameDay(startDate, date) && hoverDate < date) {
+      return 'right';
+    }
+  }
+
+  if (startDate && endDate) {
+    if (isSameDay(startDate, date) && isSameDay(endDate, date)) {
+      return 'center';
+    }
+  }
+
+  if (startDate && isSameDay(startDate, date)) return 'left';
+  if (endDate && isSameDay(endDate, date)) return 'right';
+
+  return null;
+}
+
+function isDateInRange(date: Date, isOtherMonth: boolean) {
+  if (isOtherMonth) return false;
+  return (
+    selectedStartDate.value &&
+    selectedEndDate.value &&
+    date >= selectedStartDate.value &&
+    date <= selectedEndDate.value
+  );
+}
+
+function isDateHoverRange(date: Date, isOtherMonth: boolean) {
+  if (isOtherMonth) return false;
+
+  return (
+    !!selectedStartDate.value &&
+    !!hoverDateRange.value &&
+    ((date >= selectedStartDate.value && date <= hoverDateRange.value) ||
+      (date <= selectedStartDate.value && date >= hoverDateRange.value))
+  );
+}
+
+function hoverDate(date: Date) {
+  if (selectedStartDate.value && !selectedEndDate.value) {
+    hoverDateRange.value = date;
+  }
+}
+
+function resetHover() {
+  hoverDateRange.value = null;
+}
+
+const dayTableData = {
+  isDateInRange: (date: Date, isOtherMonth: boolean) =>
+    isDateInRange(date, isOtherMonth),
+  isSelectedDate: (date: Date, isOtherMonth: boolean) =>
+    isSelectedDate(date, isOtherMonth),
+  isDateHoverRange: (date: Date, isOtherMonth: boolean) =>
+    isDateHoverRange(date, isOtherMonth),
+  hoverDate: (date: Date) => hoverDate(date),
+  selectDate: (date: Date) => selectDate(date),
+  resetHover: () => resetHover(),
+};
+
+provide(AppDateTimePickerTableComponentDataProvide, dayTableData);
+</script>
+
+<style lang="scss" scoped>
+.ui-date-range-mode {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: var(--vpick--table-range-gap);
+}
+</style>

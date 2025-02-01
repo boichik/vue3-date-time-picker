@@ -1,0 +1,10 @@
+{
+  "$schema": "https://github.com/IBM/audit-ci/raw/main/docs/schema.json",
+  "low": true,
+  "moderate": true,
+  "high": true,
+  "critical": true,
+  "skip-dev": true,
+  "package-manager": "yarn",
+  "allowlist": []
+}
