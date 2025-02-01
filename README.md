@@ -1,5 +1,63 @@
-# Vue 3 + TypeScript + Vite
+# Vue3DateTimePicker
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Modern, lightweight, and flexible date and time picker for Vue 3. 🚀
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## 📌 Features
+
+- 📆 **Date & Time Selection** – Supports date, time, and range selection.
+- 🌍 **Localization** – Works with `vue-i18n` or standalone locale props.
+- 🎨 **Customizable** – Styled via CSS variables for easy theming.
+- ⚡ **Performance Optimized** – Lightweight and fast.
+- 🛠️ **Fully Typed** – Written in TypeScript with full type support.
+
+## 📥 Installation
+
+    npm install vue3-date-time-picker
+    # or
+    yarn add vue3-date-time-picker
+    # or
+    pnpm add vue3-date-time-picker
+
+## 🚀 Quick Start
+
+### **Global Registration**
+
+    import { createApp } from 'vue';
+    import App from './App.vue';
+    import { AppDateTimePicker, AppTimePicker } from 'vue3-date-time-picker';
+    import 'vue3-date-time-picker/assets/style.css';
+    import 'vue3-date-time-picker/assets/variables.css';
+
+    const app = createApp(App);
+    app.component('AppDateTimePicker', AppDateTimePicker);
+    app.component('AppTimePicker', AppTimePicker);
+    app.mount('#app');
+
+### **Local Import**
+
+    <template>
+        <AppDateTimePicker v-model="date" />
+        <AppTimePicker v-model="time" />
+    </template>
+
+    <script setup>
+    import { ref } from 'vue';
+    import { AppDateTimePicker, AppTimePicker } from 'vue3-date-time-picker';
+    import 'vue3-date-time-picker/assets/style.css';
+    import 'vue3-date-time-picker/assets/variables.css';
+
+    const date = ref(null);
+    const time = ref(null);
+    </script>
+
+## 📖 Documentation
+
+Full documentation is available at 👉 **[docs-link]**
+
+## 🛠️ Contributing
+
+Feel free to submit PRs or issues! ❤️
+
+## 📜 License
+
+MIT License © boichik
