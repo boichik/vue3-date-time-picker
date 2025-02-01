@@ -3,7 +3,10 @@
     <template #home-hero-image>
       <div class="custom-home-container">
         <div class="custom-home-container__bg"></div>
-        <PopoverContent class="custom-home-container__content" />
+        <PopoverContent
+          :is-uk-locale="isUkLocale"
+          class="custom-home-container__content"
+        />
       </div>
     </template>
   </DefaultTheme.Layout>
@@ -12,6 +15,12 @@
 <script setup lang="ts">
 import DefaultTheme from 'vitepress/theme';
 import PopoverContent from './PopoverContent.vue';
+import { useData } from 'vitepress';
+import { computed } from 'vue';
+
+const { lang } = useData();
+
+const isUkLocale = computed(() => lang.value === 'uk');
 </script>
 
 <style lang="scss">

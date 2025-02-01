@@ -8,6 +8,8 @@
 import { computed, provide } from 'vue';
 import { AppDateTimePickerComponentDataProvide } from '../../../src/components/app-date-time-picker/src/const';
 
+const { isUkLocale = false } = defineProps<{ isUkLocale?: boolean }>();
+
 const DEFAULT_WEEDDAY_FORMAT = 'short';
 const DEFAULT_MONTH_CELL_FORMAT = 'short';
 const DEFAULT_MONTH_BUTTON_FORMAT = 'long';
@@ -18,6 +20,13 @@ const provideDate = computed(() => {
     weekdayFormat: DEFAULT_WEEDDAY_FORMAT,
     monthCellFormat: DEFAULT_MONTH_CELL_FORMAT,
     monthButtonFormat: DEFAULT_MONTH_BUTTON_FORMAT,
+    ...(isUkLocale
+      ? {
+          locale: 'uk',
+          cancelText: 'Скасувати',
+          applyText: 'Застосувати',
+        }
+      : {}),
   };
 });
 
