@@ -36,6 +36,9 @@ export default defineConfig({
         'declarations',
       ],
     },
+    env: {
+      TZ: 'Europe/Kyiv',
+    },
   },
   resolve: {
     alias: {
