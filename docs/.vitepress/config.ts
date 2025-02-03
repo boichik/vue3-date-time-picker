@@ -30,7 +30,11 @@ export default defineConfig({
     socialLinks: [
       {
         icon: 'github',
-        link: 'https://github.com/boichik/@boichikpro/vue3-date-time-picker',
+        link: 'https://github.com/boichik/vue3-date-time-picker',
+      },
+      {
+        icon: 'npm',
+        link: 'https://www.npmjs.com/package/@boichikpro/vue3-date-time-picker',
       },
     ],
     outline: {
