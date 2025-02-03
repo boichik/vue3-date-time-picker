@@ -1,17 +1,24 @@
 {
   "name": "vue3-date-time-picker",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boichik/vue3-date-time-picker"
+  },
   "type": "module",
   "main": "./lib/index.cjs",
   "module": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
-    "lib"
+    "lib/*",
+    "README.md",
+    "LICENSE"
   ],
   "exports": {
     ".": {
       "import": "./lib/index.js",
-      "require": "./lib/index.cjs"
+      "require": "./lib/index.cjs",
+      "types": "./lib/index.d.ts"
     },
     "./assets/style.css": "./lib/assets/index.css",
     "./assets/variables.css": "./lib/assets/variables.css"
@@ -34,10 +41,12 @@
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "es-toolkit": "^1.30.1",
-    "vue": "^3.5.12",
     "vue-i18n": "10",
     "vue-imask": "^7.6.1",
     "vue3-perfect-scrollbar": "^2.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.12"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
@@ -66,5 +75,31 @@
     "vitepress": "^1.6.3",
     "vitest": "^3.0.3",
     "vue-tsc": "^2.1.10"
+  },
+  "keywords": [
+    "vue",
+    "vue components",
+    "vue ui",
+    "vue3",
+    "datepicker",
+    "datetimepicker",
+    "daterangepicker",
+    "datetimerangepicker",
+    "timepicker",
+    "timerangepicker",
+    "vue-date-picker",
+    "vue-date-time-picker",
+    "vue-date-range-picker",
+    "vue-date-time-range-picker",
+    "vue-time-picker",
+    "vue-time-range-picker",
+    "vue3-date-time-picker",
+    "vue3-date-picker",
+    "vue-3-date-time-picker",
+    "vue-3-date-picker",
+    "vue-3-time-picker"
+  ],
+  "engines": {
+    "node": ">=18.20.0"
   }
 }
