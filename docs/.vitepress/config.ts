@@ -2,11 +2,11 @@ import { defineConfig } from 'vitepress';
 import { fileURLToPath } from 'node:url';
 import { preparePages } from './utils/preparePages';
 import searchTranslations from './data/searchTranslations';
-// https://vitepress.dev/reference/site-config
 
 export default defineConfig({
   title: 'Vue3DateTimePicker',
-  description: 'date and time picker components for vue 3',
+  description:
+    'Modern, lightweight, and flexible date and time picker in Vue 3',
   head: [
     [
       'link',
@@ -15,9 +15,15 @@ export default defineConfig({
         rel: 'stylesheet',
       },
     ],
+    [
+      'link',
+      {
+        href: '/favicon.svg',
+        rel: 'icon',
+      },
+    ],
   ],
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
     socialLinks: [
       {
         icon: 'github',
