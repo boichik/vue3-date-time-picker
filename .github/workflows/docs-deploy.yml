@@ -2,7 +2,7 @@ name: Deploy Docs to Pages
 
 on:
   release:
-    types: [created]
+    types: [published]
 
   workflow_dispatch:
 
@@ -26,7 +26,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '18.x'
           cache: yarn
       - name: Setup Pages
         uses: actions/configure-pages@v4
