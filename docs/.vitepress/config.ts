@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { preparePages } from './utils/preparePages';
 import searchTranslations from './data/searchTranslations';
 
-const baseUrl = '/@boichikpro/vue3-date-time-picker/';
+const baseUrl = '/vue3-date-time-picker/';
 
 export default defineConfig({
   title: 'Vue3DateTimePicker',
