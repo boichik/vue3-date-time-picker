@@ -3,11 +3,13 @@ import { fileURLToPath } from 'node:url';
 import { preparePages } from './utils/preparePages';
 import searchTranslations from './data/searchTranslations';
 
+const baseUrl = '/vue3-date-time-picker/';
+
 export default defineConfig({
   title: 'Vue3DateTimePicker',
   description:
     'Modern, lightweight, and flexible date and time picker in Vue 3',
-  base: '/vue3-date-time-picker/',
+  base: baseUrl,
   head: [
     [
       'link',
@@ -19,7 +21,7 @@ export default defineConfig({
     [
       'link',
       {
-        href: '/favicon.svg',
+        href: `${baseUrl}favicon.svg`,
         rel: 'icon',
       },
     ],
