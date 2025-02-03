@@ -4,6 +4,7 @@ import { AppDateTimePickerComponentDataProvide } from '@/components/app-date-tim
 import { mount } from '@vue/test-utils';
 import { setTime } from '@/components/app-date-time-picker/src/utils';
 import AppDayTable from '@/components/app-date-time-picker/src/components/table/AppDayTable.vue';
+import { fakeTimeWrapper } from '@tests/mocks/utils';
 
 describe('AppDateMode', () => {
   const mockDate = new Date(2025, 0, 1);
@@ -74,26 +75,28 @@ describe('AppDateMode', () => {
   });
 
   it('updates modelValue when selectDate is called', async () => {
-    mockProvideValue.disabledDate.mockReturnValue(false);
-    const wrapper = mountComponent();
+    await fakeTimeWrapper(mockDate, async () => {
+      mockProvideValue.disabledDate.mockReturnValue(false);
+      const wrapper = mountComponent();
 
-    const table = wrapper.findComponent(AppDayTable);
+      const table = wrapper.findComponent(AppDayTable);
 
-    const tbody = table.find('tbody');
-    const cells = tbody.findAll('.app-date-time-picker-day-table__cell');
+      const tbody = table.find('tbody');
+      const cells = tbody.findAll('.app-date-time-picker-day-table__cell');
 
-    const cell = cells.find(
-      el =>
-        !el
-          .classes()
-          .includes('app-date-time-picker-day-table__cell--other-month')
-    )!;
+      const cell = cells.find(
+        el =>
+          !el
+            .classes()
+            .includes('app-date-time-picker-day-table__cell--other-month')
+      )!;
 
-    await cell.trigger('click');
+      await cell.trigger('click');
 
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy();
-    expect(wrapper.emitted('update:modelValue')![0][0]).toStrictEqual(
-      new Date(2025, 0, 1)
-    );
+      expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+      expect(wrapper.emitted('update:modelValue')![0][0]).toStrictEqual(
+        mockDate
+      );
+    });
   });
 });

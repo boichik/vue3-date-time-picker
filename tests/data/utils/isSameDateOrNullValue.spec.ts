@@ -2,7 +2,6 @@ import {
   isSameDateOrNullValue,
   isSameModelValue,
 } from '@/utils/isSameDateOrNullValue';
-import { fakeTimeZone } from '@tests/mocks/utils';
 
 const isSameDateOrNullValueMapCase: [unknown, unknown, unknown][] = [
   [null, null, true],
@@ -98,8 +97,6 @@ describe('Utils: isSameModelValue', () => {
   it.each(isSameModelValueMapCase)(
     'isSameModelValue: oldValue - %p | newValue - %p | timezone - %p',
     (oldValue, newValue, timezone, expected) => {
-      fakeTimeZone();
-
       expect(
         isSameModelValue(oldValue as Date, newValue as Date, timezone as string)
       ).toEqual(expected);

@@ -9,7 +9,7 @@ import AppButtonPanel from '@/ui/AppButtonPanel.vue';
 import AppTimeBar from '@/components/app-time-picker/src/components/panel/AppTimeBar.vue';
 import AppTimeContent from '@/components/app-time-picker/src/components/base/AppTimeContent.vue';
 import { initResizeObserverMock } from '@tests/mocks/ResizeObserverMock';
-import { fakeTimeWrapper, fakeTimeZone } from '@tests/mocks/utils';
+import { fakeTimeWrapper } from '@tests/mocks/utils';
 
 vi.mock('@/composables/useLocalization', () => ({
   useLocalization: vi.fn(),
@@ -553,8 +553,6 @@ describe('AppTimePicker', () => {
   });
 
   it('must display the date relative to the time zone', async () => {
-    fakeTimeZone('Europe/Kiev');
-
     const wrapper = createWrapper({
       modelValue: new Date(2025, 0, 1, 14, 20, 30),
       timezone: 'America/New_York',
@@ -572,7 +570,6 @@ describe('AppTimePicker', () => {
   });
 
   it('must give the date in the local timezone when another one is selected in the picker', async () => {
-    fakeTimeZone('Europe/Kiev');
     const date = new Date(2025, 0, 1, 14, 20, 30);
 
     await fakeTimeWrapper(date, async () => {
@@ -616,8 +613,6 @@ describe('AppTimePicker', () => {
   });
 
   it('should display the time relative to the default time parameter in the time zone', async () => {
-    fakeTimeZone('Europe/Kiev');
-
     const wrapper = createWrapper({
       defaultTime: new Date(2025, 0, 1, 15),
       timezone: 'America/New_York',
@@ -651,8 +646,6 @@ describe('AppTimePicker', () => {
   });
 
   it('should display the time relative to the default time parameter in the array relative to the timezone', async () => {
-    fakeTimeZone('Europe/Kiev');
-
     const wrapper = createWrapper({
       defaultTime: [new Date(2025, 0, 1, 15, 0, 0)],
       timezone: 'America/New_York',

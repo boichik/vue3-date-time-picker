@@ -3,7 +3,6 @@ import { isValidTimeZone } from '@/utils/isValidTimeZone';
 import { TimezoneConvertorImpl } from '@/services/timezone-convertor/TimezoneConvertor';
 import type { TimezoneConvertor } from '@/services/timezone-convertor/TimezoneConvertor.interface';
 import type { Mock } from 'vitest';
-import { fakeTimeZone } from '@tests/mocks/utils';
 
 vi.mock('@/utils/isValidTimeZone', () => ({
   isValidTimeZone: vi.fn(),
@@ -22,7 +21,6 @@ describe('TimezoneConvertor', () => {
   });
 
   it('convertToTimeZone: converts a valid date string to the specified timezone', () => {
-    fakeTimeZone();
     (isValidTimeZone as Mock).mockReturnValue(true);
 
     const date = new Date('2025/01/01 15:00:00');
@@ -67,7 +65,6 @@ describe('TimezoneConvertor', () => {
   });
 
   it('convertToLocalTime: converts a valid date string to local time', () => {
-    fakeTimeZone();
     (isValidTimeZone as Mock).mockReturnValue(true);
 
     const date = new Date(2025, 0, 1, 12);
@@ -89,8 +86,6 @@ describe('TimezoneConvertor', () => {
   });
 
   it('convertToLocalTime: uses the local timezone if no currentTimezone is provided', () => {
-    fakeTimeZone();
-
     (isValidTimeZone as Mock).mockReturnValue(false);
 
     const date = '2023-01-01T12:00:00Z';

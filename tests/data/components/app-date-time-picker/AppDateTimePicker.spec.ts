@@ -16,7 +16,6 @@ import AppButton from '@/ui/AppButton.vue';
 import AppButtonPanel from '@/ui/AppButtonPanel.vue';
 import AppPopover from '@/ui/AppPopover.vue';
 import { initResizeObserverMock } from '@tests/mocks/ResizeObserverMock';
-import { fakeTimeZone } from '@tests/mocks/utils';
 import { flushPromises, mount, VueWrapper } from '@vue/test-utils';
 import { isBefore, isAfter } from 'date-fns';
 import { millisecondsInDay } from 'date-fns/constants';
@@ -539,8 +538,6 @@ describe('AppDateTimePicker', () => {
   });
 
   it('must give the date that was in the time zone', async () => {
-    fakeTimeZone();
-
     const wrapper = createWrapper({
       modelValue: new Date(2025, 0, 2),
       type: 'datetime',
@@ -570,8 +567,6 @@ describe('AppDateTimePicker', () => {
   });
 
   it('should display the date in the current time zone with an incorrect time zone parameter', async () => {
-    fakeTimeZone();
-
     const wrapper = createWrapper({
       modelValue: new Date(2025, 0, 2),
       type: 'datetime',

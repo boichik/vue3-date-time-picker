@@ -7,9 +7,6 @@ import AppDayTable from '@/components/app-date-time-picker/src/components/table/
 import AppDateTimePanel from '@/components/app-date-time-picker/src/components/panel/AppDateTimePanel.vue';
 import { TimezoneConvertorImpl } from '@/services/timezone-convertor/TimezoneConvertor';
 import { initResizeObserverMock } from '@tests/mocks/ResizeObserverMock';
-import { fakeTimeZone } from '@tests/mocks/utils';
-
-fakeTimeZone();
 
 describe('AppDateTimeRangeMode', () => {
   initResizeObserverMock();

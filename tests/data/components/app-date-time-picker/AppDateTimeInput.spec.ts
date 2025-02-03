@@ -2,13 +2,10 @@ import AppDateTimeInput from '@/components/app-date-time-picker/src/components/b
 import { AppDateTimePickerComponentDataProvide } from '@/components/app-date-time-picker/src/const';
 import { TimezoneConvertorImpl } from '@/services/timezone-convertor/TimezoneConvertor';
 import AppDateInput from '@/ui/AppDateInput.vue';
-import { fakeTimeZone } from '@tests/mocks/utils';
 import { mount } from '@vue/test-utils';
 import { isBefore } from 'date-fns';
 
 describe('AppDateTimeInput', () => {
-  fakeTimeZone();
-
   const mockProvide = {
     today: new Date(2025, 0, 1),
   };

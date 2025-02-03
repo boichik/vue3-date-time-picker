@@ -8,10 +8,8 @@ import { TimezoneConvertorImpl } from '@/services/timezone-convertor/TimezoneCon
 import AppTimeInput from '@/components/app-time-picker/src/components/base/AppTimeInput.vue';
 import { isBefore } from 'date-fns';
 import { initResizeObserverMock } from '@tests/mocks/ResizeObserverMock';
-import { fakeTimeZone } from '@tests/mocks/utils';
 
 describe('AppDateTimeMode', () => {
-  fakeTimeZone();
   initResizeObserverMock();
 
   const mockProvideValue = {
