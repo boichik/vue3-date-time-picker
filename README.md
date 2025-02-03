@@ -52,7 +52,7 @@ Modern, lightweight, and flexible date and time picker for Vue 3. 🚀
 
 ## 📖 Documentation
 
-Full documentation is available at 👉 **[docs-link]**
+Full documentation is available at 👉 **[docs](https://boichik.github.io/vue3-date-time-picker)**
 
 ## 🛠️ Contributing
 
