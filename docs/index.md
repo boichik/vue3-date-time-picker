@@ -10,5 +10,5 @@ hero:
       link: /en/guide/basic/installation
     - theme: alt
       text: GitHub
-      link: https://github.com/boichik/vue3-datetime-picker
+      link: https://github.com/boichik/@boichikpro/vue3-datetime-picker
 ---

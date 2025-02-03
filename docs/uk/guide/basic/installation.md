@@ -11,15 +11,15 @@
 ::: code-group
 
 ```shell [npm]
-$ npm install vue3-datetime-picker
+$ npm install @boichikpro/vue3-datetime-picker
 ```
 
 ```shell [yarn]
-$ yarn add vue3-datetime-picker
+$ yarn add @boichikpro/vue3-datetime-picker
 ```
 
 ```shell [pnpm]
-$ pnpm install vue3-datetime-picker
+$ pnpm install @boichikpro/vue3-datetime-picker
 ```
 
 :::
