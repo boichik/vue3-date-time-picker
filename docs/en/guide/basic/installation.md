@@ -11,15 +11,15 @@ To use the current version of the package or later, the minimum compatible versi
 ::: code-group
 
 ```shell [npm]
-$ npm install vue3-date-time-picker
+$ npm install vue3-datetime-picker
 ```
 
 ```shell [yarn]
-$ yarn add vue3-date-time-picker
+$ yarn add vue3-datetime-picker
 ```
 
 ```shell [pnpm]
-$ pnpm install vue3-date-time-picker
+$ pnpm install vue3-datetime-picker
 ```
 
 :::

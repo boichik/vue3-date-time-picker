@@ -1,9 +1,9 @@
 {
-  "name": "vue3-date-time-picker",
+  "name": "vue3-datetime-picker",
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/boichik/vue3-date-time-picker"
+    "url": "git+https://github.com/boichik/vue3-datetime-picker"
   },
   "type": "module",
   "main": "./lib/index.cjs",
@@ -17,8 +17,7 @@
   "exports": {
     ".": {
       "import": "./lib/index.js",
-      "require": "./lib/index.cjs",
-      "types": "./lib/index.d.ts"
+      "require": "./lib/index.cjs"
     },
     "./assets/style.css": "./lib/assets/index.css",
     "./assets/variables.css": "./lib/assets/variables.css"
@@ -93,7 +92,7 @@
     "vue-date-time-range-picker",
     "vue-time-picker",
     "vue-time-range-picker",
-    "vue3-date-time-picker",
+    "vue3-datetime-picker",
     "vue3-date-picker",
     "vue-3-date-time-picker",
     "vue-3-date-picker",

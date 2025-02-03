@@ -11,8 +11,8 @@
 :::
 
 ```ts
-import 'vue3-date-time-picker/assets/styles.css';
-import 'vue3-date-time-picker/assets/variables.css';
+import 'vue3-datetime-picker/assets/styles.css';
+import 'vue3-datetime-picker/assets/variables.css';
 import '../styles/my-custom-styles.css';
 ```
 

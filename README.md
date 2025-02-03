@@ -12,11 +12,11 @@ Modern, lightweight, and flexible date and time picker for Vue 3. 🚀
 
 ## 📥 Installation
 
-    npm install vue3-date-time-picker
+    npm install vue3-datetime-picker
     # or
-    yarn add vue3-date-time-picker
+    yarn add vue3-datetime-picker
     # or
-    pnpm add vue3-date-time-picker
+    pnpm add vue3-datetime-picker
 
 ## 🚀 Quick Start
 
@@ -24,9 +24,9 @@ Modern, lightweight, and flexible date and time picker for Vue 3. 🚀
 
     import { createApp } from 'vue';
     import App from './App.vue';
-    import { AppDateTimePicker, AppTimePicker } from 'vue3-date-time-picker';
-    import 'vue3-date-time-picker/assets/style.css';
-    import 'vue3-date-time-picker/assets/variables.css';
+    import { AppDateTimePicker, AppTimePicker } from 'vue3-datetime-picker';
+    import 'vue3-datetime-picker/assets/style.css';
+    import 'vue3-datetime-picker/assets/variables.css';
 
     const app = createApp(App);
     app.component('AppDateTimePicker', AppDateTimePicker);
@@ -42,9 +42,9 @@ Modern, lightweight, and flexible date and time picker for Vue 3. 🚀
 
     <script setup>
     import { ref } from 'vue';
-    import { AppDateTimePicker, AppTimePicker } from 'vue3-date-time-picker';
-    import 'vue3-date-time-picker/assets/style.css';
-    import 'vue3-date-time-picker/assets/variables.css';
+    import { AppDateTimePicker, AppTimePicker } from 'vue3-datetime-picker';
+    import 'vue3-datetime-picker/assets/style.css';
+    import 'vue3-datetime-picker/assets/variables.css';
 
     const date = ref(null);
     const time = ref(null);
