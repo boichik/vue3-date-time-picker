@@ -119,4 +119,4 @@ app.use(i18n);
 app.mount('#app');
 ```
 
-If you are NOT using <code>vue-i18n</code>, you only need to pass the appropriate props to the component (you can find them at the <a href="../components/app-date-time-picker#api-attributes">link</a>)
+If you are NOT using <code>vue-i18n</code>, you only need to pass the appropriate props to the component (you can find them at the <a href="../components/app-date-time-picker#attributes">link</a>)
