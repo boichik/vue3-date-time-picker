@@ -7,6 +7,7 @@ export default defineConfig({
   title: 'Vue3DateTimePicker',
   description:
     'Modern, lightweight, and flexible date and time picker in Vue 3',
+  base: '/vue3-date-time-picker/',
   head: [
     [
       'link',
