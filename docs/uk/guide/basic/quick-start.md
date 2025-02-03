@@ -17,9 +17,9 @@ import App from './App.vue';
 import {
   AppDateTimePicker,
   AppTimePicker,
-} from '@boichikpro/vue3-datetime-picker';
-import '@boichikpro/vue3-datetime-picker/assets/styles.css';
-import '@boichikpro/vue3-datetime-picker/assets/variables.css';
+} from '@boichikpro/vue3-date-time-picker';
+import '@boichikpro/vue3-date-time-picker/assets/styles.css';
+import '@boichikpro/vue3-date-time-picker/assets/variables.css';
 
 const app = createApp(App);
 
@@ -44,9 +44,9 @@ import { ref } from 'vue';
 import {
   AppDateTimePicker,
   AppTimePicker,
-} from '@boichikpro/vue3-datetime-picker';
-import '@boichikpro/vue3-datetime-picker/assets/styles.css';
-import '@boichikpro/vue3-datetime-picker/assets/variables.css';
+} from '@boichikpro/vue3-date-time-picker';
+import '@boichikpro/vue3-date-time-picker/assets/styles.css';
+import '@boichikpro/vue3-date-time-picker/assets/variables.css';
 
 const dateModel = ref(null);
 const timeModel = ref(null);
@@ -64,9 +64,9 @@ const timeModel = ref(null);
 import {
   AppDateTimePicker,
   AppTimePicker,
-} from '@boichikpro/vue3-datetime-picker';
-import '@boichikpro/vue3-datetime-picker/assets/styles.css';
-import '@boichikpro/vue3-datetime-picker/assets/variables.css';
+} from '@boichikpro/vue3-date-time-picker';
+import '@boichikpro/vue3-date-time-picker/assets/styles.css';
+import '@boichikpro/vue3-date-time-picker/assets/variables.css';
 
 export default {
   components: { AppDateTimePicker, AppTimePicker },

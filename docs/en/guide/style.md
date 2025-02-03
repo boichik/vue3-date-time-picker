@@ -11,8 +11,8 @@ If you are customising absolutely all variables, you can refuse to import the fi
 :::
 
 ```ts
-import '@boichikpro/vue3-datetime-picker/assets/styles.css';
-import '@boichikpro/vue3-datetime-picker/assets/variables.css';
+import '@boichikpro/vue3-date-time-picker/assets/styles.css';
+import '@boichikpro/vue3-date-time-picker/assets/variables.css';
 import '../styles/my-custom-styles.css';
 ```
 

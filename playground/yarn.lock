@@ -1568,7 +1568,7 @@ vue-tsc@^2.1.8:
     "@vue/language-core" "2.1.10"
     semver "^7.5.4"
 
-"@boichikpro/vue3-datetime-picker@file:..":
+"@boichikpro/vue3-date-time-picker@file:..":
   version "0.0.1"
   dependencies:
     "@popperjs/core" "^2.11.8"

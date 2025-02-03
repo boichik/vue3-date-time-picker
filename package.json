@@ -1,9 +1,12 @@
 {
-  "name": "@boichikpro/@boichikpro/vue3-datetime-picker",
+  "name": "@boichikpro/vue3-date-time-picker",
   "version": "0.0.1",
+  "description": "Date & time picker for vue3",
+  "private": false,
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/boichik/@boichikpro/vue3-datetime-picker"
+    "url": "git+https://github.com/boichik/vue3-date-time-picker"
   },
   "type": "module",
   "main": "./lib/index.cjs",
@@ -92,7 +95,7 @@
     "vue-date-time-range-picker",
     "vue-time-picker",
     "vue-time-range-picker",
-    "@boichikpro/vue3-datetime-picker",
+    "@boichikpro/vue3-date-time-picker",
     "vue3-date-picker",
     "vue-3-date-time-picker",
     "vue-3-date-picker",
