@@ -16,6 +16,10 @@ export const navbar: PageItem[] = [
     lang: { en: 'Guide', uk: 'Керівництво' },
     link: '/guide/basic/installation',
   },
+  {
+    lang: { en: 'Example', uk: 'Приклад' },
+    link: 'https://codesandbox.io/p/devbox/5wtytq?embed=1&file=%2Fsrc%2FApp.vue',
+  },
 ];
 
 export const sidebar: SidebarItem[] = [
