@@ -56,7 +56,7 @@ describe('AppTimePicker', () => {
 
   vi.useFakeTimers().setSystemTime(mockDate);
 
-  const createWrapper = (props: AppTimePickerProps = {}, slots: {}) => {
+  const createWrapper = (props: AppTimePickerProps = {}, slots = {}) => {
     return mount(AppTimePicker, {
       props,
       slots,
@@ -980,8 +980,6 @@ describe('AppTimePicker', () => {
       interval: 2,
     });
 
-    expect(
-      wrapper.findComponent(AppTimeDefaultMode).props('modelValue')
-    ).toStrictEqual(null);
+    expect(input.element.value).toBe(new Date().toString());
   });
 });
