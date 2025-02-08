@@ -1,9 +1,10 @@
 {
   "name": "@boichikpro/vue3-date-time-picker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Date & time picker for vue3",
   "private": false,
   "license": "MIT",
+  "homepage": "https://boichik.github.io/vue3-date-time-picker",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/boichik/vue3-date-time-picker"
