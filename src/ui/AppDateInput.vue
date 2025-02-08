@@ -71,7 +71,7 @@ function updateInternalModel(value: unknown) {
 
 function handleUpdateValue(value?: string) {
   if (!value) {
-    emit('update:model-value', null);
+    handleEmitValue(null);
     return;
   }
 
@@ -85,9 +85,15 @@ function handleUpdateValue(value?: string) {
         return;
       }
 
-      emit('update:model-value', parsed);
+      handleEmitValue(parsed);
     }
   }
+}
+
+function handleEmitValue(value: Date | null) {
+  if (props.disabled || props.readonly) return;
+
+  emit('update:model-value', value);
 }
 
 function handleFocus(event: Event) {

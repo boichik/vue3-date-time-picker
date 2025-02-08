@@ -56,9 +56,10 @@ describe('AppTimePicker', () => {
 
   vi.useFakeTimers().setSystemTime(mockDate);
 
-  const createWrapper = (props: AppTimePickerProps = {}) => {
+  const createWrapper = (props: AppTimePickerProps = {}, slots: {}) => {
     return mount(AppTimePicker, {
       props,
+      slots,
       global: {
         config: {
           errorHandler: mockErrorHandler,
@@ -864,5 +865,123 @@ describe('AppTimePicker', () => {
     window.dispatchEvent(focusinEvent);
 
     expect(wrapper.emitted('blur')).toBeTruthy();
+  });
+
+  it('the input must have a readonly attribute, but the floor must open', async () => {
+    const wrapper = createWrapper({ inputReadonly: true });
+
+    const { popover, input } = await openPopover(wrapper);
+
+    expect(input.element.readOnly).toBeTruthy();
+    expect(popover.props('modelValue')).toBeTruthy();
+  });
+
+  it('should pass the correct attributes to the default slot', async () => {
+    const wrapper = createWrapper(
+      { modelValue: new Date(2025, 0, 1) },
+      {
+        default: `
+          <template #default="{ value, popoverVisible, input, focus, blur }">
+            <div class="default-slot-content">
+              <span class="value">{{ value }}</span>
+              <span class="popover-visible">{{ popoverVisible }}</span>
+              <button class="focus-button" @click="focus">Focus</button>
+              <button class="blur-button" @click="blur">Blur</button>
+            </div>
+          </template>
+        `,
+      }
+    );
+
+    const defaultSlotContent = wrapper.find('.default-slot-content');
+    expect(defaultSlotContent.exists()).toBeTruthy();
+
+    const valueSpan = defaultSlotContent.find('.value');
+    const popoverVisibleSpan = defaultSlotContent.find('.popover-visible');
+    const focusButton = defaultSlotContent.find('.focus-button');
+    const blurButton = defaultSlotContent.find('.blur-button');
+
+    expect(valueSpan.text()).toBe(mockDate.toString());
+    expect(popoverVisibleSpan.text()).toBe('false');
+
+    await focusButton.trigger('click');
+    expect(wrapper.vm.popoverVisible).toBe(true);
+
+    await blurButton.trigger('click');
+    expect(wrapper.vm.popoverVisible).toBe(false);
+  });
+
+  it('should set a new picker value through the default slot', async () => {
+    const date = new Date(2025, 0, 5, 13, 30, 30);
+    const wrapper = createWrapper(
+      {},
+      {
+        default: `
+        <template #default="{ value, input, focus  }">
+          <div class="default-slot-content">
+            <input :value="value" @input="(event) => input(new Date(event.target.value))" @focus="focus" />
+          </div>
+        </template>
+      `,
+      }
+    );
+
+    const input = wrapper.find('input');
+
+    expect(input.element.value).toBe('');
+
+    await input.setValue(date);
+
+    expect(input.element.value).toBe(date.toString());
+
+    await input.trigger('focus');
+
+    const popover = wrapper.findComponent(AppPopover);
+
+    await vi.waitUntil(() => popover.emitted('open'), {
+      timeout: 200,
+      interval: 2,
+    });
+
+    expect(
+      wrapper.findComponent(AppTimeDefaultMode).props('modelValue')
+    ).toStrictEqual(date);
+  });
+
+  it('should not override the new value received from the default slot, as it is not valid', async () => {
+    const date = new Date(2025, 0, 5, 13, 30, 30);
+    const wrapper = createWrapper(
+      {},
+      {
+        default: `
+        <template #default="{ value, input, focus  }">
+          <div class="default-slot-content">
+            <input :value="value" @input="(event) => input(event.target.value)" @focus="focus" />
+          </div>
+        </template>
+      `,
+      }
+    );
+
+    const input = wrapper.find('input');
+
+    expect(input.element.value).toBe('');
+
+    await input.setValue(date);
+
+    expect(input.element.value).toBe(date.toString());
+
+    await input.trigger('focus');
+
+    const popover = wrapper.findComponent(AppPopover);
+
+    await vi.waitUntil(() => popover.emitted('open'), {
+      timeout: 200,
+      interval: 2,
+    });
+
+    expect(
+      wrapper.findComponent(AppTimeDefaultMode).props('modelValue')
+    ).toStrictEqual(null);
   });
 });

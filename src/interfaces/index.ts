@@ -10,6 +10,10 @@ export interface AppPickerProps {
    */
   readonly?: boolean;
   /**
+   * Entering a value via inputs is not available
+   */
+  inputReadonly?: boolean;
+  /**
    * Displaying a controller for clearing a data input when it is full
    */
   clearable?: boolean;

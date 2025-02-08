@@ -4,7 +4,7 @@
       ref="startInput"
       v-model="modelStart"
       :disabled="disabled"
-      :readonly="readonly"
+      :readonly="readonly || inputReadonly"
       :placeholder="startInputPlaceholder"
       :format="format"
       :disabled-date="isDisabledStartInputValue"
@@ -21,7 +21,7 @@
         ref="endInput"
         v-model="modelEnd"
         :disabled="disabled"
-        :readonly="readonly"
+        :readonly="readonly || inputReadonly"
         :placeholder="endInputPlaceholder"
         :format="format"
         :disabled-date="isDisabledEndInputValue"
@@ -119,6 +119,11 @@ const isDoubleInputs = computed(() => {
 
 const disabled = computed(() => appTimePickerComponentData?.value.disabled);
 const readonly = computed(() => appTimePickerComponentData?.value.readonly);
+
+const inputReadonly = computed(
+  () => appTimePickerComponentData?.value.inputReadonly
+);
+
 const clearable = computed(() => {
   return (
     appTimePickerComponentData?.value.clearable &&

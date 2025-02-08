@@ -28,8 +28,11 @@
         <slot
           ref="referece"
           name="default"
+          :value="model"
+          :popover-visible="popoverVisible"
+          :input="externalInputValue"
           :focus="handleFocus"
-          :blur="handleBlur"
+          :blur="handleClosedPopover"
         />
       </template>
       <template #content>
@@ -86,6 +89,7 @@ const DEFAULT_ALIGN = 'left';
 const DEFAULT_INVALID = false;
 const DEFAULT_APPEND_TO_BODY = true;
 const DEFAULT_STAY_OPENED = false;
+const DEFAULT_INPUT_READONLY = false;
 
 const timezoneConvertor = new TimezoneConvertorImpl();
 
@@ -101,6 +105,7 @@ const props = withDefaults(defineProps<AppTimePickerProps>(), {
   invalid: DEFAULT_INVALID,
   appendToBody: DEFAULT_APPEND_TO_BODY,
   stayOpened: DEFAULT_STAY_OPENED,
+  inputReadonly: DEFAULT_INPUT_READONLY,
 });
 
 const input = ref<HTMLInputElement | null>(null);
@@ -141,6 +146,7 @@ const appTimePickerComponentData = computed<AppTimePickerComponentData>(() => {
     invalid,
     cancelText,
     applyText,
+    inputReadonly,
   } = props;
 
   const { isDisabledDate } = internalSettings || {};
@@ -158,6 +164,9 @@ const appTimePickerComponentData = computed<AppTimePickerComponentData>(() => {
     cancelText: isString(cancelText) ? cancelText : '',
     applyText: isString(applyText) ? applyText : '',
     invalid: isBoolean(invalid) ? invalid : DEFAULT_INVALID,
+    inputReadonly: isBoolean(inputReadonly)
+      ? inputReadonly
+      : DEFAULT_INPUT_READONLY,
     startDefaultTime,
     endDefaultTime,
     placeholder,
@@ -194,15 +203,11 @@ const placement = computed<Placement>(() => {
   }
 });
 
-watch(
-  () => props.modelValue,
-  value => {
-    const parsedValue = prepareModelValue(value, true);
+watch(() => props.modelValue, externalInputValue);
 
-    if (!isSameModelValue(model.value, parsedValue)) {
-      model.value = parsedValue;
-    }
-  }
+watch(
+  () => props.isRange,
+  () => externalInputValue(props.modelValue)
 );
 
 function handleVisiblePopover() {
@@ -274,6 +279,14 @@ function prepareModelValue(value: unknown, forParse?: boolean) {
       : null;
 
   return isRange ? [oneValue, null] : oneValue;
+}
+
+function externalInputValue(value: unknown) {
+  const newValue = prepareModelValue(value, true);
+
+  if (!isSameModelValue(model.value, newValue)) {
+    model.value = newValue;
+  }
 }
 
 function getSelectableRange(index?: number) {

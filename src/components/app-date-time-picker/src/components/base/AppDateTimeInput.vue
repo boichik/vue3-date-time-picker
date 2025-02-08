@@ -4,7 +4,7 @@
       ref="startInput"
       v-model="modelStart"
       :disabled="disabled"
-      :readonly="readonly"
+      :readonly="readonly || inputReadonly"
       :format="format"
       :placeholder="startInputPlaceholder"
       :disabled-date="isDisabledStartInputValue"
@@ -21,7 +21,7 @@
         ref="endInput"
         v-model="modelEnd"
         :disabled="disabled"
-        :readonly="readonly"
+        :readonly="readonly || inputReadonly"
         :format="format"
         :placeholder="endInputPlaceholder"
         :disabled-date="isDisabledEndInputValue"
@@ -127,6 +127,10 @@ const isTimeTypes = computed(() => {
 
 const disabled = computed(() => appDateTimePickerComponentData?.value.disabled);
 const readonly = computed(() => appDateTimePickerComponentData?.value.readonly);
+
+const inputReadonly = computed(
+  () => appDateTimePickerComponentData?.value.inputReadonly
+);
 
 const invalid = computed(() => appDateTimePickerComponentData?.value.invalid);
 

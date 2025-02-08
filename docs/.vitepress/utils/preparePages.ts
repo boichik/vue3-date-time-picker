@@ -2,7 +2,6 @@ import { omit } from 'es-toolkit';
 import { navbar, PageItem, sidebar } from '../data/pages';
 import { availableLocales } from '../data/locales';
 import themeTranslations from '../data/themeTranslations';
-import searchTranslations from '../data/searchTranslations';
 
 const preparePagesByLocale = (pages: PageItem[], locale: string) => {
   const newMap: any[] = [];

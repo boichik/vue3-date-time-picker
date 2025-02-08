@@ -26,7 +26,15 @@
             <slot name="separator"></slot>
           </template>
         </AppDateTimeInput>
-        <slot ref="referece" name="default" :focus="handleFocus" />
+        <slot
+          ref="referece"
+          name="default"
+          :value="model"
+          :popover-visible="popoverVisible"
+          :input="externalInputValue"
+          :focus="handleFocus"
+          :blur="handleClosedPopover"
+        />
       </template>
       <template #content>
         <AppDateTimeContent
@@ -99,6 +107,7 @@ const DEFAULT_MONTH_CELL_FORMAT = 'short';
 const DEFAULT_MONTH_BUTTON_FORMAT = 'long';
 const DEFAULT_APPEND_TO_BODY = true;
 const DEFAULT_STAY_OPENED = false;
+const DEFAULT_INPUT_READONLY = false;
 
 const localization = useLocalization();
 const timezoneConvertor = new TimezoneConvertorImpl();
@@ -123,6 +132,7 @@ const props = withDefaults(defineProps<AppDateTimePickerProps>(), {
   invalid: DEFAULT_INVALID,
   appendToBody: DEFAULT_APPEND_TO_BODY,
   stayOpened: DEFAULT_STAY_OPENED,
+  inputReadonly: DEFAULT_INPUT_READONLY,
 });
 
 const input = ref<HTMLInputElement | null>(null);
@@ -173,6 +183,7 @@ const appDateTimePickerComponentData = computed<AppDateTimePickerComponentData>(
       cancelText,
       applyText,
       timezone,
+      inputReadonly,
       disabledDate,
     } = props;
 
@@ -206,6 +217,9 @@ const appDateTimePickerComponentData = computed<AppDateTimePickerComponentData>(
       placeholder: isString(placeholder) ? placeholder : '',
       startPlaceholder: isString(startPlaceholder) ? startPlaceholder : '',
       endPlaceholder: isString(endPlaceholder) ? endPlaceholder : '',
+      inputReadonly: isBoolean(inputReadonly)
+        ? inputReadonly
+        : DEFAULT_INPUT_READONLY,
       timezone: parsedTimezone,
       locale: currentLocale.value,
       // TODO: add JSON validator
@@ -250,24 +264,11 @@ const placement = computed<Placement>(() => {
   }
 });
 
-watch(
-  () => props.modelValue,
-  value => {
-    const parsedValue = prepareModelValue(value, true);
-    if (!isSameModelValue(model.value, parsedValue)) {
-      model.value = parsedValue;
-    }
-  }
-);
-// TODO: deduplicate
+watch(() => props.modelValue, externalInputValue);
+
 watch(
   () => props.type,
-  () => {
-    const parsedValue = prepareModelValue(props.modelValue, true);
-    if (!isSameModelValue(model.value, parsedValue)) {
-      model.value = parsedValue;
-    }
-  }
+  () => externalInputValue(props.modelValue)
 );
 
 function handleVisiblePopover() {
@@ -310,6 +311,14 @@ function prepareModelValue(value: unknown, forParse?: boolean) {
       : null;
 
   return isRangeComponentType.value ? [oneValue, null] : oneValue;
+}
+
+function externalInputValue(value: unknown) {
+  const newValue = prepareModelValue(value, true);
+
+  if (!isSameModelValue(model.value, newValue)) {
+    model.value = newValue;
+  }
 }
 
 function convertDateByTimezone(

@@ -23,3 +23,7 @@ $ pnpm install @boichikpro/vue3-date-time-picker
 ```
 
 :::
+
+## Playground
+
+<Codebox/>

@@ -73,6 +73,7 @@ export type AppTimePickerComponentData = Pick<
       | 'invalid'
       | 'cancelText'
       | 'applyText'
+      | 'inputReadonly'
     >
   > & {
     startDefaultTime: Date;

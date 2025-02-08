@@ -503,6 +503,19 @@ export default {
       </td>
       <td>false</td>
     </tr>
+    <tr> 
+      <td>
+        <div class="vi-table__cell--flex">
+          <span>input-readonly</span>
+          <Badge type="tip" text="^0.1.0" />
+        </div>
+      </td>
+      <td>перевести інпут в режим read-only, але через поповер є можливість обирати дату</td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>false</td>
+    </tr>
     <tr>
       <td>clearable</td>
       <td>відображення контролера для очищення входу даних, коли він переповнений</td>
@@ -704,6 +717,204 @@ export default {
     </tr>
   </tbody>
 </table>
+
+#### Default слот <Badge type="tip" text="^0.1.0" />
+
+Цей слот замінює поле введення дати. Нижче наведено таблицю з доступними пропсами для цього слоту
+
+<table>
+  <thead>
+    <tr>
+      <td>Назва</td>
+      <td>Опис</td>
+      <td>Тип</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>value</td>
+      <td>Значення, яке передається в поле введення (без форматування)</td>
+      <td>
+        <div class="vi-table__cell--flex">
+          <div><code>null</code> / <code>Date</code> / <code>object</code></div>
+          <Info>
+            <code>[Date, Date] | [null, null]</code>
+          </Info>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>popoverVisible</td>
+      <td>повертає, чи відкритий поповер в даний момент чи ні</td>
+      <td>
+        boolean
+      </td>
+    </tr>
+    <tr>
+      <td>input</td>
+      <td>встановлення нового значення в пікері</td>
+      <td>
+        <div class="vi-table__cell--flex">
+          <div><code>Function</code></div>
+          <Info>
+            <code>(value: Date | null | (Date | null)[]) => void</code>
+          </Info>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>focus</td>
+      <td>виконати фокус на пікер</td>
+      <td>
+        <div class="vi-table__cell--flex">
+          <div><code>Function</code></div>
+          <Info>
+            <code>() => void</code>
+          </Info>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>blur</td>
+      <td>прибрати фокус з пікера</td>
+      <td>
+        <div class="vi-table__cell--flex">
+          <div><code>Function</code></div>
+          <Info>
+            <code>() => void</code>
+          </Info>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<TimeDefaultSlotExample  placeholder="Виберіть час"/>
+
+::: code-group
+
+```vue [Composition API]
+<template>
+  <AppTimePicker v-model="model">
+    <template #default="{ value, popoverVisible, input, focus }">
+      <input
+        :value="dateToStringTime(value)"
+        :class="{ 'custom-input--focus': popoverVisible }"
+        class="custom-input"
+        placeholder="Виберіть час"
+        @focus="focus"
+        @input="event => stringDateToDate(event, input)"
+      />
+    </template>
+  </AppTimePicker>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { format, isDate, parse } from 'date-fns';
+
+const model = ref(null);
+
+const timeFormat = 'HH:ss:mm';
+
+function dateToStringTime(value: Date | null) {
+  if (!value || !isDate(value)) return '';
+
+  return format(value, timeFormat);
+}
+
+function stringDateToDate(event: InputEvent, cb: (value: unknown) => void) {
+  const value = (event.target as HTMLInputElement).value;
+
+  const parsed = parse(value, timeFormat, new Date());
+
+  if (!value) {
+    cb(null);
+  }
+
+  if (value.length === timeFormat.length && isDate(parsed)) {
+    cb(parsed);
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.custom-input {
+  width: 100%;
+  border: 1px solid;
+
+  &:focus,
+  &--focus {
+    border-color: blue;
+  }
+}
+</style>
+```
+
+```vue [Options API]
+<template>
+  <AppTimePicker v-model="model">
+    <template #default="{ value, popoverVisible, input, focus }">
+      <input
+        :value="dateToStringTime(value)"
+        :class="{ 'custom-input--focus': popoverVisible }"
+        class="custom-input"
+        placeholder="Виберіть час"
+        @focus="focus"
+        @input="event => stringDateToDate(event, input)"
+      />
+    </template>
+  </AppTimePicker>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      model: null,
+      timeFormat: 'HH:ss:mm',
+    };
+  },
+  methods: {
+    dateToStringTime(value) {
+      if (!value || !isDate(value)) return '';
+
+      return format(value, this.timeFormat);
+    },
+
+    stringDateToDate(event, cb) {
+      const value = event.target.value;
+
+      const parsed = parse(value, this.timeFormat, new Date());
+
+      if (!value) {
+        cb(null);
+      }
+
+      if (value.length === this.timeFormat.length && isDate(parsed)) {
+        cb(parsed);
+      }
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.custom-input {
+  width: 100%;
+  border: 1px solid;
+
+  &:focus,
+  &--focus {
+    border-color: blue;
+  }
+}
+</style>
+```
+
+:::
 
 ### Доступні властивості компонента
 

@@ -164,6 +164,7 @@ export type AppDateTimePickerComponentData = Pick<
       | 'invalid'
       | 'cancelText'
       | 'applyText'
+      | 'inputReadonly'
     >
   > & {
     disabledApplyButton: boolean;

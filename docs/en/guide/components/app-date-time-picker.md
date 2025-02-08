@@ -757,6 +757,19 @@ export default {
       </td>
       <td>false</td>
     </tr>
+    <tr> 
+      <td>
+        <div class="vi-table__cell--flex">
+          <span>input-readonly</span>
+          <Badge type="tip" text="^0.1.0" />
+        </div>
+      </td>
+      <td>switch the inputs to read-only mode, but through the popover it is possible to select the date</td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>false</td>
+    </tr>
     <tr>
       <td>clearable</td>
       <td>displaying a controller for clearing a data input when it is full</td>
@@ -961,6 +974,204 @@ export default {
     </tr>
   </tbody>
 </table>
+
+#### Default slot <Badge type="tip" text="^0.1.0" />
+
+This slot is a replacement for the date entry field. Below is a table with the available props for this slot
+
+<table>
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Type</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>value</td>
+      <td>The value that is passed to the input (without formatting)</td>
+      <td>
+        <div class="vi-table__cell--flex">
+          <div><code>null</code> / <code>Date</code> / <code>object</code></div>
+          <Info>
+            <code>[Date, Date] | [null, null]</code>
+          </Info>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>popoverVisible</td>
+      <td>returns whether the popover is currently open or not</td>
+      <td>
+        boolean
+      </td>
+    </tr>
+    <tr>
+      <td>input</td>
+      <td>setting a new value in the picker</td>
+      <td>
+        <div class="vi-table__cell--flex">
+          <div><code>Function</code></div>
+          <Info>
+            <code>(value: Date | null | (Date | null)[]) => void</code>
+          </Info>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>focus</td>
+      <td>focus the picker component</td>
+      <td>
+        <div class="vi-table__cell--flex">
+          <div><code>Function</code></div>
+          <Info>
+            <code>() => void</code>
+          </Info>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>blur</td>
+      <td>blur the picker component</td>
+      <td>
+        <div class="vi-table__cell--flex">
+          <div><code>Function</code></div>
+          <Info>
+            <code>() => void</code>
+          </Info>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<DefaultSlotExample />
+
+::: code-group
+
+```vue [Composition API]
+<template>
+  <AppDateTimePicker v-model="model">
+    <template #default="{ value, popoverVisible, input, focus }">
+      <input
+        :value="dateToStringDate(value)"
+        :class="{ 'custom-input--focus': popoverVisible }"
+        class="custom-input"
+        placeholder="Select date"
+        @focus="focus"
+        @input="event => stringDateToDate(event, input)"
+      />
+    </template>
+  </AppDateTimePicker>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { format, isDate, parse } from 'date-fns';
+
+const model = ref(null);
+
+const dateFormat = 'yyyy-MM-dd';
+
+function dateToStringDate(value: Date | null) {
+  if (!value || !isDate(value)) return '';
+
+  return format(value, dateFormat);
+}
+
+function stringDateToDate(event: InputEvent, cb: (value: unknown) => void) {
+  const value = (event.target as HTMLInputElement).value;
+
+  const parsed = parse(value, dateFormat, new Date());
+
+  if (!value) {
+    cb(null);
+  }
+
+  if (value.length === dateFormat.length && isDate(parsed)) {
+    cb(parsed);
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.custom-input {
+  width: 100%;
+  border: 1px solid;
+
+  &:focus,
+  &--focus {
+    border-color: blue;
+  }
+}
+</style>
+```
+
+```vue [Options API]
+<template>
+  <AppDateTimePicker v-model="model">
+    <template #default="{ value, popoverVisible, input, focus }">
+      <input
+        :value="dateToStringDate(value)"
+        :class="{ 'custom-input--focus': popoverVisible }"
+        class="custom-input"
+        placeholder="Select date"
+        @focus="focus"
+        @input="event => stringDateToDate(event, input)"
+      />
+    </template>
+  </AppDateTimePicker>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      model: null,
+      dateFormat: 'yyyy-MM-dd',
+    };
+  },
+  methods: {
+    dateToStringDate(value) {
+      if (!value || !isDate(value)) return '';
+
+      return format(value, this.dateFormat);
+    },
+
+    stringDateToDate(event, cb) {
+      const value = event.target.value;
+
+      const parsed = parse(value, this.dateFormat, new Date());
+
+      if (!value) {
+        cb(null);
+      }
+
+      if (value.length === this.dateFormat.length && isDate(parsed)) {
+        cb(parsed);
+      }
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.custom-input {
+  width: 100%;
+  border: 1px solid;
+
+  &:focus,
+  &--focus {
+    border-color: blue;
+  }
+}
+</style>
+```
+
+:::
 
 ### Exposes
 
