@@ -28,11 +28,12 @@ const isUkLocale = computed(() => lang.value === 'uk');
   position: relative;
 
   &__icon {
+    width: 155px;
+    color: var(--vpick--color-primary-active);
+
     @media (min-width: 960px) {
       display: none;
     }
-    width: 155px;
-    color: var(--vpick--color-primary-active);
   }
 
   &__content {
@@ -42,10 +43,6 @@ const isUkLocale = computed(() => lang.value === 'uk');
   }
 
   &__bg {
-    @media (max-width: 960px) {
-      display: none;
-    }
-
     position: absolute;
     top: calc(50% - 160px);
     border-radius: 50%;
@@ -58,6 +55,10 @@ const isUkLocale = computed(() => lang.value === 'uk');
     height: 320px;
     filter: blur(65px);
     z-index: -1;
+
+    @media (max-width: 960px) {
+      display: none;
+    }
   }
 }
 </style>
