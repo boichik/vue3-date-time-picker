@@ -140,21 +140,17 @@ Below are the CSS variables for each component:
     --vpick--table-cell-disabled-border-color
   );
 
-  --vpick--day-table-cell-range-color: var(--vpick--table-cell-hover-color);
-  --vpick--day-table-cell-range-bg-color: var(
-    --vpick--table-cell-hover-bg-color
-  );
-  --vpick--day-table-cell-range-border-color: var(
+  --vpick--table-cell-range-color: var(--vpick--table-cell-hover-color);
+  --vpick--table-cell-range-bg-color: var(--vpick--table-cell-hover-bg-color);
+  --vpick--table-cell-range-border-color: var(
     --vpick--table-cell-hover-bg-color
   );
 
-  --vpick--day-table-cell-range-hover-color: var(
-    --vpick--table-cell-hover-color
-  );
-  --vpick--day-table-cell-range-hover-bg-color: var(
+  --vpick--table-cell-range-hover-color: var(--vpick--table-cell-hover-color);
+  --vpick--table-cell-range-hover-bg-color: var(
     --vpick--table-cell-hover-bg-color
   );
-  --vpick--day-table-cell-range-hover-border-color: var(
+  --vpick--table-cell-range-hover-border-color: var(
     --vpick--table-cell-hover-bg-color
   );
 
@@ -652,21 +648,17 @@ Below are the CSS variables for each component:
     --vpick--table-cell-disabled-border-color
   );
 
-  --vpick--day-table-cell-range-color: var(--vpick--table-cell-hover-color);
-  --vpick--day-table-cell-range-bg-color: var(
-    --vpick--table-cell-hover-bg-color
-  );
-  --vpick--day-table-cell-range-border-color: var(
+  --vpick--table-cell-range-color: var(--vpick--table-cell-hover-color);
+  --vpick--table-cell-range-bg-color: var(--vpick--table-cell-hover-bg-color);
+  --vpick--table-cell-range-border-color: var(
     --vpick--table-cell-hover-bg-color
   );
 
-  --vpick--day-table-cell-range-hover-color: var(
-    --vpick--table-cell-hover-color
-  );
-  --vpick--day-table-cell-range-hover-bg-color: var(
+  --vpick--table-cell-range-hover-color: var(--vpick--table-cell-hover-color);
+  --vpick--table-cell-range-hover-bg-color: var(
     --vpick--table-cell-hover-bg-color
   );
-  --vpick--day-table-cell-range-hover-border-color: var(
+  --vpick--table-cell-range-hover-border-color: var(
     --vpick--table-cell-hover-bg-color
   );
 

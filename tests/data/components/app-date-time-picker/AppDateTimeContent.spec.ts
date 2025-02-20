@@ -4,8 +4,6 @@ import AppButtonPanel from '@/ui/AppButtonPanel.vue';
 import AppDateTimeShortcutPanel from '@/components/app-date-time-picker/src/components/panel/AppDateTimeShortcutPanel.vue';
 import AppDateMode from '@/components/app-date-time-picker/src/components/mode/AppDateMode.vue';
 import AppDateRangeMode from '@/components/app-date-time-picker/src/components/mode/AppDateRangeMode.vue';
-import AppDateTimeMode from '@/components/app-date-time-picker/src/components/mode/AppDateTimeMode.vue';
-import AppDateTimeRangeMode from '@/components/app-date-time-picker/src/components/mode/AppDateTimeRangeMode.vue';
 import { AppDateTimePickerComponentDataProvide } from '@/components/app-date-time-picker/src/const';
 import AppButton from '@/ui/AppButton.vue';
 import { initResizeObserverMock } from '@tests/mocks/ResizeObserverMock';
@@ -83,7 +81,7 @@ describe('AppDateTimePickerContent', () => {
       type: 'datetime',
     });
 
-    expect(wrapper.findComponent(AppDateTimeMode).exists()).toBe(true);
+    expect(wrapper.findComponent(AppDateMode).exists()).toBe(true);
   });
 
   it('render correct date-range mode component based on "type"', async () => {
@@ -101,7 +99,7 @@ describe('AppDateTimePickerContent', () => {
       type: 'datetimerange',
     });
 
-    expect(wrapper.findComponent(AppDateTimeRangeMode).exists()).toBe(true);
+    expect(wrapper.findComponent(AppDateRangeMode).exists()).toBe(true);
   });
 
   it('calls applyChange and cancelChange when corresponding buttons are clicked', async () => {

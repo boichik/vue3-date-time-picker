@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import AppDateTimeRangeMode from '@/components/app-date-time-picker/src/components/mode/AppDateTimeRangeMode.vue';
+import AppDateRangeMode from '@/components/app-date-time-picker/src/components/mode/AppDateRangeMode.vue';
 import AppDateTimeController from '@/components/app-date-time-picker/src/components/controller/AppDateTimeController.vue';
 import { AppDateTimePickerComponentDataProvide } from '@/components/app-date-time-picker/src/const';
 import { isBefore } from 'date-fns';
@@ -7,6 +7,8 @@ import AppDayTable from '@/components/app-date-time-picker/src/components/table/
 import AppDateTimePanel from '@/components/app-date-time-picker/src/components/panel/AppDateTimePanel.vue';
 import { TimezoneConvertorImpl } from '@/services/timezone-convertor/TimezoneConvertor';
 import { initResizeObserverMock } from '@tests/mocks/ResizeObserverMock';
+import { AppDateTimePickerType } from '@/components/app-date-time-picker/src/enums/dateTimePickerType';
+import { AppDateTimePickerMode } from '@/components/app-date-time-picker/src/enums/dateTimePickerMode';
 
 describe('AppDateTimeRangeMode', () => {
   initResizeObserverMock();
@@ -15,11 +17,13 @@ describe('AppDateTimeRangeMode', () => {
   const mockProvideValue = {
     defaultTime: mockDefaultTime,
     today: new Date(2025, 0, 1),
+    type: AppDateTimePickerType.DateTimeRange,
+    mode: AppDateTimePickerMode.Day,
     monthButtonFormat: 'short',
   };
 
   const createWrapper = (props = {}, options = {}) =>
-    mount(AppDateTimeRangeMode, {
+    mount(AppDateRangeMode, {
       global: {
         provide: {
           [AppDateTimePickerComponentDataProvide]: {

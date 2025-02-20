@@ -507,7 +507,7 @@ export default {
       <td>
         <div class="vi-table__cell--flex">
           <span>input-readonly</span>
-          <Badge type="tip" text="^0.1.0" />
+          <Badge type="tip" text="^0.0.2" />
         </div>
       </td>
       <td>перевести інпут в режим read-only, але через поповер є можливість обирати дату</td>
@@ -718,7 +718,7 @@ export default {
   </tbody>
 </table>
 
-#### Default слот <Badge type="tip" text="^0.1.0" />
+#### Default слот <Badge type="tip" text="^0.0.2" />
 
 Цей слот замінює поле введення дати. Нижче наведено таблицю з доступними пропсами для цього слоту
 

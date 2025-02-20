@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import AppDateTimeMode from '@/components/app-date-time-picker/src/components/mode/AppDateTimeMode.vue';
+import AppDateMode from '@/components/app-date-time-picker/src/components/mode/AppDateMode.vue';
 import { AppTimePicker } from '@/components/app-time-picker';
 import AppDateTimeController from '@/components/app-date-time-picker/src/components/controller/AppDateTimeController.vue';
 import { AppDateTimePickerComponentDataProvide } from '@/components/app-date-time-picker/src/const';
@@ -8,6 +8,8 @@ import { TimezoneConvertorImpl } from '@/services/timezone-convertor/TimezoneCon
 import AppTimeInput from '@/components/app-time-picker/src/components/base/AppTimeInput.vue';
 import { isBefore } from 'date-fns';
 import { initResizeObserverMock } from '@tests/mocks/ResizeObserverMock';
+import { AppDateTimePickerType } from '@/components/app-date-time-picker/src/enums/dateTimePickerType';
+import { AppDateTimePickerMode } from '@/components/app-date-time-picker/src/enums/dateTimePickerMode';
 
 describe('AppDateTimeMode', () => {
   initResizeObserverMock();
@@ -16,13 +18,15 @@ describe('AppDateTimeMode', () => {
     today: new Date(2025, 0, 1),
     defaultTime: '12:00:00',
     timeFormat: 'HH:mm:ss',
+    type: AppDateTimePickerType.DateTime,
+    mode: AppDateTimePickerMode.Day,
     disabledDate: vi.fn(),
     timezoneConvertor: new TimezoneConvertorImpl(),
     timeOptions: { placeholder: 'Select time' },
   };
 
   const createWrapper = (props = {}, options = {}) => {
-    return mount(AppDateTimeMode, {
+    return mount(AppDateMode, {
       propsData: {
         modelValue: null,
         ...props,

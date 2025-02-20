@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import AppDateTimePickerPanel from '@/components/app-date-time-picker/src/components/panel/AppDateTimePanel.vue';
 import AppDateTimeControlButton from '@/components/app-date-time-picker/src/components/base/AppDateTimeControlButton.vue';
-import { DateTimePickerMode } from '@/components/app-date-time-picker/src/enums/dateTimePickerMode';
+import { AppDateTimePickerMode } from '@/components/app-date-time-picker/src/enums/dateTimePickerMode';
 
 const casePressButton: any[] = [
   ['--next-month', 'nextMonth', 1, true],
@@ -19,7 +19,7 @@ describe('AppDateTimePickerPanel.vue', () => {
   const defaultProps = {
     value: null,
     currentDate,
-    mode: DateTimePickerMode.Day,
+    mode: AppDateTimePickerMode.Day,
   };
 
   it.each(casePressButton)(
@@ -31,7 +31,7 @@ describe('AppDateTimePickerPanel.vue', () => {
         props: yearMode
           ? {
               ...defaultProps,
-              mode: DateTimePickerMode.Year,
+              mode: AppDateTimePickerMode.Year,
             }
           : defaultProps,
       });
@@ -102,7 +102,7 @@ describe('AppDateTimePickerPanel.vue', () => {
     await yearModeButton.trigger('click');
     expect(wrapper.emitted('changeMode')).toBeTruthy();
     expect(wrapper.emitted('changeMode')?.[0]).toEqual([
-      DateTimePickerMode.Year,
+      AppDateTimePickerMode.Year,
     ]);
   });
 
@@ -110,7 +110,7 @@ describe('AppDateTimePickerPanel.vue', () => {
     const wrapper = mount(AppDateTimePickerPanel, {
       props: {
         ...defaultProps,
-        mode: DateTimePickerMode.Year,
+        mode: AppDateTimePickerMode.Year,
       },
     });
 
@@ -128,7 +128,7 @@ describe('AppDateTimePickerPanel.vue', () => {
     const wrapper = mount(AppDateTimePickerPanel, {
       props: {
         ...defaultProps,
-        mode: DateTimePickerMode.Year,
+        mode: AppDateTimePickerMode.Year,
       },
     });
 

@@ -162,6 +162,89 @@ export default {
 
 :::
 
+## Modes <Badge type="tip" text="^0.1.0" />
+
+You can configure the calendar mode you need
+
+- <code>day</code> - the initial display of the calendar of days of the month (it is also possible to select a month or year)
+- <code>month</code> - the initial display of the calendar of months of the year (it is also possible to select the year)
+- <code>year</code> - start display of the calendar of years of the decade
+
+::: info
+Note that the value that will be emitted will be a date, not a number
+
+<p>
+To correctly display the value in the input, pass the appropriate format using the <br><code>date-format</code> attribute
+</p>
+:::
+
+<BasicDateTimePicker mode="month" date-format="MM" placeholder="Select month"/>
+
+<br>
+
+<BasicDateTimePicker mode="year" date-format="yyyy" type="daterange" start-placeholder="Start year" end-placeholder="End year"/>
+
+::: code-group
+
+```vue [Composition API]
+<template>
+  <AppDateTimePicker
+    v-model="month"
+    mode="month"
+    date-format="MM"
+    placeholder="Select month"
+  />
+
+  <AppDateTimePicker
+    v-model="yearRange"
+    date-format="yyyy"
+    type="daterange"
+    start-placeholder="Start year"
+    end-placeholder="End year"
+  />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const month = ref(null);
+
+const yearRange = ref(null);
+</script>
+```
+
+```vue [Options API]
+<template>
+  <AppDateTimePicker
+    v-model="month"
+    mode="month"
+    date-format="MM"
+    placeholder="Select month"
+  />
+
+  <AppDateTimePicker
+    v-model="yearRange"
+    date-format="yyyy"
+    type="daterange"
+    start-placeholder="Start year"
+    end-placeholder="End year"
+  />
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      month: null,
+      yearRange: null,
+    };
+  },
+};
+</script>
+```
+
+:::
+
 ## Shortcuts
 
 You can set up shortcuts to quickly select a date
@@ -603,6 +686,24 @@ export default {
       <td><code>date</code></td>
     </tr>
     <tr>
+      <td>
+        <div class="vi-table__cell--flex">
+          <span>mode</span>
+          <Badge type="tip" text="^0.1.0" />
+        </div>
+      </td>
+      <td>in which mode you want to display the calendar. <a href="#modes">more</a></td>
+      <td>
+        <div class="vi-table__cell--flex">
+          <div><code>string</code></div>
+          <Info>
+            <code>day | month | year</code>
+          </Info>
+        </div>
+      </td>
+      <td><code>day</code></td>
+    </tr>
+    <tr>
       <td>first-day-of-week</td>
       <td>
         the order of the days of the week in the day calendar
@@ -761,7 +862,7 @@ export default {
       <td>
         <div class="vi-table__cell--flex">
           <span>input-readonly</span>
-          <Badge type="tip" text="^0.1.0" />
+          <Badge type="tip" text="^0.0.2" />
         </div>
       </td>
       <td>switch the inputs to read-only mode, but through the popover it is possible to select the date</td>
@@ -975,7 +1076,7 @@ export default {
   </tbody>
 </table>
 
-#### Default slot <Badge type="tip" text="^0.1.0" />
+#### Default slot <Badge type="tip" text="^0.0.2" />
 
 This slot is a replacement for the date entry field. Below is a table with the available props for this slot
 

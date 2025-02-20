@@ -5,6 +5,8 @@ export interface PageItem {
   };
   link?: string;
   items?: PageItem[];
+  activeMatch?: string;
+  target?: '_self' | '_blank';
 }
 
 interface SidebarItem extends PageItem {
@@ -15,10 +17,12 @@ export const navbar: PageItem[] = [
   {
     lang: { en: 'Guide', uk: 'Керівництво' },
     link: '/guide/basic/installation',
+    activeMatch: '/guide/',
   },
   {
-    lang: { en: 'Example', uk: 'Приклад' },
-    link: 'https://codesandbox.io/p/devbox/5wtytq?embed=1&file=%2Fsrc%2FApp.vue',
+    lang: { en: 'Changelog', uk: 'Зміни' },
+    link: 'https://github.com/boichik/vue3-date-time-picker/blob/master/CHANGELOG.md',
+    target: '_blank',
   },
 ];
 

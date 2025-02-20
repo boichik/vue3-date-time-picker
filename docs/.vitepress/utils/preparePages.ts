@@ -13,7 +13,9 @@ const preparePagesByLocale = (pages: PageItem[], locale: string) => {
       ...(page.items
         ? { items: preparePagesByLocale(page.items, locale) }
         : {}),
-      ...(page.link ? { link: `/${locale}${page.link}` } : {}),
+      ...(page.link
+        ? { link: !page.target ? `/${locale}${page.link}` : page.link }
+        : {}),
     });
   });
 

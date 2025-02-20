@@ -33,9 +33,8 @@ import AppButtonPanel from '@/ui/AppButtonPanel.vue';
 import AppDateTimeShortcutPanel from '../panel/AppDateTimeShortcutPanel.vue';
 import AppDateMode from '../mode/AppDateMode.vue';
 import AppDateRangeMode from '../mode/AppDateRangeMode.vue';
-import AppDateTimeMode from '../mode/AppDateTimeMode.vue';
-import AppDateTimeRangeMode from '../mode/AppDateTimeRangeMode.vue';
 import { AppDateTimePickerComponentDataProvide } from '../../const';
+import { AppDateTimePickerType } from '../../enums/dateTimePickerType';
 
 const picker = ref<HTMLElement | null>(null);
 const shortcuts = ref<HTMLElement | null>(null);
@@ -88,14 +87,11 @@ const contentClass = computed(() => {
 
 const currentComponent = computed(() => {
   switch (appDateTimePickerComponentData?.value.type) {
-    case 'date':
-      return AppDateMode;
-    case 'daterange':
+    case AppDateTimePickerType.DateRange:
+    case AppDateTimePickerType.DateTimeRange:
       return AppDateRangeMode;
-    case 'datetime':
-      return AppDateTimeMode;
-    case 'datetimerange':
-      return AppDateTimeRangeMode;
+    case AppDateTimePickerType.Date:
+    case AppDateTimePickerType.DateTime:
     default:
       return AppDateMode;
   }

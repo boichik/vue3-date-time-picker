@@ -507,7 +507,7 @@ export default {
       <td>
         <div class="vi-table__cell--flex">
           <span>input-readonly</span>
-          <Badge type="tip" text="^0.1.0" />
+          <Badge type="tip" text="^0.0.2" />
         </div>
       </td>
       <td>switch the inputs to read-only mode, but through the popover it is possible to select the date</td>
@@ -719,7 +719,7 @@ export default {
   </tbody>
 </table>
 
-#### Default slot <Badge type="tip" text="^0.1.0" />
+#### Default slot <Badge type="tip" text="^0.0.2" />
 
 This slot is a replacement for the date entry field. Below is a table with the available props for this slot
 

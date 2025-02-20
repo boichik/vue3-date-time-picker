@@ -2,6 +2,7 @@ import { getDaysInMonth, addMonths, addDays, set } from 'date-fns';
 import { regexpValidator } from '@/utils/regexpValidator';
 import { AppDateTimePickerType } from '../enums/dateTimePickerType';
 import { timeFormatRegex } from '@/const/timeRegexp.const';
+import { AppDateTimePickerMode } from '../enums/dateTimePickerMode';
 
 export function setTime(
   date: Date,
@@ -93,4 +94,12 @@ export function isValidMonthFormat(value: unknown) {
   if (typeof value !== 'string') return false;
 
   return ['long', 'short', 'narrow', 'numeric', '2-digit'].includes(value);
+}
+
+export function isValidMode(value: unknown) {
+  if (typeof value !== 'string') return false;
+
+  return Object.values(AppDateTimePickerMode).includes(
+    value as AppDateTimePickerMode
+  );
 }

@@ -142,21 +142,17 @@ import '../styles/my-custom-styles.css';
     --vpick--table-cell-disabled-border-color
   );
 
-  --vpick--day-table-cell-range-color: var(--vpick--table-cell-hover-color);
-  --vpick--day-table-cell-range-bg-color: var(
-    --vpick--table-cell-hover-bg-color
-  );
-  --vpick--day-table-cell-range-border-color: var(
+  --vpick--table-cell-range-color: var(--vpick--table-cell-hover-color);
+  --vpick--table-cell-range-bg-color: var(--vpick--table-cell-hover-bg-color);
+  --vpick--table-cell-range-border-color: var(
     --vpick--table-cell-hover-bg-color
   );
 
-  --vpick--day-table-cell-range-hover-color: var(
-    --vpick--table-cell-hover-color
-  );
-  --vpick--day-table-cell-range-hover-bg-color: var(
+  --vpick--table-cell-range-hover-color: var(--vpick--table-cell-hover-color);
+  --vpick--table-cell-range-hover-bg-color: var(
     --vpick--table-cell-hover-bg-color
   );
-  --vpick--day-table-cell-range-hover-border-color: var(
+  --vpick--table-cell-range-hover-border-color: var(
     --vpick--table-cell-hover-bg-color
   );
 
@@ -654,21 +650,17 @@ import '../styles/my-custom-styles.css';
     --vpick--table-cell-disabled-border-color
   );
 
-  --vpick--day-table-cell-range-color: var(--vpick--table-cell-hover-color);
-  --vpick--day-table-cell-range-bg-color: var(
-    --vpick--table-cell-hover-bg-color
-  );
-  --vpick--day-table-cell-range-border-color: var(
+  --vpick--table-cell-range-color: var(--vpick--table-cell-hover-color);
+  --vpick--table-cell-range-bg-color: var(--vpick--table-cell-hover-bg-color);
+  --vpick--table-cell-range-border-color: var(
     --vpick--table-cell-hover-bg-color
   );
 
-  --vpick--day-table-cell-range-hover-color: var(
-    --vpick--table-cell-hover-color
-  );
-  --vpick--day-table-cell-range-hover-bg-color: var(
+  --vpick--table-cell-range-hover-color: var(--vpick--table-cell-hover-color);
+  --vpick--table-cell-range-hover-bg-color: var(
     --vpick--table-cell-hover-bg-color
   );
-  --vpick--day-table-cell-range-hover-border-color: var(
+  --vpick--table-cell-range-hover-border-color: var(
     --vpick--table-cell-hover-bg-color
   );
 

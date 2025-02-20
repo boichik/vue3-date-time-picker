@@ -13,19 +13,19 @@
 
   <div class="app-date-time-controller-content" @wheel="handleScroll">
     <AppDayTable
-      v-show="showComponent(DateTimePickerMode.Day)"
+      v-show="showComponent(AppDateTimePickerMode.Day)"
       v-bind="componentBinds"
       v-on="componentListener"
     />
 
     <AppMonthTable
-      v-show="showComponent(DateTimePickerMode.Month)"
+      v-show="showComponent(AppDateTimePickerMode.Month)"
       v-bind="componentBinds"
       v-on="componentListener"
     />
 
     <AppYearTable
-      v-show="showComponent(DateTimePickerMode.Year)"
+      v-show="showComponent(AppDateTimePickerMode.Year)"
       v-bind="componentBinds"
       v-on="componentListener"
     />
@@ -36,23 +36,34 @@
 import AppDayTable from '../table/AppDayTable.vue';
 import AppMonthTable from '../table/AppMonthTable.vue';
 import AppYearTable from '../table/AppYearTable.vue';
-import { computed, ref, watch } from 'vue';
-import { DateTimePickerMode } from '../../enums/dateTimePickerMode';
+import { computed, inject, ref, watch, type ComputedRef } from 'vue';
+import { AppDateTimePickerMode } from '../../enums/dateTimePickerMode';
 import { addMonths, subMonths, addYears, subYears } from 'date-fns';
 import AppDateTimePanel from '../panel/AppDateTimePanel.vue';
+import { AppDateTimePickerComponentDataProvide } from '../../const';
+import type { AppDateTimePickerComponentData } from '../../interfaces';
 
 const props = defineProps<{
   selectedDate?: Date | null;
-  mode: DateTimePickerMode;
 }>();
 
 const panel = ref<{
   handleSelectByScroll: (event: WheelEvent) => void;
 } | null>(null);
 
+const appDateTimePickerComponentData =
+  inject<ComputedRef<AppDateTimePickerComponentData> | null>(
+    AppDateTimePickerComponentDataProvide,
+    null
+  );
+
+const globalMode = computed(() => appDateTimePickerComponentData?.value.mode);
+
 const model = defineModel<Date>({ required: true });
 
-const mode = ref<DateTimePickerMode>(props.mode || DateTimePickerMode.Day);
+const mode = ref<AppDateTimePickerMode>(
+  globalMode.value || AppDateTimePickerMode.Day
+);
 
 const componentBinds = computed(() => {
   return {
@@ -68,11 +79,9 @@ const componentListener = computed(() => {
 });
 
 watch(
-  () => props.mode,
+  () => globalMode.value,
   value => {
-    if (value && Object.values(DateTimePickerMode).includes(value)) {
-      mode.value = value;
-    }
+    if (value) mode.value = value;
   }
 );
 
@@ -89,16 +98,22 @@ function handleUpdateCurrentDateDisplay(val: Date) {
 function handleUpdateCurrentDateFromYearOrMonthTable(val: Date) {
   handleUpdateCurrentDateDisplay(val);
 
-  if (DateTimePickerMode.Month === mode.value) {
-    mode.value = props.mode;
+  if (
+    AppDateTimePickerMode.Month === mode.value &&
+    globalMode.value === AppDateTimePickerMode.Day
+  ) {
+    mode.value = AppDateTimePickerMode.Day;
   }
 
-  if (DateTimePickerMode.Year === mode.value) {
-    mode.value = DateTimePickerMode.Month;
+  if (
+    AppDateTimePickerMode.Year === mode.value &&
+    globalMode.value !== AppDateTimePickerMode.Year
+  ) {
+    mode.value = AppDateTimePickerMode.Month;
   }
 }
 
-function showComponent(value: DateTimePickerMode) {
+function showComponent(value: AppDateTimePickerMode) {
   return mode.value === value;
 }
 
@@ -115,7 +130,7 @@ function nextYear(val: number) {
   handleUpdateCurrentDateDisplay(addYears(model.value, val));
 }
 
-function handleChangeMode(val: DateTimePickerMode) {
+function handleChangeMode(val: AppDateTimePickerMode) {
   mode.value = val;
 }
 </script>

@@ -7,16 +7,15 @@ import { setTime } from '@/components/app-date-time-picker/src/utils';
 import { addMonths } from 'date-fns';
 import AppDayTable from '@/components/app-date-time-picker/src/components/table/AppDayTable.vue';
 import AppDateTimePanel from '@/components/app-date-time-picker/src/components/panel/AppDateTimePanel.vue';
-
-function addOneMonth(date: Date) {
-  return addMonths(new Date(date), 1);
-}
+import { AppDateTimePickerMode } from '@/components/app-date-time-picker/src/enums/dateTimePickerMode';
 
 describe('AppDateRangeMode', () => {
+  const mockDate = new Date(2025, 0, 1);
   const mockDefaultTime = '';
   const mockProvideValue = ref({
     defaultTime: mockDefaultTime,
-    today: new Date(2025, 0, 1),
+    today: mockDate,
+    mode: AppDateTimePickerMode.Day,
   });
 
   const mountComponent = (modelValue: any = []) =>
@@ -54,8 +53,8 @@ describe('AppDateRangeMode', () => {
   it('sets initial values if modelValue is empty', () => {
     const wrapper = mountComponent();
 
-    const expectedStartDate = setTime(new Date(), mockDefaultTime);
-    const expectedEndDate = addOneMonth(expectedStartDate);
+    const expectedStartDate = setTime(mockDate, mockDefaultTime);
+    const expectedEndDate = addMonths(expectedStartDate, 1);
 
     const controllers = wrapper.findAllComponents(AppDateTimeController);
 

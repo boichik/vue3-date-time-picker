@@ -2,6 +2,7 @@
   <AppDateTimePicker
     v-model="model"
     :type="props.type"
+    :mode="props.mode"
     :date-format="props.dateFormat"
     :time-format="props.timeFormat"
     :default-time="props.defaultTime"

@@ -162,6 +162,89 @@ export default {
 
 :::
 
+## Режими <Badge type="tip" text="^0.1.0" />
+
+Ви можете налаштувати потрібний вам режим календаря
+
+- <code>day</code> - початкове відображення календаря: дні місяця (також можна вибрати місяць або рік)
+- <code>month</code> - початкове відображення календаря: місяці року (також є можливість вибору року)
+- <code>year</code> - початок відображення календаря: роки десятиліття
+
+::: info ІНФОРМАЦІЯ
+Зверніть увагу, що значення, яке буде передано назад, буде датою, а не числом
+
+<p>
+Щоб коректно відобразити значення у інпуті, передайте відповідний формат за допомогою атрибута <br> <code>date-format</code>
+</p>
+:::
+
+<BasicDateTimePicker mode="month" date-format="MM" placeholder="Оберіть місяць"/>
+
+<br>
+
+<BasicDateTimePicker mode="year" date-format="yyyy" type="daterange" start-placeholder="Початковий рік" end-placeholder="Кінцевий рік"/>
+
+::: code-group
+
+```vue [Composition API]
+<template>
+  <AppDateTimePicker
+    v-model="month"
+    mode="month"
+    date-format="MM"
+    placeholder="Оберіть місяць"
+  />
+
+  <AppDateTimePicker
+    v-model="yearRange"
+    date-format="yyyy"
+    type="daterange"
+    start-placeholder="Початковий рік"
+    end-placeholder="Кінцевий рік"
+  />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const month = ref(null);
+
+const yearRange = ref(null);
+</script>
+```
+
+```vue [Options API]
+<template>
+  <AppDateTimePicker
+    v-model="month"
+    mode="month"
+    date-format="MM"
+    placeholder="Оберіть місяць"
+  />
+
+  <AppDateTimePicker
+    v-model="yearRange"
+    date-format="yyyy"
+    type="daterange"
+    start-placeholder="Початковий рік"
+    end-placeholder="Кінцевий рік"
+  />
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      month: null,
+      yearRange: null,
+    };
+  },
+};
+</script>
+```
+
+:::
+
 ## Ярлики для швидкого доступу
 
 Ви можете налаштувати ярлики для швидкого вибору дати
@@ -599,6 +682,24 @@ export default {
       <td><code>date</code></td>
     </tr>
     <tr>
+      <td>
+        <div class="vi-table__cell--flex">
+          <span>mode</span>
+          <Badge type="tip" text="^0.1.0" />
+        </div>
+      </td>
+      <td>в якому режимі ви хочете відображати календар. <a href="#режими">більше</a></td>
+      <td>
+        <div class="vi-table__cell--flex">
+          <div><code>string</code></div>
+          <Info>
+            <code>day | month | year</code>
+          </Info>
+        </div>
+      </td>
+      <td><code>day</code></td>
+    </tr>
+    <tr>
       <td>first-day-of-week</td>
       <td>
         порядок днів тижня в денному календарі
@@ -757,7 +858,7 @@ export default {
       <td>
         <div class="vi-table__cell--flex">
           <span>input-readonly</span>
-          <Badge type="tip" text="^0.1.0" />
+          <Badge type="tip" text="^0.0.2" />
         </div>
       </td>
       <td>перевести інпут в режим read-only, але через поповер є можливість обирати дату</td>
@@ -971,7 +1072,7 @@ export default {
   </tbody>
 </table>
 
-#### Default слот <Badge type="tip" text="^0.1.0" />
+#### Default слот <Badge type="tip" text="^0.0.2" />
 
 Цей слот замінює поле введення дати. Нижче наведено таблицю з доступними пропсами для цього слоту
 

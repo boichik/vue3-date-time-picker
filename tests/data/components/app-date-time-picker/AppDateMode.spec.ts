@@ -2,13 +2,12 @@ import AppDateMode from '@/components/app-date-time-picker/src/components/mode/A
 import AppDateTimeController from '@/components/app-date-time-picker/src/components/controller/AppDateTimeController.vue';
 import { AppDateTimePickerComponentDataProvide } from '@/components/app-date-time-picker/src/const';
 import { mount } from '@vue/test-utils';
-import { setTime } from '@/components/app-date-time-picker/src/utils';
 import AppDayTable from '@/components/app-date-time-picker/src/components/table/AppDayTable.vue';
 import { fakeTimeWrapper } from '@tests/mocks/utils';
 
 describe('AppDateMode', () => {
   const mockDate = new Date(2025, 0, 1);
-  const mockDefaultTime = { hours: 12, minutes: 0 };
+  const mockDefaultTime = '12:00:00';
 
   const mockProvideValue = {
     firstDayOfWeek: 1,
@@ -47,18 +46,6 @@ describe('AppDateMode', () => {
     expect(controller.props('modelValue')).toEqual(mockDate);
   });
 
-  it('initialises currentDateDisplay from the current date with defaultTime, if modelValue is not specified', () => {
-    const wrapper = mountComponent();
-
-    const expectedDate = setTime(new Date());
-
-    const controller = wrapper.findComponent(AppDateTimeController);
-
-    expect(controller.exists()).toBeTruthy();
-
-    expect(controller.props('modelValue')).toEqual(expectedDate);
-  });
-
   it('updates currentDateDisplay when modelValue changes', async () => {
     const initialDate = new Date(2025, 0, 1);
     const newDate = new Date(2025, 5, 15);
@@ -95,7 +82,7 @@ describe('AppDateMode', () => {
 
       expect(wrapper.emitted('update:modelValue')).toBeTruthy();
       expect(wrapper.emitted('update:modelValue')![0][0]).toStrictEqual(
-        mockDate
+        new Date(2025, 0, 1, 12)
       );
     });
   });

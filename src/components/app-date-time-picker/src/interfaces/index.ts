@@ -3,17 +3,9 @@ import type { Ref } from 'vue';
 import type { AppDateTimePickerType } from '../enums/dateTimePickerType';
 import type { AppPickerProps } from '@/interfaces';
 import type { TimezoneConvertor } from '@/services/timezone-convertor/TimezoneConvertor.interface';
+import { AppDateTimePickerMode } from '../enums/dateTimePickerMode';
 
 export type AppDateTimePickerModel = null | Date | (null | Date)[];
-
-enum AppDateTimePickerInternalType {
-  Month = 'month',
-  Year = 'year',
-}
-
-export type AppDateTimePickerMode =
-  | AppDateTimePickerType
-  | AppDateTimePickerInternalType;
 
 export type AppDateTimePickerFirstDayOfWeek = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
@@ -65,6 +57,10 @@ export interface AppDateTimePickerProps extends AppPickerProps {
    */
   type?: AppDateTimePickerType;
   /**
+   * An option that indicates what type of calendar will be displayed. (day, month, year)
+   */
+  mode?: AppDateTimePickerMode;
+  /**
    * The option is responsible for the order of the days of the week in the day calendar. (1, 2, 3, 4, 5, 6, 7)
    */
   firstDayOfWeek?: AppDateTimePickerFirstDayOfWeek;
@@ -112,16 +108,30 @@ export interface AppDateTimePickerProps extends AppPickerProps {
   disabledDate?(date: Date): boolean;
 }
 
-type SelectedDateClass = 'left' | 'right' | 'center' | null;
+type SelectedDateClass = 'left' | 'right' | 'center' | boolean;
 
-export interface AppDateTimePickerTableComponentData {
-  isDateInRange(date: Date, isOtherMonth: boolean): boolean;
-  isSelectedDate(date: Date, isOtherMonth: boolean): SelectedDateClass;
-  isDateHoverRange(date: Date, isOtherMonth: boolean): boolean;
-  hoverDate(date: Date): void;
-  selectDate(date: Date): void;
-  resetHover(): void;
+interface AppDateTimePickerTableComponentData<T extends unknown[] = []> {
+  inRange: (date: Date, ...args: T) => boolean;
+  isHoverRange: (date: Date, ...args: T) => boolean;
+  isSelected: (date: Date, ...args: T) => SelectedDateClass;
+  select: (date: Date) => void;
+  hover: (date: Date) => void;
+  resetHover: () => void;
 }
+
+export type AppDateTimePickerGlobalTableComponentData = Pick<
+  AppDateTimePickerTableComponentData,
+  'select'
+>;
+
+export type AppDateTimePickerDayTableComponentData =
+  AppDateTimePickerTableComponentData<[isOtherMonth: boolean]>;
+
+export type AppDateTimePickerMonthTableComponentData =
+  AppDateTimePickerTableComponentData;
+
+export type AppDateTimePickerYearTableComponentData =
+  AppDateTimePickerTableComponentData;
 
 export type AppDateTimePickerComponentData = Pick<
   AppDateTimePickerProps,
@@ -145,6 +155,7 @@ export type AppDateTimePickerComponentData = Pick<
   | 'monthButtonFormat'
   | 'locale'
   | 'timezone'
+  | 'mode'
 > &
   Required<
     Pick<
@@ -165,6 +176,7 @@ export type AppDateTimePickerComponentData = Pick<
       | 'cancelText'
       | 'applyText'
       | 'inputReadonly'
+      | 'mode'
     >
   > & {
     disabledApplyButton: boolean;

@@ -37,7 +37,8 @@
 import type { ComputedRef } from 'vue';
 import type {
   AppDateTimePickerComponentData,
-  AppDateTimePickerTableComponentData,
+  AppDateTimePickerDayTableComponentData,
+  AppDateTimePickerGlobalTableComponentData,
 } from '../../interfaces';
 import { computed, inject } from 'vue';
 import {
@@ -53,7 +54,8 @@ import {
 import { getDayStart, getDayEnd, getNewDate } from '@/utils/getNewDate';
 import {
   AppDateTimePickerComponentDataProvide,
-  AppDateTimePickerTableComponentDataProvide,
+  AppDateTimePickerDayTableComponentDataProvide,
+  AppDateTimePickerGlobalTableComponentDataProvide,
 } from '../../const';
 const props = withDefaults(
   defineProps<{ value?: Date | null; currentDate: Date }>(),
@@ -63,9 +65,15 @@ const props = withDefaults(
   }
 );
 
-const appDateTimePickerTableComponentData =
-  inject<AppDateTimePickerTableComponentData | null>(
-    AppDateTimePickerTableComponentDataProvide,
+const appDateTimePickerDayTableComponentData =
+  inject<AppDateTimePickerDayTableComponentData | null>(
+    AppDateTimePickerDayTableComponentDataProvide,
+    null
+  );
+
+const appDateTimePickerGlobalTableComponentData =
+  inject<AppDateTimePickerGlobalTableComponentData | null>(
+    AppDateTimePickerGlobalTableComponentDataProvide,
     null
   );
 
@@ -202,15 +210,14 @@ function isDisabled(date: Date) {
 
 function isSelected(date: Date, isOtherMonth: boolean) {
   if (
-    appDateTimePickerTableComponentData &&
-    appDateTimePickerTableComponentData.isSelectedDate
+    appDateTimePickerDayTableComponentData &&
+    appDateTimePickerDayTableComponentData.isSelected
   ) {
-    return appDateTimePickerTableComponentData.isSelectedDate(
+    return appDateTimePickerDayTableComponentData.isSelected(
       date,
       isOtherMonth
     );
   }
-
   if (props.value && isSameDay(props.value, date)) return 'center';
 
   return null;
@@ -218,13 +225,10 @@ function isSelected(date: Date, isOtherMonth: boolean) {
 
 function isInRange(date: Date, isOtherMonth: boolean) {
   if (
-    appDateTimePickerTableComponentData &&
-    appDateTimePickerTableComponentData.isDateInRange
+    appDateTimePickerDayTableComponentData &&
+    appDateTimePickerDayTableComponentData.inRange
   ) {
-    return appDateTimePickerTableComponentData.isDateInRange(
-      date,
-      isOtherMonth
-    );
+    return appDateTimePickerDayTableComponentData.inRange(date, isOtherMonth);
   }
 
   return false;
@@ -232,10 +236,10 @@ function isInRange(date: Date, isOtherMonth: boolean) {
 
 function isHoverRange(date: Date, isOtherMonth: boolean) {
   if (
-    appDateTimePickerTableComponentData &&
-    appDateTimePickerTableComponentData.isDateHoverRange
+    appDateTimePickerDayTableComponentData &&
+    appDateTimePickerDayTableComponentData.isHoverRange
   ) {
-    return appDateTimePickerTableComponentData.isDateHoverRange(
+    return appDateTimePickerDayTableComponentData.isHoverRange(
       date,
       isOtherMonth
     );
@@ -246,29 +250,37 @@ function isHoverRange(date: Date, isOtherMonth: boolean) {
 
 function hoverDate(date: Date) {
   if (
-    appDateTimePickerTableComponentData &&
-    appDateTimePickerTableComponentData.hoverDate
+    appDateTimePickerDayTableComponentData &&
+    appDateTimePickerDayTableComponentData.hover
   ) {
-    return appDateTimePickerTableComponentData.hoverDate(date);
+    appDateTimePickerDayTableComponentData.hover(date);
   }
 }
 
 function resetHover() {
   if (
-    appDateTimePickerTableComponentData &&
-    appDateTimePickerTableComponentData.resetHover
+    appDateTimePickerDayTableComponentData &&
+    appDateTimePickerDayTableComponentData.resetHover
   ) {
-    return appDateTimePickerTableComponentData.resetHover();
+    appDateTimePickerDayTableComponentData.resetHover();
   }
 }
 
 function selectDate(date: Date) {
+  if (isDisabled(date)) return;
+
   if (
-    appDateTimePickerTableComponentData &&
-    appDateTimePickerTableComponentData.selectDate &&
-    !isDisabled(date)
+    appDateTimePickerGlobalTableComponentData &&
+    appDateTimePickerGlobalTableComponentData.select
   ) {
-    return appDateTimePickerTableComponentData.selectDate(date);
+    appDateTimePickerGlobalTableComponentData.select(date);
+  }
+
+  if (
+    appDateTimePickerDayTableComponentData &&
+    appDateTimePickerDayTableComponentData.select
+  ) {
+    appDateTimePickerDayTableComponentData.select(date);
   }
 }
 </script>
@@ -346,15 +358,17 @@ function selectDate(date: Date) {
 
     &--selected:not(.app-date-time-picker-day-table__cell--other-month) {
       &.app-date-time-picker-day-table__cell--selected-left {
-        border-radius: 4px 0px 0px 4px;
+        border-radius: var(--vpick--table-cell-border-radius) 0px 0px
+          var(--vpick--table-cell-border-radius);
       }
 
       &.app-date-time-picker-day-table__cell--selected-right {
-        border-radius: 0px 4px 4px 0px;
+        border-radius: 0px var(--vpick--table-cell-border-radius)
+          var(--vpick--table-cell-border-radius) 0px;
       }
 
       &.app-date-time-picker-day-table__cell--selected-center {
-        border-radius: 4px;
+        border-radius: var(--vpick--table-cell-border-radius);
       }
 
       .app-date-time-picker-day-table__cell-content {
@@ -372,17 +386,17 @@ function selectDate(date: Date) {
 
     &--in-range:not(.app-date-time-picker-day-table__cell--selected) {
       .app-date-time-picker-day-table__cell-content {
-        color: var(--vpick--day-table-cell-range-color);
-        background-color: var(--vpick--day-table-cell-range-bg-color);
-        border-color: var(--vpick--day-table-cell-range-border-color);
+        color: var(--vpick--table-cell-range-color);
+        background-color: var(--vpick--table-cell-range-bg-color);
+        border-color: var(--vpick--table-cell-range-border-color);
       }
     }
 
     &--hover-range:not(.app-date-time-picker-day-table__cell--selected) {
       .app-date-time-picker-day-table__cell-content {
-        color: var(--vpick--day-table-cell-range-hover-color);
-        background-color: var(--vpick--day-table-cell-range-hover-bg-color);
-        border-color: var(--vpick--day-table-cell-range-hover-border-color);
+        color: var(--vpick--table-cell-range-hover-color);
+        background-color: var(--vpick--table-cell-range-hover-bg-color);
+        border-color: var(--vpick--table-cell-range-hover-border-color);
       }
     }
 

@@ -1,6 +1,6 @@
 {
   "name": "@boichikpro/vue3-date-time-picker",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Date & time picker for vue3",
   "private": false,
   "license": "MIT",

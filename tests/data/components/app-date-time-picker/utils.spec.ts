@@ -1,6 +1,7 @@
 import {
   isValidDefaultTime,
   isValidFirstDayOfWeek,
+  isValidMode,
   isValidMonthFormat,
   isValidType,
   isValidWeekdayFormat,
@@ -232,6 +233,37 @@ describe('AppDateTimePicker Utils', () => {
     'isValidMonthFormat: value= %p; result= %p',
     (value, result) => {
       expect(isValidMonthFormat(value)).toBe(result);
+    }
+  );
+
+  const isValidModeTestCase: any[] = [
+    [0, false],
+    [1, false],
+    [123, false],
+    ['', false],
+    ['abc', false],
+    ['12b', false],
+    [true, false],
+    [false, false],
+    [null, false],
+    [undefined, false],
+    [NaN, false],
+    [[], false],
+    [['123'], false],
+    [{ 1: '123' }, false],
+    ['Day', false],
+    ['Year', false],
+    ['Month', false],
+    ['da', false],
+    ['day', true],
+    ['year', true],
+    ['month', true],
+  ];
+
+  it.each(isValidModeTestCase)(
+    'isValidMode: value= %p; result= %p',
+    (value, result) => {
+      expect(isValidMode(value)).toBe(result);
     }
   );
 });

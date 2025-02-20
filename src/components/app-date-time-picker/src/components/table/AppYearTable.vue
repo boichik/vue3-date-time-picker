@@ -6,17 +6,10 @@
           <td
             v-for="(year, yearIndex) in row"
             :key="yearIndex"
-            :class="{
-              'app-date-time-picker-year-table__cell--current-year':
-                isCurrentYear(year.date),
-              'app-date-time-picker-year-table__cell--selected-year':
-                isSelectedYear(year.date),
-              'app-date-time-picker-year-table__cell--disabled': isDisabled(
-                year.date
-              ),
-            }"
-            class="app-date-time-picker-year-table__cell"
+            :class="calendarCellClasses(year.date)"
             @click="selectYear(year.date)"
+            @mouseenter="hoverDate(year.date)"
+            @mouseleave="resetHover"
           >
             <div class="app-date-time-picker-year-table__cell-content">
               {{ year.number }}
@@ -33,9 +26,18 @@ import type { ComputedRef } from 'vue';
 import { computed, inject } from 'vue';
 import { isSameYear, setYear } from 'date-fns';
 import { isDisabledYear } from '../../utils';
-import { AppDateTimePickerComponentDataProvide } from '../../const';
-import type { AppDateTimePickerComponentData } from '../../interfaces';
+import {
+  AppDateTimePickerComponentDataProvide,
+  AppDateTimePickerGlobalTableComponentDataProvide,
+  AppDateTimePickerYearTableComponentDataProvide,
+} from '../../const';
+import type {
+  AppDateTimePickerComponentData,
+  AppDateTimePickerGlobalTableComponentData,
+  AppDateTimePickerYearTableComponentData,
+} from '../../interfaces';
 import { getNewDate } from '@/utils/getNewDate';
+import { AppDateTimePickerMode } from '../../enums/dateTimePickerMode';
 
 const emit = defineEmits(['update']);
 
@@ -50,6 +52,18 @@ const props = withDefaults(
 const appDateTimePickerComponentData =
   inject<ComputedRef<AppDateTimePickerComponentData> | null>(
     AppDateTimePickerComponentDataProvide,
+    null
+  );
+
+const appDateTimePickerYearTableComponentData =
+  inject<AppDateTimePickerYearTableComponentData | null>(
+    AppDateTimePickerYearTableComponentDataProvide,
+    null
+  );
+
+const appDateTimePickerGlobalTableComponentData =
+  inject<AppDateTimePickerGlobalTableComponentData | null>(
+    AppDateTimePickerGlobalTableComponentDataProvide,
     null
   );
 
@@ -77,11 +91,50 @@ const today = computed(
   () => appDateTimePickerComponentData?.value?.today || getNewDate()
 );
 
+function calendarCellClasses(date: Date) {
+  const selectedValue = isSelectedYear(date);
+  const classes = ['app-date-time-picker-year-table__cell'];
+
+  if (isInRange(date)) {
+    classes.push('app-date-time-picker-year-table__cell--in-range');
+  }
+
+  if (isHoverRange(date)) {
+    classes.push('app-date-time-picker-year-table__cell--hover-range');
+  }
+
+  if (isDisabled(date)) {
+    classes.push('app-date-time-picker-year-table__cell--disabled');
+  }
+
+  if (isCurrentYear(date)) {
+    classes.push('app-date-time-picker-year-table__cell--current-year');
+  }
+
+  if (selectedValue) {
+    classes.push(
+      ...[
+        'app-date-time-picker-year-table__cell--selected-year',
+        `app-date-time-picker-year-table__cell--selected-year--${selectedValue}`,
+      ]
+    );
+  }
+
+  return classes;
+}
+
 function isCurrentYear(date: Date) {
   return isSameYear(today.value, date);
 }
 
 function isSelectedYear(date: Date) {
+  if (
+    appDateTimePickerYearTableComponentData &&
+    appDateTimePickerYearTableComponentData.isSelected
+  ) {
+    return appDateTimePickerYearTableComponentData.isSelected(date);
+  }
+
   if (!props.value) {
     return false;
   }
@@ -100,10 +153,67 @@ function formattedDate(year: number) {
   return setYear(oldDate, year);
 }
 
-function selectYear(date: Date) {
-  if (isDisabled(date)) {
-    return;
+function isInRange(date: Date) {
+  if (
+    appDateTimePickerYearTableComponentData &&
+    appDateTimePickerYearTableComponentData.inRange
+  ) {
+    return appDateTimePickerYearTableComponentData.inRange(date);
   }
+
+  return false;
+}
+
+function isHoverRange(date: Date) {
+  if (
+    appDateTimePickerYearTableComponentData &&
+    appDateTimePickerYearTableComponentData.isHoverRange
+  ) {
+    return appDateTimePickerYearTableComponentData.isHoverRange(date);
+  }
+
+  return false;
+}
+
+function hoverDate(date: Date) {
+  if (
+    appDateTimePickerYearTableComponentData &&
+    appDateTimePickerYearTableComponentData.hover
+  ) {
+    return appDateTimePickerYearTableComponentData.hover(date);
+  }
+}
+
+function resetHover() {
+  if (
+    appDateTimePickerYearTableComponentData &&
+    appDateTimePickerYearTableComponentData.resetHover
+  ) {
+    return appDateTimePickerYearTableComponentData.resetHover();
+  }
+}
+
+function selectYear(date: Date) {
+  if (isDisabled(date)) return;
+
+  if (
+    appDateTimePickerComponentData?.value.mode !== AppDateTimePickerMode.Day
+  ) {
+    if (
+      appDateTimePickerGlobalTableComponentData &&
+      appDateTimePickerGlobalTableComponentData.select
+    ) {
+      appDateTimePickerGlobalTableComponentData.select(date);
+    }
+
+    if (
+      appDateTimePickerYearTableComponentData &&
+      !!appDateTimePickerYearTableComponentData.select
+    ) {
+      appDateTimePickerYearTableComponentData!.select(date);
+    }
+  }
+
   emit('update', date);
 }
 </script>
@@ -137,7 +247,7 @@ function selectYear(date: Date) {
 
         &:hover:not(.app-date-time-picker-year-table__cell--disabled):not(
             .app-date-time-picker-year-table__cell--selected-year
-          ) {
+          ):not(.app-date-time-picker-year-table__cell--in-range) {
           .app-date-time-picker-year-table__cell-content {
             color: var(--vpick--table-cell-hover-color);
             background-color: var(--vpick--table-cell-hover-bg-color);
@@ -174,6 +284,20 @@ function selectYear(date: Date) {
       }
 
       &--selected-year {
+        &.app-date-time-picker-year-table__cell--selected-year--left {
+          border-radius: var(--vpick--table-cell-border-radius) 0px 0px
+            var(--vpick--table-cell-border-radius);
+        }
+
+        &.app-date-time-picker-year-table__cell--selected-year--right {
+          border-radius: 0px var(--vpick--table-cell-border-radius)
+            var(--vpick--table-cell-border-radius) 0px;
+        }
+
+        &.app-date-time-picker-year-table__cell--selected-year--center {
+          border-radius: var(--vpick--table-cell-border-radius);
+        }
+
         .app-date-time-picker-year-table__cell-content {
           color: var(--vpick--table-cell-selected-color);
           background-color: var(--vpick--table-cell-selected-bg-color);
@@ -182,6 +306,24 @@ function selectYear(date: Date) {
           &::before {
             background-color: var(--vpick--table-cell-today-selected-color);
           }
+        }
+      }
+
+      &--in-range:not(.app-date-time-picker-year-table__cell--selected-year) {
+        .app-date-time-picker-year-table__cell-content {
+          color: var(--vpick--table-cell-range-color);
+          background-color: var(--vpick--table-cell-range-bg-color);
+          border-color: var(--vpick--table-cell-range-border-color);
+        }
+      }
+
+      &--hover-range:not(
+          .app-date-time-picker-year-table__cell--selected-year
+        ) {
+        .app-date-time-picker-year-table__cell-content {
+          color: var(--vpick--table-cell-range-hover-color);
+          background-color: var(--vpick--table-cell-range-hover-bg-color);
+          border-color: var(--vpick--table-cell-range-hover-border-color);
         }
       }
 

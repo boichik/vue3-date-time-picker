@@ -1,9 +1,11 @@
-import { mount } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 import AppDateTimePickerDayTable from '@/components/app-date-time-picker/src/components/table/AppDayTable.vue';
 import {
   AppDateTimePickerComponentDataProvide,
-  AppDateTimePickerTableComponentDataProvide,
+  AppDateTimePickerDayTableComponentDataProvide,
+  AppDateTimePickerGlobalTableComponentDataProvide,
 } from '@/components/app-date-time-picker/src/const';
+import { isSameDay } from 'date-fns';
 
 describe('AppDayTable', () => {
   const currentDate = new Date(2025, 0, 15);
@@ -20,22 +22,54 @@ describe('AppDayTable', () => {
     disabledDate: vi.fn(),
   };
 
-  const mockTableComponentData = {
-    isSelectedDate: vi.fn(),
-    isDateInRange: vi.fn(),
-    isDateHoverRange: vi.fn(),
-    selectDate: vi.fn(),
-    hoverDate: vi.fn(),
+  const globalTableDataMock = {
+    select: vi.fn(),
+  };
+
+  const dayTableDataMock = {
+    inRange: vi.fn(),
+    isHoverRange: vi.fn(),
+    isSelected: vi.fn(),
+    select: vi.fn(),
+    hover: vi.fn(),
     resetHover: vi.fn(),
   };
 
-  const createWrapper = (props = {}, options = {}) => {
+  const globalTableDataProvideMock = {
+    [AppDateTimePickerGlobalTableComponentDataProvide]: globalTableDataMock,
+  };
+
+  const dayTableDataProvideMock = {
+    [AppDateTimePickerDayTableComponentDataProvide]: dayTableDataMock,
+  };
+
+  const componentDataProvideMock = {
+    [AppDateTimePickerComponentDataProvide]: {
+      value: mockComponentData,
+    },
+  };
+
+  const cellsNotOtherMonth = (wrapper: VueWrapper) => {
+    const tbody = wrapper.find('tbody');
+    const cells = tbody.findAll('.app-date-time-picker-day-table__cell');
+
+    return cells.filter(
+      el => !el.classes('app-date-time-picker-day-table__cell--other-month')
+    );
+  };
+
+  const firstCellClick = async (wrapper: VueWrapper) => {
+    const cells = cellsNotOtherMonth(wrapper);
+    await cells[0]?.trigger('click');
+  };
+
+  const createWrapper = (props = {}, options = {}, provide = {}) => {
     return mount(AppDateTimePickerDayTable, {
       props: { ...defaultProps, ...props },
       global: {
         provide: {
-          [AppDateTimePickerComponentDataProvide]: { value: mockComponentData },
-          [AppDateTimePickerTableComponentDataProvide]: mockTableComponentData,
+          ...componentDataProvideMock,
+          ...provide,
         },
         ...options,
       },
@@ -91,54 +125,14 @@ describe('AppDayTable', () => {
   });
 
   it('applies selected class to the correct day', () => {
-    mockTableComponentData.isSelectedDate.mockImplementation(date => {
-      return date.getDate() === currentDate.getDate();
-    });
+    mockComponentData.disabledDate.mockReturnValue(false);
 
-    const wrapper = createWrapper();
+    const wrapper = createWrapper({ value: new Date(2025, 0, 1) });
     const selectedCell = wrapper.find(
       '.app-date-time-picker-day-table__cell--selected'
     );
 
     expect(selectedCell.exists()).toBe(true);
-  });
-
-  it('handles date selection on click', async () => {
-    mockComponentData.disabledDate.mockImplementation(() => false);
-
-    const wrapper = createWrapper();
-    const tbody = wrapper.find('tbody');
-    const cells = tbody.findAll('.app-date-time-picker-day-table__cell');
-
-    const cell = cells.find(
-      el =>
-        !el
-          .classes()
-          .includes('app-date-time-picker-day-table__cell--other-month')
-    )!;
-    await cell.trigger('click');
-
-    expect(mockTableComponentData.selectDate).toHaveBeenCalled();
-  });
-
-  it('handles hover events correctly', async () => {
-    const wrapper = createWrapper();
-    const tbody = wrapper.find('tbody');
-    const cells = tbody.findAll('.app-date-time-picker-day-table__cell');
-
-    const cell = cells.find(
-      el =>
-        !el
-          .classes()
-          .includes('app-date-time-picker-day-table__cell--other-month')
-    )!;
-
-    await cell.trigger('mouseenter');
-
-    expect(mockTableComponentData.hoverDate).toHaveBeenCalled();
-
-    await cell.trigger('mouseleave');
-    expect(mockTableComponentData.resetHover).toHaveBeenCalled();
   });
 
   it('renders reordered weekdays correctly based on firstDayOfWeek', () => {
@@ -150,5 +144,116 @@ describe('AppDayTable', () => {
 
     const expectedOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     expect(renderedDays).toEqual(expectedOrder);
+  });
+
+  it('must call the global selector function', async () => {
+    mockComponentData.disabledDate.mockReturnValue(false);
+
+    const wrapper = createWrapper({}, {}, globalTableDataProvideMock);
+
+    await firstCellClick(wrapper);
+
+    expect(globalTableDataMock.select).toBeCalled();
+    expect(globalTableDataMock.select.mock.calls[0][0]).toStrictEqual(
+      new Date(2025, 0, 1)
+    );
+  });
+
+  it('must call the local selector function', async () => {
+    mockComponentData.disabledDate.mockReturnValue(false);
+
+    const wrapper = createWrapper({}, {}, dayTableDataProvideMock);
+
+    await firstCellClick(wrapper);
+
+    expect(dayTableDataMock.select).toBeCalled();
+    expect(dayTableDataMock.select.mock.calls[0][0]).toStrictEqual(
+      new Date(2025, 0, 1)
+    );
+  });
+
+  it('the date must be selected using the function received through the inject', () => {
+    dayTableDataMock.isSelected.mockImplementation((date: Date) => {
+      return isSameDay(date, new Date(2025, 0, 1));
+    });
+
+    const wrapper = createWrapper({}, {}, dayTableDataProvideMock);
+
+    const selectedCell = wrapper.find(
+      '.app-date-time-picker-day-table__cell--selected'
+    );
+
+    expect(selectedCell.text()).toBe('1');
+  });
+
+  const classNameInSelectedCellCase = [['left'], ['center'], ['right']];
+
+  it.each(classNameInSelectedCellCase)(
+    'must be a class of the selected day with the prefix: %i',
+    position => {
+      dayTableDataMock.isSelected.mockImplementation((date: Date) => {
+        if (isSameDay(date, new Date(2025, 0, 1))) {
+          return position;
+        }
+
+        return null;
+      });
+
+      const wrapper = createWrapper({}, {}, dayTableDataProvideMock);
+
+      const selectedCell = wrapper.find(
+        `.app-date-time-picker-day-table__cell--selected-${position}`
+      );
+
+      expect(selectedCell.exists()).toBeTruthy();
+    }
+  );
+
+  it('the cell is in the range', () => {
+    dayTableDataMock.inRange.mockImplementation((date: Date) =>
+      isSameDay(date, new Date(2025, 0, 1))
+    );
+
+    const wrapper = createWrapper({}, {}, dayTableDataProvideMock);
+
+    const cells = cellsNotOtherMonth(wrapper);
+    expect(
+      cells[0].classes('app-date-time-picker-day-table__cell--in-range')
+    ).toBeTruthy();
+  });
+
+  it('the cell must have the hover in range class', () => {
+    dayTableDataMock.isHoverRange.mockImplementation((date: Date) =>
+      isSameDay(date, new Date(2025, 0, 1))
+    );
+
+    const wrapper = createWrapper({}, {}, dayTableDataProvideMock);
+
+    const cells = cellsNotOtherMonth(wrapper);
+
+    expect(
+      cells[0].classes('app-date-time-picker-day-table__cell--hover-range')
+    ).toBeTruthy();
+  });
+
+  it('should pass the date as a hover', async () => {
+    const wrapper = createWrapper({}, {}, dayTableDataProvideMock);
+    const cells = cellsNotOtherMonth(wrapper);
+
+    await cells[0].trigger('mouseenter');
+
+    expect(dayTableDataMock.hover).toBeCalled();
+    expect(dayTableDataMock.hover.mock.calls[0][0]).toStrictEqual(
+      new Date(2025, 0, 1)
+    );
+  });
+
+  it('should clear the date as hovered', async () => {
+    const wrapper = createWrapper({}, {}, dayTableDataProvideMock);
+    const cells = cellsNotOtherMonth(wrapper);
+
+    await cells[0].trigger('mouseleave');
+
+    expect(dayTableDataMock.resetHover).toBeCalled();
   });
 });

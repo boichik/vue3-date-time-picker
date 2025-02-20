@@ -64,6 +64,7 @@ import AppDateTimeContent from './components/base/AppDateTimeContent.vue';
 import {
   isValidDefaultTime,
   isValidFirstDayOfWeek,
+  isValidMode,
   isValidMonthFormat,
   isValidType,
   isValidWeekdayFormat,
@@ -98,6 +99,7 @@ const DEFAULT_DISABLED = false;
 const DEFAULT_CLEARABLE = false;
 const DEFAULT_INVALID = false;
 const DEFAULT_TYPE = 'date';
+const DEFAULT_MODE = 'day';
 const DEFAULT_ALIGN = 'left';
 const DEFAULT_FIRST_DAY_OF_WEEK = 1;
 const DEFAULT_COMBINE_FORMATS = true;
@@ -122,6 +124,7 @@ const props = withDefaults(defineProps<AppDateTimePickerProps>(), {
   disabled: DEFAULT_DISABLED,
   clearable: DEFAULT_CLEARABLE,
   type: DEFAULT_TYPE,
+  mode: DEFAULT_MODE,
   align: DEFAULT_ALIGN,
   firstDayOfWeek: DEFAULT_FIRST_DAY_OF_WEEK,
   combineFormats: DEFAULT_COMBINE_FORMATS,
@@ -184,6 +187,7 @@ const appDateTimePickerComponentData = computed<AppDateTimePickerComponentData>(
       applyText,
       timezone,
       inputReadonly,
+      mode,
       disabledDate,
     } = props;
 
@@ -198,6 +202,7 @@ const appDateTimePickerComponentData = computed<AppDateTimePickerComponentData>(
         : DEFAULT_FIRST_DAY_OF_WEEK,
       align: isValidAlign(align) ? align : DEFAULT_ALIGN,
       type: isValidType(type) ? type : DEFAULT_TYPE,
+      mode: isValidMode(mode) ? mode : DEFAULT_MODE,
       defaultTime: isValidDefaultTime(defaultTime) ? defaultTime : '',
       combineFormats: isBoolean(combineFormats)
         ? combineFormats

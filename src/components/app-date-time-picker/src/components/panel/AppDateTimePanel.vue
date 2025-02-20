@@ -52,7 +52,7 @@ import type { ComputedRef } from 'vue';
 import { computed, inject } from 'vue';
 import { isDisabledMonth, isDisabledYear } from '../../utils';
 import { addMonths, addYears, subMonths, subYears } from 'date-fns';
-import { DateTimePickerMode } from '../../enums/dateTimePickerMode';
+import { AppDateTimePickerMode } from '../../enums/dateTimePickerMode';
 import { AppDateTimePickerComponentDataProvide } from '../../const';
 import type { AppDateTimePickerComponentData } from '../../interfaces';
 
@@ -68,7 +68,7 @@ const props = withDefaults(
   defineProps<{
     value?: Date | null;
     currentDate: Date;
-    mode: DateTimePickerMode;
+    mode: AppDateTimePickerMode;
   }>(),
   {
     value: undefined,
@@ -83,7 +83,7 @@ const appDateTimePickerComponentData =
   );
 
 const displacementNumber = computed(() => {
-  if (DateTimePickerMode.Year === props.mode) {
+  if (AppDateTimePickerMode.Year === props.mode) {
     return 10;
   } else {
     return 1;
@@ -91,7 +91,7 @@ const displacementNumber = computed(() => {
 });
 
 const yearButtonContent = computed(() => {
-  if (![DateTimePickerMode.Year].includes(props.mode as never)) {
+  if (![AppDateTimePickerMode.Year].includes(props.mode as never)) {
     return props.currentDate.getFullYear();
   } else {
     const currentYear = props.currentDate.getFullYear();
@@ -104,7 +104,7 @@ const yearButtonContent = computed(() => {
 });
 
 const disabledYearAndMonthButton = computed(() => {
-  return !![DateTimePickerMode.Year].includes(props.mode as never);
+  return !![AppDateTimePickerMode.Year].includes(props.mode as never);
 });
 
 const monthButtonContent = computed(() => {
@@ -117,7 +117,7 @@ const monthButtonContent = computed(() => {
 });
 
 const showMonthElements = computed(() => {
-  return [DateTimePickerMode.Day].includes(props.mode as never);
+  return [AppDateTimePickerMode.Day].includes(props.mode as never);
 });
 
 const isDisabledButtonRelativeDate = computed(() => {
@@ -154,7 +154,7 @@ function handleSelectByScroll(event: WheelEvent) {
 
   let fn: (() => void) | null = null;
 
-  if (DateTimePickerMode.Day === props.mode) {
+  if (AppDateTimePickerMode.Day === props.mode) {
     fn = isNext ? handleNextMonth : handlePrevMonth;
   } else {
     fn = isNext ? handleNextYear : handlePrevYear;
@@ -187,11 +187,11 @@ function handleNextMonth() {
 }
 
 function handleYearMode() {
-  emit('changeMode', DateTimePickerMode.Year);
+  emit('changeMode', AppDateTimePickerMode.Year);
 }
 
 function handleMonthMode() {
-  emit('changeMode', DateTimePickerMode.Month);
+  emit('changeMode', AppDateTimePickerMode.Month);
 }
 
 defineExpose({ handleSelectByScroll });

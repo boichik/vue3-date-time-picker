@@ -3,13 +3,14 @@ import AppMonthTable from '@/components/app-date-time-picker/src/components/tabl
 import AppDayTable from '@/components/app-date-time-picker/src/components/table/AppDayTable.vue';
 import AppDateTimeController from '@/components/app-date-time-picker/src/components/controller/AppDateTimeController.vue';
 import AppDateTimePickerPanel from '@/components/app-date-time-picker/src/components/panel/AppDateTimePanel.vue';
-import { DateTimePickerMode } from '@/components/app-date-time-picker/src/enums/dateTimePickerMode';
-import { mount } from '@vue/test-utils';
+import { AppDateTimePickerMode } from '@/components/app-date-time-picker/src/enums/dateTimePickerMode';
+import { flushPromises, mount } from '@vue/test-utils';
 import { subMonths, subYears } from 'date-fns';
 import {
   AppDateTimePickerComponentDataProvide,
-  AppDateTimePickerTableComponentDataProvide,
+  AppDateTimePickerGlobalTableComponentDataProvide,
 } from '@/components/app-date-time-picker/src/const';
+import AppDateTimePanel from '@/components/app-date-time-picker/src/components/panel/AppDateTimePanel.vue';
 
 describe('AppDateTimeController', () => {
   const mockDate = new Date(2025, 0, 1);
@@ -23,25 +24,28 @@ describe('AppDateTimeController', () => {
   };
 
   const mockTableComponentData = {
-    isSelectedDate: vi.fn(),
-    isDateInRange: vi.fn(),
-    isDateHoverRange: vi.fn(),
-    selectDate: vi.fn(),
-    hoverDate: vi.fn(),
-    resetHover: vi.fn(),
+    select: vi.fn(),
   };
 
-  const mountComponent = (props = {}, modelValue = mockDate) =>
+  const mountComponent = (
+    props = {},
+    modelValue = mockDate,
+    mode: AppDateTimePickerMode = AppDateTimePickerMode.Day
+  ) =>
     mount(AppDateTimeController, {
       props: {
         selectedDate: mockDate,
-        mode: DateTimePickerMode.Day,
         modelValue,
         ...props,
       },
-      provide: {
-        [AppDateTimePickerComponentDataProvide]: { value: mockComponentData },
-        [AppDateTimePickerTableComponentDataProvide]: mockTableComponentData,
+      global: {
+        provide: {
+          [AppDateTimePickerComponentDataProvide]: {
+            value: { ...mockComponentData, mode },
+          },
+          [AppDateTimePickerGlobalTableComponentDataProvide]:
+            mockTableComponentData,
+        },
       },
     });
 
@@ -54,62 +58,66 @@ describe('AppDateTimeController', () => {
     expect(wrapper.findComponent(AppYearTable).exists()).toBe(true);
   });
 
-  it('displays the correct component depending on the mode', async () => {
+  it('should display a calendar with the days of the month', async () => {
     const wrapper = mountComponent();
 
     expect(wrapper.findComponent(AppDayTable).isVisible()).toBe(true);
     expect(wrapper.findComponent(AppMonthTable).isVisible()).toBe(false);
     expect(wrapper.findComponent(AppYearTable).isVisible()).toBe(false);
+  });
 
-    await wrapper.setProps({ mode: DateTimePickerMode.Month });
+  it('should display a calendar with the months of the year', async () => {
+    const wrapper = mountComponent({}, undefined, AppDateTimePickerMode.Month);
 
     expect(wrapper.findComponent(AppDayTable).isVisible()).toBe(false);
     expect(wrapper.findComponent(AppMonthTable).isVisible()).toBe(true);
     expect(wrapper.findComponent(AppYearTable).isVisible()).toBe(false);
+  });
 
-    await wrapper.setProps({ mode: DateTimePickerMode.Year });
+  it('should display a calendar with the years of the decade', async () => {
+    const wrapper = mountComponent({}, undefined, AppDateTimePickerMode.Year);
+
     expect(wrapper.findComponent(AppDayTable).isVisible()).toBe(false);
     expect(wrapper.findComponent(AppMonthTable).isVisible()).toBe(false);
     expect(wrapper.findComponent(AppYearTable).isVisible()).toBe(true);
   });
 
-  it('calls handleScroll on the wheel event', async () => {
-    const wrapper = mountComponent();
-    const panelMock = { handleSelectByScroll: vi.fn() };
-
-    (wrapper.vm as any).panel = panelMock;
-    await wrapper.vm.$nextTick();
-
-    await wrapper.find('.app-date-time-controller-content').trigger('wheel');
-    expect(panelMock.handleSelectByScroll).toHaveBeenCalled();
-  });
-
   it('updates the current date when calling prevMonth, nextMonth, prevYear, nextYear', () => {
     const wrapper = mountComponent();
-    const vm = wrapper.vm as any;
 
-    vm.prevMonth(1);
-    expect(vm.model).toEqual(subMonths(mockDate, 1));
+    const panel = wrapper.findComponent(AppDateTimePanel);
 
-    vm.nextMonth(1);
-    expect(vm.model).toEqual(mockDate);
+    panel.vm.$emit('prevMonth', 1);
+    expect(wrapper.emitted('update:modelValue')![0][0]).toStrictEqual(
+      subMonths(mockDate, 1)
+    );
+    panel.vm.$emit('nextMonth', 1);
+    expect(wrapper.emitted('update:modelValue')![1][0]).toStrictEqual(mockDate);
 
-    vm.prevYear(1);
-    expect(vm.model).toEqual(subYears(mockDate, 1));
+    panel.vm.$emit('prevYear', 1);
+    expect(wrapper.emitted('update:modelValue')![2][0]).toStrictEqual(
+      subYears(mockDate, 1)
+    );
 
-    vm.nextYear(1);
-    expect(vm.model).toEqual(mockDate);
+    panel.vm.$emit('nextYear', 1);
+    expect(wrapper.emitted('update:modelValue')![3][0]).toStrictEqual(mockDate);
   });
 
-  it('changes the mode when calling handleChangeMode', () => {
+  it('changes the mode when calling handleChangeMode', async () => {
     const wrapper = mountComponent();
-    const vm = wrapper.vm as any;
+    const panel = wrapper.findComponent(AppDateTimePanel);
 
-    vm.handleChangeMode(DateTimePickerMode.Month);
-    expect(vm.mode).toBe(DateTimePickerMode.Month);
+    panel.vm.$emit('changeMode', AppDateTimePickerMode.Month);
 
-    vm.handleChangeMode(DateTimePickerMode.Year);
-    expect(vm.mode).toBe(DateTimePickerMode.Year);
+    await flushPromises();
+
+    expect(wrapper.findComponent(AppMonthTable).isVisible()).toBe(true);
+
+    panel.vm.$emit('changeMode', AppDateTimePickerMode.Year);
+
+    await flushPromises();
+
+    expect(wrapper.findComponent(AppYearTable).isVisible()).toBe(true);
   });
 
   it('updates the date on the update event in child components', async () => {
@@ -117,6 +125,6 @@ describe('AppDateTimeController', () => {
     const wrapper = mountComponent();
 
     await wrapper.findComponent(AppDayTable).vm.$emit('update', newDate);
-    expect((wrapper.vm as any).model).toEqual(newDate);
+    expect(wrapper.emitted('update:modelValue')![0][0]).toEqual(newDate);
   });
 });

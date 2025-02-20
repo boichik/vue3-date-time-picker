@@ -185,24 +185,6 @@
     --vpick--table-cell-disabled-border-color
   );
 
-  --vpick--day-table-cell-range-color: var(--vpick--table-cell-hover-color);
-  --vpick--day-table-cell-range-bg-color: var(
-    --vpick--table-cell-hover-bg-color
-  );
-  --vpick--day-table-cell-range-border-color: var(
-    --vpick--table-cell-hover-bg-color
-  );
-
-  --vpick--day-table-cell-range-hover-color: var(
-    --vpick--table-cell-hover-color
-  );
-  --vpick--day-table-cell-range-hover-bg-color: var(
-    --vpick--table-cell-hover-bg-color
-  );
-  --vpick--day-table-cell-range-hover-border-color: var(
-    --vpick--table-cell-hover-bg-color
-  );
-
   --vpick--table-cell-font: var(--vpick--font-default);
   --vpick--table-cell-border-radius: 8px;
   --vpick--table-cell-border-width: 2px;
@@ -223,6 +205,24 @@
   --vpick--table-cell-disabled-color: var(--vpick--color-text-secondary);
   --vpick--table-cell-disabled-bg-color: var(--vpick--color-white);
   --vpick--table-cell-disabled-border-color: var(--vpick--color-white);
+
+  --vpick--table-cell-range-color: var(--vpick--table-cell-hover-color);
+  --vpick--table-cell-range-bg-color: var(
+    --vpick--table-cell-hover-bg-color
+  );
+  --vpick--table-cell-range-border-color: var(
+    --vpick--table-cell-hover-bg-color
+  );
+
+  --vpick--table-cell-range-hover-color: var(
+    --vpick--table-cell-hover-color
+  );
+  --vpick--table-cell-range-hover-bg-color: var(
+    --vpick--table-cell-hover-bg-color
+  );
+  --vpick--table-cell-range-hover-border-color: var(
+    --vpick--table-cell-hover-bg-color
+  );
 
   /* TIME PICKER */
   --vpick--time-content-margin-bottom: 8px;

@@ -5,12 +5,11 @@ import {
 import AppDateTimeContent from '@/components/app-date-time-picker/src/components/base/AppDateTimeContent.vue';
 import AppDateMode from '@/components/app-date-time-picker/src/components/mode/AppDateMode.vue';
 import AppDateRangeMode from '@/components/app-date-time-picker/src/components/mode/AppDateRangeMode.vue';
-import AppDateTimeMode from '@/components/app-date-time-picker/src/components/mode/AppDateTimeMode.vue';
-import AppDateTimeRangeMode from '@/components/app-date-time-picker/src/components/mode/AppDateTimeRangeMode.vue';
 import AppDateTimePanel from '@/components/app-date-time-picker/src/components/panel/AppDateTimePanel.vue';
 import AppDateTimeShortcutPanel from '@/components/app-date-time-picker/src/components/panel/AppDateTimeShortcutPanel.vue';
 import AppDayTable from '@/components/app-date-time-picker/src/components/table/AppDayTable.vue';
 import AppMonthTable from '@/components/app-date-time-picker/src/components/table/AppMonthTable.vue';
+import AppYearTable from '@/components/app-date-time-picker/src/components/table/AppYearTable.vue';
 import { useLocalization } from '@/composables/useLocalization';
 import AppButton from '@/ui/AppButton.vue';
 import AppButtonPanel from '@/ui/AppButtonPanel.vue';
@@ -274,9 +273,9 @@ describe('AppDateTimePicker', () => {
 
   const displayPickerModeTestCase: any[] = [
     ['date', AppDateMode],
-    ['datetime', AppDateTimeMode],
+    ['datetime', AppDateMode],
     ['daterange', AppDateRangeMode],
-    ['datetimerange', AppDateTimeRangeMode],
+    ['datetimerange', AppDateRangeMode],
     ['test', AppDateMode],
     [1, AppDateMode],
     [null, AppDateMode],
@@ -623,7 +622,7 @@ describe('AppDateTimePicker', () => {
 
     await openPopover(wrapper);
 
-    const mode = wrapper.findComponent(AppDateTimeMode);
+    const mode = wrapper.findComponent(AppDateMode);
 
     expect(mode.find('input').attributes('placeholder')).toBe(placeholder);
   });
@@ -636,7 +635,7 @@ describe('AppDateTimePicker', () => {
 
     await openPopover(wrapper);
 
-    const mode = wrapper.findComponent(AppDateTimeMode);
+    const mode = wrapper.findComponent(AppDateMode);
 
     expect(mode.find('input').attributes('placeholder')).toBeUndefined();
   });
@@ -655,7 +654,7 @@ describe('AppDateTimePicker', () => {
 
     await openPopover(wrapper);
 
-    const mode = wrapper.findComponent(AppDateTimeRangeMode);
+    const mode = wrapper.findComponent(AppDateRangeMode);
 
     expect(mode.findAll('input')[0].attributes('placeholder')).toBe(
       startPlaceholder
@@ -1202,5 +1201,105 @@ describe('AppDateTimePicker', () => {
     expect(
       cell.classes('app-date-time-picker-day-table__cell--selected')
     ).toBeFalsy();
+  });
+
+  it('should display a calendar of days when prop ‘mode’ = ‘day’', async () => {
+    const wrapper = createWrapper({ mode: 'day' });
+
+    await openPopover(wrapper);
+
+    const table = wrapper.findComponent(AppDayTable);
+
+    expect(table.isVisible()).toBeTruthy();
+  });
+
+  it('should display a calendar of months when prop ‘mode’ = ‘month’', async () => {
+    const wrapper = createWrapper({ mode: 'month' });
+
+    await openPopover(wrapper);
+
+    const table = wrapper.findComponent(AppMonthTable);
+
+    expect(table.isVisible()).toBeTruthy();
+  });
+
+  it('should display a calendar of years when prop ‘mode’ = ‘year’', async () => {
+    const wrapper = createWrapper({ mode: 'year' });
+
+    await openPopover(wrapper);
+
+    const table = wrapper.findComponent(AppYearTable);
+
+    expect(table.isVisible()).toBeTruthy();
+  });
+
+  it('should display the date with the selected month after confirming the selection when prop ‘mode’ = ‘month’', async () => {
+    const wrapper = createWrapper({ mode: 'month' });
+
+    await openPopover(wrapper);
+
+    const table = wrapper.findComponent(AppMonthTable);
+
+    const cell = table.find('td');
+
+    await cell.trigger('click');
+
+    await applyValue(wrapper);
+
+    wrapperEmittedValue(wrapper, new Date(2025, 0, 1));
+  });
+
+  it('must display the date with the selected year after confirming the selection when prop ‘mode’ = ‘year’', async () => {
+    const wrapper = createWrapper({ mode: 'year' });
+
+    await openPopover(wrapper);
+
+    const table = wrapper.findComponent(AppYearTable);
+
+    const cell = table.find('td');
+
+    await cell.trigger('click');
+
+    await applyValue(wrapper);
+
+    wrapperEmittedValue(wrapper, new Date(2020, 0, 1));
+  });
+
+  it('should give a date range with the selected months after confirming the selection when prop ‘mode’ = ‘month’', async () => {
+    const wrapper = createWrapper({ mode: 'month', type: 'daterange' });
+
+    await openPopover(wrapper);
+
+    const [t1, t2] = wrapper.findAllComponents(AppMonthTable);
+
+    const c1 = t1.find('td');
+
+    await c1.trigger('click');
+
+    const c2 = t2.find('td');
+    await c2.trigger('click');
+
+    await applyValue(wrapper);
+
+    wrapperEmittedValue(wrapper, [new Date(2025, 0, 1), new Date(2026, 0, 1)]);
+  });
+
+  it('should provide a date range with the selected years after confirming the selection when prop ‘mode’ = ‘year’', async () => {
+    const wrapper = createWrapper({ mode: 'year', type: 'daterange' });
+
+    await openPopover(wrapper);
+
+    const [t1, t2] = wrapper.findAllComponents(AppYearTable);
+
+    const c1 = t1.find('td');
+
+    await c1.trigger('click');
+
+    const c2 = t2.find('td');
+    await c2.trigger('click');
+
+    await applyValue(wrapper);
+
+    wrapperEmittedValue(wrapper, [new Date(2020, 0, 1), new Date(2030, 0, 1)]);
   });
 });
