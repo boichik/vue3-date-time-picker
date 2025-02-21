@@ -20,6 +20,7 @@ const provideDate = computed(() => {
     weekdayFormat: DEFAULT_WEEDDAY_FORMAT,
     monthCellFormat: DEFAULT_MONTH_CELL_FORMAT,
     monthButtonFormat: DEFAULT_MONTH_BUTTON_FORMAT,
+    mode: 'day',
     ...(isUkLocale
       ? {
           locale: 'uk',
