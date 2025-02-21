@@ -91,6 +91,7 @@ import { isValidAlign } from '@/utils/isValidAlign';
 import { useClickOutside } from '@/composables/useClickOutside';
 import { useFocusInOutside } from '@/composables/useFocusInOutside';
 import { isValidLocale } from '@/utils/isValidLocale';
+import { getPlacementByAlign } from '@/utils/getPlacementByAlign';
 
 const DEFAULT_DATE_FORMAT = 'yyyy/MM/dd';
 const DEFAULT_TIME_FORMAT = 'HH:mm:ss';
@@ -255,19 +256,7 @@ const isRangeComponentType = computed(
     ].includes(appDateTimePickerComponentData.value.type as never)
 );
 
-// TODO: to global utils
-const placement = computed<Placement>(() => {
-  switch (props.align) {
-    case 'left':
-      return 'bottom-start';
-    case 'center':
-      return 'bottom';
-    case 'right':
-      return 'bottom-end';
-    default:
-      return 'bottom-start';
-  }
-});
+const placement = computed<Placement>(() => getPlacementByAlign(props.align));
 
 watch(() => props.modelValue, externalInputValue);
 

@@ -80,6 +80,7 @@ import type {
 import { isValidSelectableRange } from './utils';
 import { useFocusInOutside } from '@/composables/useFocusInOutside';
 import { useClickOutside } from '@/composables/useClickOutside';
+import { getPlacementByAlign } from '@/utils/getPlacementByAlign';
 
 const DEFAULT_TIME_FORMAT = 'HH:mm:ss';
 const DEFAULT_READONLY = false;
@@ -190,18 +191,7 @@ provide<ComputedRef<AppTimePickerComponentData>>(
   appTimePickerComponentData
 );
 
-const placement = computed<Placement>(() => {
-  switch (props.align) {
-    case 'left':
-      return 'bottom-start';
-    case 'center':
-      return 'bottom';
-    case 'right':
-      return 'bottom-end';
-    default:
-      return 'bottom-start';
-  }
-});
+const placement = computed<Placement>(() => getPlacementByAlign(props.align));
 
 watch(() => props.modelValue, externalInputValue);
 
