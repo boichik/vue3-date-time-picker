@@ -86,6 +86,8 @@ watch(
 );
 
 function handleScroll(event: WheelEvent) {
+  event.preventDefault();
+
   if (panel.value && panel.value.handleSelectByScroll) {
     panel.value.handleSelectByScroll(event);
   }
