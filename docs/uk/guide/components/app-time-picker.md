@@ -1,6 +1,13 @@
 <script setup>
 import {ref} from 'vue';
 
+const model = ref();
+
+const rangeModel = ref();
+
+const defaultTimeModel = ref();
+const defaultTimeRangeModel = ref();
+
 const timezoneModel = ref(new Date())
 const hourMinutesModel = ref(new Date())
 const amPmModel = ref(new Date())
@@ -28,7 +35,7 @@ const defaultTimeRange = [setTime(12, 0, 30), setTime(17, 28, 30)]
 
 Ви можете вибрати час за допомогою введеню даних в інпут або панелі вибору часу
 
-<AppTimePicker placeholder="Виберіть час"/>
+<AppTimePicker v-model="model" placeholder="Виберіть час"/>
 
 ::: code-group
 
@@ -70,7 +77,7 @@ export default {
 Зверніть увагу, що якщо ви не використовуєте атрибут <code>selectable-range</code> і якщо встановлено атрибут <code>is-range="true"</code>, пікер автоматично визначить допустимий діапазон на основі вибраних даних.
 :::
 
-<AppTimePicker is-range start-placeholder="Початковий час" end-placeholder="Кінцевий час"/>
+<AppTimePicker v-model="rangeModel" is-range start-placeholder="Початковий час" end-placeholder="Кінцевий час"/>
 
 ::: code-group
 
@@ -119,11 +126,11 @@ export default {
 У пікері ви можете встановити час, який буде підставлятися за замовчуванням, коли користувач відкриває його вперше.
 Ви можете налаштувати як для одного пікера, так і для кожного пікера окремо.
 
-<AppTimePicker :default-time="defaultTime" placeholder="Виберіть час"/>
+<AppTimePicker v-model="defaultTimeModel" :default-time="defaultTime" placeholder="Виберіть час"/>
 
 <br>
 
-<AppTimePicker is-range :default-time="defaultTimeRange" start-placeholder="Початковий час" end-placeholder="Кінцевий час"/>
+<AppTimePicker v-model="defaultTimeRangeModel" is-range :default-time="defaultTimeRange" start-placeholder="Початковий час" end-placeholder="Кінцевий час"/>
 
 ::: code-group
 
@@ -486,6 +493,19 @@ export default {
         </div>
       </td>
       <td>"</td>
+    </tr>
+    <tr>
+      <td>
+        <div class="vi-table__cell--flex">
+          <span>auto-apply</span>
+          <Badge type="tip" text="$VERSION" />
+        </div>
+      </td>
+      <td>застосування змін без натискання кнопки "Застосувати"</td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>false</td>
     </tr>
     <tr>
       <td>disabled</td>

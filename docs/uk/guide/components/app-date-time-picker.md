@@ -839,6 +839,19 @@ export default {
       <td>—</td>
     </tr>
     <tr>
+      <td>
+        <div class="vi-table__cell--flex">
+          <span>auto-apply</span>
+          <Badge type="tip" text="$VERSION" />
+        </div>
+      </td>
+      <td>застосування змін без натискання кнопки "Застосувати"</td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
       <td>disabled</td>
       <td>чи заблокований пікер</td>
       <td>

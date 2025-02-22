@@ -843,6 +843,19 @@ export default {
       <td>—</td>
     </tr>
     <tr>
+      <td>
+        <div class="vi-table__cell--flex">
+          <span>auto-apply</span>
+          <Badge type="tip" text="$VERSION" />
+        </div>
+      </td>
+      <td>applying changes without clicking the "Apply" button</td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
       <td>disabled</td>
       <td>whether the picker is blocked</td>
       <td>

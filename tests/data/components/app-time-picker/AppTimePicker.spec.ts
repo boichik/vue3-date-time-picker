@@ -982,4 +982,19 @@ describe('AppTimePicker', () => {
 
     expect(input.element.value).toBe(new Date().toString());
   });
+
+  it('should automatically apply the value without clicking the apply button', async () => {
+    const date = new Date(2025, 0, 1, 14, 20, 29);
+
+    await fakeTimeWrapper(date, async () => {
+      const wrapper = createWrapper({ autoApply: true });
+
+      await openPopover(wrapper);
+
+      expect(wrapper.emitted('update:model-value')).toBeTruthy();
+      expect(wrapper.emitted('update:model-value')![0][0]).toStrictEqual(
+        new Date(2025, 0, 1, 14, 20, 29)
+      );
+    });
+  });
 });

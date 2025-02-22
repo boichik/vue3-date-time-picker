@@ -1,6 +1,13 @@
 <script setup>
 import {ref} from 'vue';
 
+const model = ref();
+
+const rangeModel = ref();
+
+const defaultTimeModel = ref();
+const defaultTimeRangeModel = ref();
+
 const timezoneModel = ref(new Date())
 const hourMinutesModel = ref(new Date())
 const amPmModel = ref(new Date())
@@ -28,7 +35,7 @@ const defaultTimeRange = [setTime(12, 0, 30), setTime(17, 28, 30)]
 
 You can select the time by entering data in the input or the time selection panel
 
-<AppTimePicker placeholder="Select time"/>
+<AppTimePicker v-model="model" placeholder="Select time"/>
 
 ::: code-group
 
@@ -70,7 +77,7 @@ Using the <code>is-range</code> attribute, the picker will start working in the 
 Please note that if you do not use the <code>selectable-range</code> attribute and if the <code>is-range=‘true’</code> attribute is set, the picker will automatically determine the valid range based on the selected data.
 :::
 
-<AppTimePicker is-range start-placeholder="Start time" end-placeholder="End time"/>
+<AppTimePicker v-model="rangeModel" is-range start-placeholder="Start time" end-placeholder="End time"/>
 
 ::: code-group
 
@@ -119,11 +126,11 @@ export default {
 In the picker, you can set the time that will be substituted by default when the user opens it for the first time.
 You can configure both for one picker and for each picker separately.
 
-<AppTimePicker :default-time="defaultTime" placeholder="Select time"/>
+<AppTimePicker v-model="defaultTimeModel" :default-time="defaultTime" placeholder="Select time"/>
 
 <br>
 
-<AppTimePicker is-range :default-time="defaultTimeRange" start-placeholder="Start time" end-placeholder="End time"/>
+<AppTimePicker v-model="defaultTimeRangeModel" is-range :default-time="defaultTimeRange" start-placeholder="Start time" end-placeholder="End time"/>
 
 ::: code-group
 
@@ -486,6 +493,19 @@ export default {
         </div>
       </td>
       <td>"</td>
+    </tr>
+    <tr>
+      <td>
+        <div class="vi-table__cell--flex">
+          <span>auto-apply</span>
+          <Badge type="tip" text="$VERSION" />
+        </div>
+      </td>
+      <td>applying changes without clicking the "Apply" button</td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>false</td>
     </tr>
     <tr>
       <td>disabled</td>

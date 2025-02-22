@@ -84,4 +84,8 @@ export interface AppPickerProps {
    * Leave the picker open after opening it. Use it for debugging or researching a popover
    */
   stayOpened?: boolean;
+  /**
+   * applying changes without clicking the Apply button
+   */
+  autoApply?: boolean;
 }

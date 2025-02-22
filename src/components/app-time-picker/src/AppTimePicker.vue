@@ -81,6 +81,7 @@ import { isValidSelectableRange } from './utils';
 import { useFocusInOutside } from '@/composables/useFocusInOutside';
 import { useClickOutside } from '@/composables/useClickOutside';
 import { getPlacementByAlign } from '@/utils/getPlacementByAlign';
+import { isEmptyModels } from '@/utils/isEmptyModels';
 
 const DEFAULT_TIME_FORMAT = 'HH:mm:ss';
 const DEFAULT_READONLY = false;
@@ -91,10 +92,11 @@ const DEFAULT_INVALID = false;
 const DEFAULT_APPEND_TO_BODY = true;
 const DEFAULT_STAY_OPENED = false;
 const DEFAULT_INPUT_READONLY = false;
+const DEFAULT_AUTO_APPLY = false;
 
 const timezoneConvertor = new TimezoneConvertorImpl();
 
-const emit = defineEmits(['update:model-value', 'focus', 'blur']);
+const emit = defineEmits(['update:model-value', 'change', 'focus', 'blur']);
 
 const props = withDefaults(defineProps<AppTimePickerProps>(), {
   modelValue: null,
@@ -107,6 +109,7 @@ const props = withDefaults(defineProps<AppTimePickerProps>(), {
   appendToBody: DEFAULT_APPEND_TO_BODY,
   stayOpened: DEFAULT_STAY_OPENED,
   inputReadonly: DEFAULT_INPUT_READONLY,
+  autoApply: DEFAULT_AUTO_APPLY,
 });
 
 const input = ref<HTMLInputElement | null>(null);
@@ -120,9 +123,13 @@ const contentVisible = ref(false);
 
 const model = ref<AppTimePickerModel>(null);
 
-const disallowApplyValue = computed(() =>
-  isSameModelValue(model.value, props.modelValue, props.timezone)
-);
+const disallowApplyValue = computed(() => {
+  if (!!props.autoApply) {
+    return isEmptyModels(model.value, props.modelValue);
+  }
+
+  return isSameModelValue(model.value, props.modelValue, props.timezone);
+});
 
 const isDisplayDefaultSlot = computed(() => !!useSlots()['default']);
 
@@ -198,6 +205,15 @@ watch(() => props.modelValue, externalInputValue);
 watch(
   () => props.isRange,
   () => externalInputValue(props.modelValue)
+);
+
+watch(
+  () => model.value,
+  () => {
+    if (!!props.autoApply) {
+      handleApplyValue(false);
+    }
+  }
 );
 
 function handleVisiblePopover() {
@@ -323,10 +339,16 @@ function handleCancel() {
   handleBlur();
 }
 
-function handleApplyValue() {
-  emit('update:model-value', prepareModelValue(model.value));
-  input.value?.blur();
-  handleBlur();
+function handleApplyValue(blur = true) {
+  const value = prepareModelValue(model.value);
+
+  emit('update:model-value', value);
+  emit('change', value);
+
+  if (blur) {
+    input.value?.blur();
+    handleBlur();
+  }
 }
 
 function handleKeydown(event: KeyboardEvent) {
@@ -362,7 +384,7 @@ useFocusInOutside(
       (event.target as HTMLElement).hasAttribute('data-popover-ignore')
     ) {
       if (popoverVisible.value && !props.stayOpened) {
-        handleBlur();
+        handleCancel();
       }
 
       return;

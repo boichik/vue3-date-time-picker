@@ -1302,4 +1302,16 @@ describe('AppDateTimePicker', () => {
 
     wrapperEmittedValue(wrapper, [new Date(2020, 0, 1), new Date(2030, 0, 1)]);
   });
+
+  it('should automatically apply the value without clicking the apply button', async () => {
+    const wrapper = createWrapper({ autoApply: true });
+
+    await openPopover(wrapper);
+
+    const { cells } = await findAllCellNotOtherMonth(wrapper);
+
+    await cells[0].trigger('click');
+
+    wrapperEmittedValue(wrapper, new Date(2025, 0, 1));
+  });
 });
