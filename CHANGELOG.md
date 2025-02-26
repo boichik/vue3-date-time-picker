@@ -1,3 +1,21 @@
+## [0.2.0](https://github.com/boichik/vue3-date-time-picker/compare/v0.1.0...v0.2.0) (2025-02-26)
+
+### Features
+
+- Added a new global props `auto-apply` (default: **false**). 
+  _Functionality_: if the props is “**true**”, when changing the value in the picker, there is no need to click the “Apply” button
+- Added global props `start-id` (default: **"**).
+  _Functionality_: When the prop has a value, it will be passed to the `id` attribute of the native input (or the first native inlet when the “range” mode is selected)
+- Added global props `start-name` (default: **"**).
+  _Functionality_: When the prop has a value, it will be passed to the `name` attribute of the native input (or the first native inlet when the “range” mode is selected)
+- Added global props `end-id` (default: **"**).
+  _Functionality_: When the prop has a value, it will be passed to the `id` attribute of the last native input
+- Added global props `end-name` (default: **"**).
+  _Functionality_: When the prop has a value, it will be passed to the `name` attribute of the last native input
+
+### Critical changes
+**There are no critical changes in this release**
+
 ## [0.1.0](https://github.com/boichik/vue3-date-time-picker/compare/v0.0.2...v0.1.0) (2025-02-20)
 
 ### Features
