@@ -19,7 +19,7 @@ export const globalAttributes: DocsTableData<AttributeColumns> = {
     {
       name: {
         value: 'auto-apply',
-        version: '$VERSION',
+        version: '^0.2.0',
       },
       description: {
         value: 'global_attributes__auto_apply_description',
@@ -179,7 +179,7 @@ export const globalAttributes: DocsTableData<AttributeColumns> = {
     {
       name: {
         value: 'start-id',
-        version: '$VERSION',
+        version: '^0.2.0',
       },
       description: {
         value: 'global_attributes__start_id_description',
@@ -195,7 +195,7 @@ export const globalAttributes: DocsTableData<AttributeColumns> = {
     {
       name: {
         value: 'end-id',
-        version: '$VERSION',
+        version: '^0.2.0',
       },
       description: {
         value: 'global_attributes__end_id_description',
@@ -211,7 +211,7 @@ export const globalAttributes: DocsTableData<AttributeColumns> = {
     {
       name: {
         value: 'start-name',
-        version: '$VERSION',
+        version: '^0.2.0',
       },
       description: {
         value: 'global_attributes__start_name_description',
@@ -227,7 +227,7 @@ export const globalAttributes: DocsTableData<AttributeColumns> = {
     {
       name: {
         value: 'end-name',
-        version: '$VERSION',
+        version: '^0.2.0',
       },
       description: {
         value: 'global_attributes__end_name_description',
