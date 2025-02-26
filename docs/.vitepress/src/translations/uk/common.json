@@ -1,0 +1,7 @@
+{
+  "common__name": "Назва",
+  "common__description": "Опис",
+  "common__type": "Тип",
+  "common__default": "За замовчуванням",
+  "common__more": "більше"
+}

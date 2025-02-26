@@ -1,0 +1,7 @@
+{
+  "common__name": "Name",
+  "common__description": "Description",
+  "common__type": "Type",
+  "common__default": "Default",
+  "common__more": "more"
+}

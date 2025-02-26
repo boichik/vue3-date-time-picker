@@ -1,0 +1,17 @@
+{
+  "date_time_attributes__v_model_description": "binding value, if it is an array, the length should be 2",
+  "date_time_attributes__date_format_description": "format is designed to display the date in the input data.",
+  "date_time_attributes__time_format_description": "format is for displaying the time in the time input (ie in <code>datetime</code>, <code>datetimerange</code> modes)",
+  "date_time_attributes__combine_formats_description": "generate the format for the picker from the <code>date-format</code> & <code>time-format</code> props",
+  "date_time_attributes__type_description": "which type of picker should be displayed",
+  "date_time_attributes__mode_description": "in which mode you want to display the calendar.",
+  "date_time_attributes__first_day_of_week_description": "the order of the days of the week in the day calendar",
+  "date_time_attributes__weekday_format_description": "format of the days of the week displayed in the calendar",
+  "date_time_attributes__month_cell_format_description": "format of months displayed in the calendar",
+  "date_time_attributes__month_button_format_description": "the format of the month, which is displayed in the button located in the top panel of the calendar",
+  "date_time_attributes__shortcuts_description": "list of shortcuts to quickly select a date",
+  "date_time_attributes__default_time_description": "the time that will be set by default. The expected format is “00:00:00”.",
+  "date_time_attributes__locale_description": "the language in which you want to display data in the picker. (Use only if you do not have the <code>vue-i18n</code> package)",
+  "date_time_attributes__time_options_description": "setting up the time picker",
+  "date_time_attributes__disabled_date_description": "the option is used to define blocked dates"
+}

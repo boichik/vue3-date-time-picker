@@ -1,0 +1,17 @@
+{
+  "date_time_attributes__v_model_description": "значення прив'язки, якщо це масив, то довжина повинна бути 2",
+  "date_time_attributes__date_format_description": "призначений для відображення дати в інпуті у певному форматі.",
+  "date_time_attributes__time_format_description": "призначений для відображення дати в інпуті у певному форматі, який знаходиться в поповері при режимах <code>datetime</code>, <code>datetimerange</code>)",
+  "date_time_attributes__combine_formats_description": "згенерувати формат для пікера на основі пропсів <code>date-format</code> & <code>time-format</code>",
+  "date_time_attributes__type_description": "який тип пікера слід відображати",
+  "date_time_attributes__mode_description": "в якому режимі ви хочете відображати календар.",
+  "date_time_attributes__first_day_of_week_description": "порядок днів тижня в денному календарі",
+  "date_time_attributes__weekday_format_description": "формат днів тижня в денному календарі",
+  "date_time_attributes__month_cell_format_description": "формат місяців у календарі",
+  "date_time_attributes__month_button_format_description": "формат місяця в кнопці яка знаходиться у верхній панелі календаря",
+  "date_time_attributes__shortcuts_description": "список ярликів для швидкого вибору дати.",
+  "date_time_attributes__default_time_description": "час, який буде встановлено за замовчуванням. Очікуваний формат - «00:00:00».",
+  "date_time_attributes__locale_description": "мова, якою ви хочете відображати дані в пікері (Використовуйте тільки якщо у вас немає пакета <code>vue-i18n</code>)",
+  "date_time_attributes__time_options_description": "налаштування пікера часу",
+  "date_time_attributes__disabled_date_description": "визначення заблокованих дат"
+}

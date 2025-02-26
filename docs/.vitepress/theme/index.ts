@@ -3,8 +3,8 @@ import { AppDateTimePicker } from '../../../src/components/app-date-time-picker'
 import AppDateTimeContent from '../../../src/components/app-date-time-picker/src/components/base/AppDateTimeContent.vue';
 import { AppTimePicker } from '../../../src/components/app-time-picker';
 import '../../../src/styles/variables.css';
-import './style/index.scss';
-import Layout from '../../components/custom/Layout.vue';
+import '../src/style/index.scss';
+import Layout from '../src/components/custom/Layout.vue';
 
 export default {
   extends: DefaultTheme,
@@ -14,7 +14,7 @@ export default {
     app.component('AppDateTimePicker', AppDateTimePicker);
     app.component('AppTimePicker', AppTimePicker);
 
-    const components = import.meta.glob('../../components/**/*.vue', {
+    const components = import.meta.glob('../src/components/**/*.vue', {
       eager: true,
     });
 

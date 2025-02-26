@@ -1,0 +1,21 @@
+.container {
+  .image {
+    & {
+      margin: 0 0 20px;
+    }
+
+    @media (min-width: 640px) {
+      margin: 0 0 20px;
+    }
+  }
+}
+
+.image-container {
+  width: fit-content !important;
+  height: fit-content !important;
+  @media (min-width: 960px) {
+    transform: unset !important;
+  }
+}
+
+

@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress';
 import { fileURLToPath } from 'node:url';
-import { preparePages } from './utils/preparePages';
-import searchTranslations from './data/searchTranslations';
+import { preparePages } from './src/utils/preparePages';
+import searchTranslations from './src/data/searchTranslations';
 
 const baseUrl = '/vue3-date-time-picker/';
 
@@ -10,6 +10,7 @@ export default defineConfig({
   description:
     'Modern, lightweight, and flexible date and time picker in Vue 3',
   base: baseUrl,
+  srcDir: './pages',
   head: [
     [
       'link',
