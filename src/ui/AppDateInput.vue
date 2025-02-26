@@ -1,10 +1,12 @@
 <template>
   <input
+    :id="customId"
     ref="input"
     v-model="model"
-    :disabled="props.disabled"
-    :readonly="props.readonly"
-    :placeholder="props.placeholder"
+    :disabled="disabled"
+    :readonly="readonly"
+    :placeholder="placeholder"
+    :name="customName"
     type="text"
     class="app-date-input"
     @focus="handleFocus"
@@ -33,6 +35,8 @@ const props = withDefaults(
     readonly?: boolean;
     disabled?: boolean;
     placeholder?: string;
+    customId?: string;
+    customName?: string;
     disabledDate?: (date: Date) => boolean;
   }>(),
   {

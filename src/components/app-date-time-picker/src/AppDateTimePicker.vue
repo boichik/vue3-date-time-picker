@@ -196,6 +196,10 @@ const appDateTimePickerComponentData = computed<AppDateTimePickerComponentData>(
       timezone,
       inputReadonly,
       mode,
+      startId,
+      endId,
+      startName,
+      endName,
       disabledDate,
     } = props;
 
@@ -244,6 +248,10 @@ const appDateTimePickerComponentData = computed<AppDateTimePickerComponentData>(
       dateFormat: parseFormat(dateFormat, DEFAULT_DATE_FORMAT),
       timeFormat: parseFormat(timeFormat, DEFAULT_TIME_FORMAT),
       timeOptions: typeof timeOptions === 'object' ? timeOptions : {},
+      startId: isString(startId) ? startId : '',
+      endId: isString(endId) ? endId : '',
+      startName: isString(startName) ? startName : '',
+      endName: isString(endName) ? endName : '',
       applyChange: handleApplyValue,
       cancelChange: handleCancel,
     };

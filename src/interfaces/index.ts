@@ -88,4 +88,20 @@ export interface AppPickerProps {
    * applying changes without clicking the Apply button
    */
   autoApply?: boolean;
+  /**
+   * id for the initial native input (also used for the native input when there is only one)
+   */
+  startId?: string;
+  /**
+   * id for the last native input
+   */
+  endId?: string;
+  /**
+   * the name for the initial native input (also used for the custom input if there is only one)
+   */
+  startName?: string;
+  /**
+   * the name for the last native input
+   */
+  endName?: string;
 }

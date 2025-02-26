@@ -155,6 +155,10 @@ const appTimePickerComponentData = computed<AppTimePickerComponentData>(() => {
     cancelText,
     applyText,
     inputReadonly,
+    startId,
+    endId,
+    startName,
+    endName,
   } = props;
 
   const { isDisabledDate } = internalSettings || {};
@@ -175,6 +179,10 @@ const appTimePickerComponentData = computed<AppTimePickerComponentData>(() => {
     inputReadonly: isBoolean(inputReadonly)
       ? inputReadonly
       : DEFAULT_INPUT_READONLY,
+    startId: isString(startId) ? startId : '',
+    endId: isString(endId) ? endId : '',
+    startName: isString(startName) ? startName : '',
+    endName: isString(endName) ? endName : '',
     startDefaultTime,
     endDefaultTime,
     placeholder,

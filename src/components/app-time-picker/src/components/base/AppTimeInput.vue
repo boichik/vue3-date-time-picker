@@ -7,6 +7,8 @@
       :readonly="readonly || inputReadonly"
       :placeholder="startInputPlaceholder"
       :format="format"
+      :custom-id="attributesForNativeInputs.startId"
+      :custom-name="attributesForNativeInputs.startName"
       :disabled-date="isDisabledStartInputValue"
       class="app-time-picker-input__inner"
       autocomplete="off"
@@ -24,6 +26,8 @@
         :readonly="readonly || inputReadonly"
         :placeholder="endInputPlaceholder"
         :format="format"
+        :custom-id="attributesForNativeInputs.endId"
+        :custom-name="attributesForNativeInputs.endName"
         :disabled-date="isDisabledEndInputValue"
         class="app-time-picker-input__inner"
         autocomplete="off"
@@ -115,6 +119,18 @@ const modelEnd = computed<Date | null>({
 
 const isDoubleInputs = computed(() => {
   return appTimePickerComponentData?.value.isRange;
+});
+
+const attributesForNativeInputs = computed(() => {
+  const { startId, endId, startName, endName } =
+    appTimePickerComponentData?.value || {};
+
+  return {
+    startId,
+    endId,
+    startName,
+    endName,
+  };
 });
 
 const disabled = computed(() => appTimePickerComponentData?.value.disabled);

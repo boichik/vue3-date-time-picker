@@ -74,6 +74,10 @@ export type AppTimePickerComponentData = Pick<
       | 'cancelText'
       | 'applyText'
       | 'inputReadonly'
+      | 'startId'
+      | 'endId'
+      | 'startName'
+      | 'endName'
     >
   > & {
     startDefaultTime: Date;

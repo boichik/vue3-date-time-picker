@@ -7,6 +7,8 @@
       :readonly="readonly || inputReadonly"
       :format="format"
       :placeholder="startInputPlaceholder"
+      :custom-id="attributesForNativeInputs.startId"
+      :custom-name="attributesForNativeInputs.startName"
       :disabled-date="isDisabledStartInputValue"
       class="app-datetime-picker-input__inner"
       autocomplete="off"
@@ -24,6 +26,8 @@
         :readonly="readonly || inputReadonly"
         :format="format"
         :placeholder="endInputPlaceholder"
+        :custom-id="attributesForNativeInputs.endId"
+        :custom-name="attributesForNativeInputs.endName"
         :disabled-date="isDisabledEndInputValue"
         class="app-datetime-picker-input__inner"
         autocomplete="off"
@@ -123,6 +127,18 @@ const isTimeTypes = computed(() => {
   return ['datetime', 'datetimerange'].includes(
     appDateTimePickerComponentData?.value.type as never
   );
+});
+
+const attributesForNativeInputs = computed(() => {
+  const { startId, endId, startName, endName } =
+    appDateTimePickerComponentData?.value || {};
+
+  return {
+    startId,
+    endId,
+    startName,
+    endName,
+  };
 });
 
 const disabled = computed(() => appDateTimePickerComponentData?.value.disabled);

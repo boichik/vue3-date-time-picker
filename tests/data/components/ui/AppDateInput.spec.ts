@@ -3,19 +3,17 @@ import { mount } from '@vue/test-utils';
 import { format, parse } from 'date-fns';
 
 describe('AppDateInput.vue', () => {
+  const createWrapper = (props = {}) => mount(AppDateInput, { props });
+
   it('renders the input element', () => {
-    const wrapper = mount(AppDateInput);
+    const wrapper = createWrapper();
     const input = wrapper.find('input.app-date-input');
     expect(input.exists()).toBe(true);
   });
 
   it('updates internal model when `modelValue` prop changes', async () => {
     const date = new Date(2025, 0, 1);
-    const wrapper = mount(AppDateInput, {
-      props: {
-        modelValue: date,
-      },
-    });
+    const wrapper = createWrapper({ modelValue: date });
 
     expect(wrapper.find('input').element.value).toBe(
       format(date, 'yyyy/MM/dd')
@@ -29,7 +27,7 @@ describe('AppDateInput.vue', () => {
   });
 
   it('Update values when imask is not available', async () => {
-    const wrapper = mount(AppDateInput);
+    const wrapper = createWrapper();
 
     const newDate = new Date(2025, 1, 1);
 
@@ -38,7 +36,7 @@ describe('AppDateInput.vue', () => {
   });
 
   it('emits `focus` event when the input gains focus', async () => {
-    const wrapper = mount(AppDateInput);
+    const wrapper = createWrapper();
     const input = wrapper.find('input');
 
     await input.trigger('focus');
@@ -46,7 +44,7 @@ describe('AppDateInput.vue', () => {
   });
 
   it('emits `blur` event when the input loses focus', async () => {
-    const wrapper = mount(AppDateInput);
+    const wrapper = createWrapper();
     const input = wrapper.find('input');
 
     await input.trigger('blur');
@@ -54,11 +52,9 @@ describe('AppDateInput.vue', () => {
   });
 
   it('emits `update:model-value` with a valid date when input value changes', async () => {
-    const wrapper = mount(AppDateInput, {
-      props: {
-        format: 'yyyy/MM/dd',
-        modelValue: null,
-      },
+    const wrapper = createWrapper({
+      format: 'yyyy/MM/dd',
+      modelValue: null,
     });
 
     const input = wrapper.find('input');
@@ -70,11 +66,9 @@ describe('AppDateInput.vue', () => {
   });
 
   it('does not emit `update:model-value` for invalid date', async () => {
-    const wrapper = mount(AppDateInput, {
-      props: {
-        format: 'yyyy/MM/dd',
-        modelValue: null,
-      },
+    const wrapper = createWrapper({
+      format: 'yyyy/MM/dd',
+      modelValue: null,
     });
 
     const input = wrapper.find('input');
@@ -83,7 +77,7 @@ describe('AppDateInput.vue', () => {
   });
 
   it('handles focus and blur methods correctly', async () => {
-    const wrapper = mount(AppDateInput);
+    const wrapper = createWrapper();
     const input = wrapper.find('input');
 
     vi.spyOn(input.element, 'focus');
@@ -97,11 +91,9 @@ describe('AppDateInput.vue', () => {
   });
 
   it('resets value on `remove` method call', async () => {
-    const wrapper = mount(AppDateInput, {
-      props: {
-        format: 'yyyy/MM/dd',
-        modelValue: new Date(2025, 0, 1),
-      },
+    const wrapper = createWrapper({
+      format: 'yyyy/MM/dd',
+      modelValue: new Date(2025, 0, 1),
     });
 
     (wrapper.vm as any).remove();
@@ -111,11 +103,27 @@ describe('AppDateInput.vue', () => {
   });
 
   it('destroys IMask instance on unmount', () => {
-    const wrapper = mount(AppDateInput);
+    const wrapper = createWrapper();
     const imaskInstance = (wrapper.vm as any).imaskInstance;
     expect(imaskInstance).not.toBeNull();
 
     wrapper.unmount();
     expect(imaskInstance.value).toBe('');
+  });
+
+  it('should be added to the id of the native input', () => {
+    const id = 'customID';
+
+    const wrapper = createWrapper({ customId: id });
+
+    expect(wrapper.find('input').attributes('id')).toBe(id);
+  });
+
+  it('should be added to the name of the native input', () => {
+    const name = 'custom';
+
+    const wrapper = createWrapper({ customName: name });
+
+    expect(wrapper.find('input').attributes('name')).toBe(name);
   });
 });

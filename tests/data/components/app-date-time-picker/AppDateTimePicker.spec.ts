@@ -1314,4 +1314,48 @@ describe('AppDateTimePicker', () => {
 
     wrapperEmittedValue(wrapper, new Date(2025, 0, 1));
   });
+
+  const customIdAndNameForNativeInputTestCases: any[] = [
+    [false, ''],
+    [true, ''],
+    [undefined, ''],
+    [null, ''],
+    [NaN, ''],
+    [0, ''],
+    [[], ''],
+    [{}, ''],
+    [123, ''],
+    ['custom', 'custom'],
+  ];
+
+  it.each(customIdAndNameForNativeInputTestCases)(
+    'custom id and name for the native input: value = %i; hasAttribute = %i',
+    async (value, result) => {
+      const wrapper = createWrapper({ startId: value, startName: value });
+
+      expect(wrapper.find('input').attributes('id')).toBe(result);
+      expect(wrapper.find('input').attributes('name')).toBe(result);
+    }
+  );
+
+  it.each(customIdAndNameForNativeInputTestCases)(
+    'custom id and name for two the native input: value = %i; hasAttribute = %i',
+    async (value, result) => {
+      const wrapper = createWrapper({
+        startId: value,
+        startName: value,
+        endId: value,
+        endName: value,
+        type: 'daterange',
+      });
+
+      const [start, end] = wrapper.findAll('input');
+
+      expect(start.attributes('id')).toBe(result);
+      expect(start.attributes('name')).toBe(result);
+
+      expect(end.attributes('id')).toBe(result);
+      expect(end.attributes('name')).toBe(result);
+    }
+  );
 });
