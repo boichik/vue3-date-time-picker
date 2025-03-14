@@ -113,6 +113,7 @@ const DEFAULT_APPEND_TO_BODY = true;
 const DEFAULT_STAY_OPENED = false;
 const DEFAULT_INPUT_READONLY = false;
 const DEFAULT_AUTO_APPLY = false;
+const DEFAULT_HIDE_OFFSET_DAY = false;
 
 const localization = useLocalization();
 const timezoneConvertor = new TimezoneConvertorImpl();
@@ -140,6 +141,7 @@ const props = withDefaults(defineProps<AppDateTimePickerProps>(), {
   stayOpened: DEFAULT_STAY_OPENED,
   inputReadonly: DEFAULT_INPUT_READONLY,
   autoApply: DEFAULT_AUTO_APPLY,
+  hideOffsetDay: DEFAULT_HIDE_OFFSET_DAY,
 });
 
 const input = ref<HTMLInputElement | null>(null);
@@ -200,6 +202,7 @@ const appDateTimePickerComponentData = computed<AppDateTimePickerComponentData>(
       endId,
       startName,
       endName,
+      hideOffsetDay,
       disabledDate,
     } = props;
 
@@ -237,6 +240,9 @@ const appDateTimePickerComponentData = computed<AppDateTimePickerComponentData>(
       inputReadonly: isBoolean(inputReadonly)
         ? inputReadonly
         : DEFAULT_INPUT_READONLY,
+      hideOffsetDay: isBoolean(hideOffsetDay)
+        ? hideOffsetDay
+        : DEFAULT_HIDE_OFFSET_DAY,
       timezone: parsedTimezone,
       locale: currentLocale.value,
       // TODO: add JSON validator

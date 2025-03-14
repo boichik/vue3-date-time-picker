@@ -13,5 +13,6 @@
   "date_time_attributes__default_time_description": "час, який буде встановлено за замовчуванням. Очікуваний формат - «00:00:00».",
   "date_time_attributes__locale_description": "мова, якою ви хочете відображати дані в пікері (Використовуйте тільки якщо у вас немає пакета <code>vue-i18n</code>)",
   "date_time_attributes__time_options_description": "налаштування пікера часу",
-  "date_time_attributes__disabled_date_description": "визначення заблокованих дат"
+  "date_time_attributes__disabled_date_description": "визначення заблокованих дат",
+  "date_time_attributes__hide_offset_day_description": "приховати дні іншого місяця в календарі"
 }

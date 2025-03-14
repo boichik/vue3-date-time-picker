@@ -102,6 +102,10 @@ export interface AppDateTimePickerProps extends AppPickerProps {
    */
   timeOptions?: AppDateTimePickerTimeOptions;
   /**
+   * Hide days that belong to another month
+   */
+  hideOffsetDay?: boolean;
+  /**
    * The option is used to define blocked dates
    * @param date
    */
@@ -181,6 +185,7 @@ export type AppDateTimePickerComponentData = Pick<
       | 'endId'
       | 'startName'
       | 'endName'
+      | 'hideOffsetDay'
     >
   > & {
     disabledApplyButton: boolean;

@@ -1358,4 +1358,19 @@ describe('AppDateTimePicker', () => {
       expect(end.attributes('name')).toBe(result);
     }
   );
+
+  it('the days of another month in the calendar should be hidden when the “hideOffsedDay” option is true', async () => {
+    const wrapper = createWrapper({ hideOffsetDay: true });
+
+    await openPopover(wrapper);
+
+    const dayTable = wrapper.findComponent(AppDayTable);
+
+    const cell = dayTable.find('.app-date-time-picker-day-table__cell--hide');
+
+    expect(cell?.exists()).toBeTruthy();
+    expect(
+      cell.classes('app-date-time-picker-day-table__cell--other-month')
+    ).toBeTruthy();
+  });
 });

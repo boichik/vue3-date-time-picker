@@ -49,6 +49,15 @@ describe('AppDayTable', () => {
     },
   };
 
+  const componentDataProvideWithHideMock = {
+    [AppDateTimePickerComponentDataProvide]: {
+      value: {
+        ...mockComponentData,
+        hideOffsetDay: true,
+      },
+    },
+  };
+
   const cellsNotOtherMonth = (wrapper: VueWrapper) => {
     const tbody = wrapper.find('tbody');
     const cells = tbody.findAll('.app-date-time-picker-day-table__cell');
@@ -75,6 +84,8 @@ describe('AppDayTable', () => {
       },
     });
   };
+
+  beforeEach(() => vi.resetAllMocks());
 
   it('renders the correct number of days', () => {
     const wrapper = createWrapper();
@@ -255,5 +266,71 @@ describe('AppDayTable', () => {
     await cells[0].trigger('mouseleave');
 
     expect(dayTableDataMock.resetHover).toBeCalled();
+  });
+
+  it('a class should appear that hides days that are not included in the current month', () => {
+    const wrapper = createWrapper({}, {}, componentDataProvideWithHideMock);
+
+    const cell = wrapper.find('.app-date-time-picker-day-table__cell--hide');
+    expect(cell.exists()).toBeTruthy();
+    expect(
+      cell.classes('app-date-time-picker-day-table__cell--other-month')
+    ).toBeTruthy();
+  });
+
+  it('the day should not be selected if it is from another month, or if it is hidden', async () => {
+    const wrapper = createWrapper(
+      {},
+      {},
+      { ...componentDataProvideWithHideMock, ...globalTableDataProvideMock }
+    );
+
+    const cell = wrapper.find('.app-date-time-picker-day-table__cell--hide');
+
+    await cell.trigger('click');
+
+    expect(globalTableDataMock.select).not.toBeCalled();
+  });
+
+  it('the hoverDate & resetHover functions should not be triggered for a day of a different month', async () => {
+    const wrapper = createWrapper(
+      {},
+      {},
+      { ...componentDataProvideWithHideMock, ...dayTableDataProvideMock }
+    );
+
+    const cell = wrapper.find('.app-date-time-picker-day-table__cell--hide');
+
+    await cell.trigger('mouseenter');
+
+    expect(dayTableDataMock.hover).not.toBeCalled();
+
+    await cell.trigger('mouseleave');
+
+    expect(dayTableDataMock.resetHover).not.toBeCalled();
+  });
+
+  it('there should not be an “in-range”, “hover-range”, “selected” class for a day of another month', async () => {
+    dayTableDataMock.inRange.mockReturnValue(true);
+    dayTableDataMock.isSelected.mockReturnValue(true);
+    dayTableDataMock.isHoverRange.mockReturnValue(true);
+
+    const wrapper = createWrapper(
+      {},
+      {},
+      { ...componentDataProvideWithHideMock, ...dayTableDataProvideMock }
+    );
+
+    const cell = wrapper.find('.app-date-time-picker-day-table__cell--hide');
+
+    expect(
+      cell.classes('app-date-time-picker-day-table__cell--selected')
+    ).toBeFalsy();
+    expect(
+      cell.classes('app-date-time-picker-day-table__cell--in-range')
+    ).toBeFalsy();
+    expect(
+      cell.classes('app-date-time-picker-day-table__cell--hover-range')
+    ).toBeFalsy();
   });
 });

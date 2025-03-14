@@ -20,9 +20,9 @@
           :key="+day.date"
           :class="calendarCellClasses(day.date, day.isOtherMonth)"
           class="app-date-time-picker-day-table__cell"
-          @click="selectDate(day.date)"
-          @mouseenter="hoverDate(day.date)"
-          @mouseleave="resetHover"
+          @click="selectDate(day.date, day.isOtherMonth)"
+          @mouseenter="hoverDate(day.date, day.isOtherMonth)"
+          @mouseleave="resetHover(day.isOtherMonth)"
         >
           <div class="app-date-time-picker-day-table__cell-content">
             {{ day.day }}
@@ -82,6 +82,11 @@ const appDateTimePickerComponentData =
     AppDateTimePickerComponentDataProvide,
     null
   );
+
+const hideOffsetDay = computed(
+  () => appDateTimePickerComponentData?.value.hideOffsetDay
+);
+
 const firstDayOfWeek = computed(() => {
   return appDateTimePickerComponentData?.value?.firstDayOfWeek || 1;
 });
@@ -178,6 +183,11 @@ function calendarCellClasses(date: Date, isOtherMonth: boolean) {
   if (isOtherMonth) {
     classes.push('app-date-time-picker-day-table__cell--other-month');
   }
+
+  if (isOtherMonth && hideOffsetDay.value) {
+    classes.push('app-date-time-picker-day-table__cell--hide');
+  }
+
   if (isToday(date)) {
     classes.push('app-date-time-picker-day-table__cell--current-day');
   }
@@ -209,6 +219,8 @@ function isDisabled(date: Date) {
 }
 
 function isSelected(date: Date, isOtherMonth: boolean) {
+  if (isOtherMonth && hideOffsetDay.value) return;
+
   if (
     appDateTimePickerDayTableComponentData &&
     appDateTimePickerDayTableComponentData.isSelected
@@ -224,6 +236,8 @@ function isSelected(date: Date, isOtherMonth: boolean) {
 }
 
 function isInRange(date: Date, isOtherMonth: boolean) {
+  if (isOtherMonth && hideOffsetDay.value) return;
+
   if (
     appDateTimePickerDayTableComponentData &&
     appDateTimePickerDayTableComponentData.inRange
@@ -235,6 +249,8 @@ function isInRange(date: Date, isOtherMonth: boolean) {
 }
 
 function isHoverRange(date: Date, isOtherMonth: boolean) {
+  if (isOtherMonth && hideOffsetDay.value) return;
+
   if (
     appDateTimePickerDayTableComponentData &&
     appDateTimePickerDayTableComponentData.isHoverRange
@@ -248,7 +264,9 @@ function isHoverRange(date: Date, isOtherMonth: boolean) {
   return false;
 }
 
-function hoverDate(date: Date) {
+function hoverDate(date: Date, isOtherMonth: boolean) {
+  if (isOtherMonth && hideOffsetDay.value) return;
+
   if (
     appDateTimePickerDayTableComponentData &&
     appDateTimePickerDayTableComponentData.hover
@@ -257,7 +275,9 @@ function hoverDate(date: Date) {
   }
 }
 
-function resetHover() {
+function resetHover(isOtherMonth: boolean) {
+  if (isOtherMonth && hideOffsetDay.value) return;
+
   if (
     appDateTimePickerDayTableComponentData &&
     appDateTimePickerDayTableComponentData.resetHover
@@ -266,8 +286,8 @@ function resetHover() {
   }
 }
 
-function selectDate(date: Date) {
-  if (isDisabled(date)) return;
+function selectDate(date: Date, isOtherMonth: boolean) {
+  if (isDisabled(date) || (isOtherMonth && hideOffsetDay.value)) return;
 
   if (
     appDateTimePickerGlobalTableComponentData &&
@@ -405,6 +425,16 @@ function selectDate(date: Date) {
         color: var(--vpick--day-table-cell-other-month-color);
         background-color: var(--vpick--day-table-cell-other-month-bg-color);
         border-color: var(--vpick--day-table-cell-other-month-border-color);
+      }
+    }
+
+    &--hide {
+      cursor: default;
+
+      .app-date-time-picker-day-table__cell-content {
+        opacity: 0;
+        height: 0;
+        border: unset;
       }
     }
 

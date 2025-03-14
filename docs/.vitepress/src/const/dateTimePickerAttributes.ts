@@ -303,6 +303,22 @@ export const dateTimePickerAttributes: DocsTableData<AttributeColumns> = {
         value: '—',
       },
     },
+    {
+      name: {
+        value: 'hide-offset-day',
+        version: '$VERSION',
+      },
+      description: {
+        value: 'date_time_attributes__hide_offset_day_description',
+        needTranslate: true,
+      },
+      type: {
+        value: '<code>false</code>',
+      },
+      default: {
+        value: 'false',
+      },
+    },
     ...globalAttributes.rows,
   ],
 };

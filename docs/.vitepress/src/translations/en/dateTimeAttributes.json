@@ -13,5 +13,6 @@
   "date_time_attributes__default_time_description": "the time that will be set by default. The expected format is “00:00:00”.",
   "date_time_attributes__locale_description": "the language in which you want to display data in the picker. (Use only if you do not have the <code>vue-i18n</code> package)",
   "date_time_attributes__time_options_description": "setting up the time picker",
-  "date_time_attributes__disabled_date_description": "the option is used to define blocked dates"
+  "date_time_attributes__disabled_date_description": "the option is used to define blocked dates",
+  "date_time_attributes__hide_offset_day_description": "hide the days of another month in the calendar"
 }
