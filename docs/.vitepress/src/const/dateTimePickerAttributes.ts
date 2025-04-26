@@ -306,7 +306,7 @@ export const dateTimePickerAttributes: DocsTableData<AttributeColumns> = {
     {
       name: {
         value: 'hide-offset-day',
-        version: '$VERSION',
+        version: '^0.3.0',
       },
       description: {
         value: 'date_time_attributes__hide_offset_day_description',

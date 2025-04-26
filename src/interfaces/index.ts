@@ -104,4 +104,12 @@ export interface AppPickerProps {
    * the name for the last native input
    */
   endName?: string;
+  /**
+   * The CSS z-index value for the picker's popover.
+   */
+  zIndex?: number;
+  /**
+   * Render popover content inside <client-only> component. (Works only in SSR mode)
+   */
+  clientOnlyPopoverContent?: boolean;
 }

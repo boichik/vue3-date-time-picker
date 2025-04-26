@@ -2,7 +2,9 @@ import { mount } from '@vue/test-utils';
 import Popover from '@/ui/AppPopover.vue';
 
 describe('Popover.vue', () => {
-  const createWrapper = () =>
+  const createWrapper = (
+    props: Partial<InstanceType<typeof Popover>['$props']> = {}
+  ) =>
     mount(Popover, {
       props: {
         modelValue: false,
@@ -12,6 +14,7 @@ describe('Popover.vue', () => {
         tabindex: 0,
         appendToBody: false,
         disabled: false,
+        ...props,
       },
       slots: {
         reference: '<button>Reference</button>',
@@ -21,6 +24,8 @@ describe('Popover.vue', () => {
 
   it('renders the reference slot correctly', () => {
     const wrapper = createWrapper();
+
+    expect(wrapper.props('zIndex')).toBe(1000);
 
     expect(wrapper.find('.app-popover').exists()).toBe(true);
     expect(wrapper.find('button').text()).toBe('Reference');
@@ -67,5 +72,17 @@ describe('Popover.vue', () => {
 
     await wrapper.setProps({ placement: 'bottom' });
     expect(wrapper.props('placement')).toBe('bottom');
+  });
+
+  it('should render the client-only tag when transmitting a proxy clientOnlyPopoverContent', () => {
+    const wrapper = createWrapper({ clientOnlyPopoverContent: true });
+
+    expect(wrapper.find('client-only').exists()).toBe(true);
+  });
+
+  it('should not render the client-only tag when passing a clientOnlyPopoverContent prop that is negative', () => {
+    const wrapper = createWrapper({ clientOnlyPopoverContent: false });
+
+    expect(wrapper.find('client-only').exists()).toBe(false);
   });
 });

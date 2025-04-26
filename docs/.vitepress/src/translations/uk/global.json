@@ -22,6 +22,8 @@
   "global_attributes__close_delay_description": "затримка в мілісекундах перед закриттям поповера",
   "global_attributes__append_to_body_description": " визначає, чи слід додавати вміст спливаючого вікна до <code>body</code> замість того, щоб вкладати його в структуру DOM компонента.",
   "global_attributes__stay_opened_description": "залишайте пікап відкритим після відкриття. Використовуйте його для налагодження або дослідження поповера",
+  "global_attributes__z_index_description": "z-index для вмісту поповера",
+  "global_attributes__client_only_popover_content_description": "Відображати вміст поповеру всередині <client-only> компонента. (Працює лише в режимі SSR)",
   "global_slots__default_desciption": "кастомне посилання для поповера",
   "global_slots__separator_desciption": "кастомний вміст роздільника діапазону",
   "global_exposes__popover_visible_description": "повертає, чи відкрито спливаюче вікно в даний момент чи ні",

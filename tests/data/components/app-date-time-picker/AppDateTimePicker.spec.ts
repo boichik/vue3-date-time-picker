@@ -1373,4 +1373,24 @@ describe('AppDateTimePicker', () => {
       cell.classes('app-date-time-picker-day-table__cell--other-month')
     ).toBeTruthy();
   });
+
+  it('should correctly pass zIndex props to Popover component', () => {
+    const wrapper = createWrapper({
+      zIndex: 1000,
+    });
+
+    const popover = wrapper.findComponent(AppPopover);
+
+    expect(popover.props('zIndex')).toBe(1000);
+  });
+
+  it('should correctly pass clientOnlyPopoverContent props to Popover component', () => {
+    const wrapper = createWrapper({
+      clientOnlyPopoverContent: true,
+    });
+
+    const popover = wrapper.findComponent(AppPopover);
+
+    expect(popover.props('clientOnlyPopoverContent')).toBe(true);
+  });
 });

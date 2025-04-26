@@ -9,7 +9,9 @@
         appDateTimePickerComponentData.readonly
       "
       :tabindex="-1"
-      :append-to-body="props.appendToBody"
+      :append-to-body="appendToBody"
+      :z-index="zIndex"
+      :client-only-popover-content="clientOnlyPopoverContent"
       @open="handleVisiblePopover()"
       @close="handleClosedPopover()"
     >

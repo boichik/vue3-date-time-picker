@@ -54,7 +54,13 @@ export function useEventListenerOutside<T extends Document | Window>(
       (!Array.isArray(target) && !target.value)
     )
       return;
-    if (targetElementContainsInParent(event.target as Node)) {
+
+    if (
+      targetElementContainsInParent(event.target as Node) ||
+      (event instanceof FocusEvent &&
+        event.relatedTarget &&
+        targetElementContainsInParent(event.relatedTarget as Node))
+    ) {
       isOutside.value = false;
     } else {
       isOutside.value = true;

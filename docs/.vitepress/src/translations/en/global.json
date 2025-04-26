@@ -22,6 +22,8 @@
   "global_attributes__close_delay_description": "delay in milliseconds before the popover closes after being triggered",
   "global_attributes__append_to_body_description": "determines if the popover content should be appended to the <code>body</code> instead of being nested within the DOM structure of the component",
   "global_attributes__stay_opened_description": "leave the picker open after opening it. Use it for debugging or researching a popover",
+  "global_attributes__z_index_description": "z-index for popover conent",
+  "global_attributes__client_only_popover_content_description": "Render popover content inside <client-only> component. (Works only in SSR mode)",
   "global_slots__default_desciption": "custom reference for popover",
   "global_slots__separator_desciption": "custom range separator content",
   "global_exposes__popover_visible_description": "returns whether the popover is currently open or not",

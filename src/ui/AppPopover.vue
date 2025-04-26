@@ -3,18 +3,18 @@
     <slot name="reference"></slot>
   </div>
 
-  <client-only>
+  <component :is="clientOnlyPopoverContent ? 'client-only' : 'div'">
     <Teleport :to="teleportTo" :disabled="!appendToBody">
       <div
         v-show="isVisible"
         ref="content"
         class="app-popover__content"
-        :style="{ zIndex: '1000' }"
+        :style="contentStyle"
       >
         <slot name="content"></slot>
       </div>
     </Teleport>
-  </client-only>
+  </component>
 </template>
 
 <script setup lang="ts">
@@ -43,6 +43,8 @@ const props = withDefaults(
     disabled?: boolean;
     offset?: number;
     customAppend?: string;
+    zIndex?: number;
+    clientOnlyPopoverContent?: boolean;
   }>(),
   {
     placement: 'bottom',
@@ -52,6 +54,8 @@ const props = withDefaults(
     appendToBody: false,
     disabled: false,
     offset: 12,
+    zIndex: 1000,
+    clientOnlyPopoverContent: false,
   }
 );
 
@@ -70,6 +74,12 @@ const settings = inject<{ forceUpdate?: boolean } | null>(
   AppDateTimePopoverInternalSettingsProvide,
   null
 );
+
+const contentStyle = computed(() => {
+  return {
+    zIndex: props.zIndex,
+  };
+});
 
 const appendToBody = computed(() =>
   isBoolean(props.appendToBody) ? props.appendToBody : false

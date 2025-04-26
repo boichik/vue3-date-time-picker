@@ -1041,4 +1041,24 @@ describe('AppTimePicker', () => {
       expect(end.attributes('name')).toBe(result);
     }
   );
+
+  it('should correctly pass zIndex props to Popover component', () => {
+    const wrapper = createWrapper({
+      zIndex: 1000,
+    });
+
+    const popover = wrapper.findComponent(AppPopover);
+
+    expect(popover.props('zIndex')).toBe(1000);
+  });
+
+  it('should correctly pass clientOnlyPopoverContent props to Popover component', () => {
+    const wrapper = createWrapper({
+      clientOnlyPopoverContent: true,
+    });
+
+    const popover = wrapper.findComponent(AppPopover);
+
+    expect(popover.props('clientOnlyPopoverContent')).toBe(true);
+  });
 });

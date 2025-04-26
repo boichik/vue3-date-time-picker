@@ -289,6 +289,38 @@ export const globalAttributes: DocsTableData<AttributeColumns> = {
     },
     {
       name: {
+        value: 'z-index',
+        version: '^0.3.0',
+      },
+      description: {
+        value: 'global_attributes__z_index_description',
+        needTranslate: true,
+      },
+      type: {
+        value: '<code>number</code>',
+      },
+      default: {
+        value: '1000',
+      },
+    },
+    {
+      name: {
+        value: 'client-only-popover-content',
+        version: '^0.3.0',
+      },
+      description: {
+        value: 'global_attributes__client_only_popover_content_description',
+        needTranslate: true,
+      },
+      type: {
+        value: '<code>boolean</code>',
+      },
+      default: {
+        value: 'false',
+      },
+    },
+    {
+      name: {
         value: 'open-delay',
       },
       description: {
