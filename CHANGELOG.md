@@ -1,3 +1,18 @@
+## [0.3.0](https://github.com/boichik/vue3-date-time-picker/compare/v0.2.0...v0.3.0) (2025-04-26)
+
+### Features
+- Added a new prop `hide-offset-day` for the `AppDateTimePicker` component. Now you can hide the days of another month in the calendar
+- Added global props `z-index` for styling popover content
+- Added global prop `client-only-popover-content`. It is now possible to control the rendering of popover content. When set to `true`, the content will appear only on the client after hydration (props is intended for `SSR`)
+### Fix
+- Fixed the issue, opening the popover of the `AppTimePicker` component when it is integrated into the `AppDateTimePicker` and the parent element has the style " position: fixed;"
+### Critical changes
+> [!CAUTION]
+> _If you are using SSR, please note the following information before upgrading to the new version of the package_
+
+**Previous behaviour**: Previously, the content of the Popover component was rendered exclusively on the client side (after hydration).
+**New behaviour**: Added a global props `client-only-popover-content`. This props allows you to explicitly control whether the popover content will be rendered only on the client side or will be available everywhere
+
 ## [0.2.0](https://github.com/boichik/vue3-date-time-picker/compare/v0.1.0...v0.2.0) (2025-02-26)
 
 ### Features
