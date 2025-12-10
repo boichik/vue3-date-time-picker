@@ -7,6 +7,8 @@
       :clearable="timePickerOptions.clearable"
       :format="timePickerOptions.format"
       :placeholder="timePickerOptions.placeholder"
+      :apply-text="timePickerOptions.applyText"
+      :cancel-text="timePickerOptions.cancelText"
       :default-time="defaultTime"
       :append-to-body="false"
     />
@@ -85,12 +87,14 @@ const timePickerOptions = computed(() => {
   const { clearable, timeFormat, timeOptions } =
     appDateTimePickerComponentData?.value || {};
 
-  const { placeholder } = timeOptions || {};
+  const { placeholder, applyText, cancelText } = timeOptions || {};
 
   return {
     clearable,
     format: timeFormat,
     placeholder,
+    applyText,
+    cancelText,
   };
 });
 

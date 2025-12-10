@@ -277,7 +277,7 @@ export const dateTimePickerAttributes: DocsTableData<AttributeColumns> = {
 
         infoPopover: {
           content:
-            '<code>{placeholder?: string; startPlaceholder?: string; endPlaceholder?: string}</code>',
+            '<code>{placeholder?: string; startPlaceholder?: string; endPlaceholder?: string; applyText?: string; cancelText?: string;}</code>',
         },
       },
       default: {
