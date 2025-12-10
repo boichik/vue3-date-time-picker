@@ -33,7 +33,7 @@ jobs:
         run: pnpm lint:style
 
       - name: Type check
-        run: pnpm type-check
+        run: pnpm typecheck
 
       - name: Run tests
         run: pnpm test
