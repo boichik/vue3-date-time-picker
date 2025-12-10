@@ -2,27 +2,47 @@ name: Quality checks commit
 
 on:
   push:
-    branches: [master]
+  pull_request:
 
 jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: wagoid/commitlint-github-action@v6
+
   quality-checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18.x'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Format check
-        run: yarn format
+        run: pnpm format
 
       - name: Lint check
-        run: yarn lint
+        run: pnpm lint
+
+      - name: Stylelint check
+        run: pnpm lint:style
+
+      - name: Type check
+        run: pnpm type-check
 
       - name: Run tests
-        run: yarn test
+        run: pnpm test
