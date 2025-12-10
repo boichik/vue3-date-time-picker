@@ -38,6 +38,11 @@ export interface AppTimePickerProps extends AppPickerProps {
    * If the “isRange” option is enabled, you need to pass an array - ["00:00:00 - 12:30:00", "12:30:00 - 23:59:59"]
    */
   selectableRange?: string | string[];
+  /**
+   * text that will be displayed on the “Next” button
+   * when the range type is selected for mobile display
+   */
+  nextText?: string;
 }
 
 export interface AppTimePickerInternalSettings {
@@ -78,6 +83,7 @@ export type AppTimePickerComponentData = Pick<
       | 'endId'
       | 'startName'
       | 'endName'
+      | 'nextText'
     >
   > & {
     startDefaultTime: Date;

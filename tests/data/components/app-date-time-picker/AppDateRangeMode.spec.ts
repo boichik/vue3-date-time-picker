@@ -9,6 +9,12 @@ import AppDayTable from '@/components/app-date-time-picker/src/components/table/
 import AppDateTimePanel from '@/components/app-date-time-picker/src/components/panel/AppDateTimePanel.vue';
 import { AppDateTimePickerMode } from '@/components/app-date-time-picker/src/enums/dateTimePickerMode';
 
+vi.mock('@/composables/useIsFullyVisibleRangeContent', () => ({
+  useIsFullyVisibleRangeContent: vi.fn().mockReturnValue({
+    isFullyVisible: { value: true },
+  }),
+}));
+
 describe('AppDateRangeMode', () => {
   const mockDate = new Date(2025, 0, 1);
   const mockDefaultTime = '';

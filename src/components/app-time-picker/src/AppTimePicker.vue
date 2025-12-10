@@ -95,6 +95,7 @@ const DEFAULT_APPEND_TO_BODY = true;
 const DEFAULT_STAY_OPENED = false;
 const DEFAULT_INPUT_READONLY = false;
 const DEFAULT_AUTO_APPLY = false;
+const DEFAULT_NEXT_TEXT = 'Next';
 
 const timezoneConvertor = new TimezoneConvertorImpl();
 
@@ -112,6 +113,7 @@ const props = withDefaults(defineProps<AppTimePickerProps>(), {
   stayOpened: DEFAULT_STAY_OPENED,
   inputReadonly: DEFAULT_INPUT_READONLY,
   autoApply: DEFAULT_AUTO_APPLY,
+  nextText: DEFAULT_NEXT_TEXT,
 });
 
 const input = ref<HTMLInputElement | null>(null);
@@ -161,6 +163,7 @@ const appTimePickerComponentData = computed<AppTimePickerComponentData>(() => {
     endId,
     startName,
     endName,
+    nextText,
   } = props;
 
   const { isDisabledDate } = internalSettings || {};
@@ -177,6 +180,7 @@ const appTimePickerComponentData = computed<AppTimePickerComponentData>(() => {
     align: isValidAlign(align) ? align : DEFAULT_ALIGN,
     cancelText: isString(cancelText) ? cancelText : '',
     applyText: isString(applyText) ? applyText : '',
+    nextText: isString(nextText) ? nextText : DEFAULT_NEXT_TEXT,
     invalid: isBoolean(invalid) ? invalid : DEFAULT_INVALID,
     inputReadonly: isBoolean(inputReadonly)
       ? inputReadonly

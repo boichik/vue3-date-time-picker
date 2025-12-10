@@ -1,6 +1,6 @@
 <template>
   <div class="ui-date-time-range-mode">
-    <div class="ui-date-time-range-mode__section">
+    <div ref="firstSection" class="ui-date-time-range-mode__section">
       <AppTimePicker
         v-if="isTimeMode"
         v-model="selectedStartDate"
@@ -17,7 +17,7 @@
         :selected-date="selectedStartDate"
       />
     </div>
-    <div class="ui-date-time-range-mode__section">
+    <div v-show="isFullyVisible" class="ui-date-time-range-mode__section">
       <AppTimePicker
         v-if="isTimeMode"
         v-model="selectedEndDate"
@@ -47,7 +47,7 @@ import type {
   AppDateTimePickerYearTableComponentData,
 } from '../../interfaces';
 import type { ComputedRef } from 'vue';
-import { computed, inject, provide, ref, watch } from 'vue';
+import { computed, inject, provide, ref, watch, useTemplateRef } from 'vue';
 import {
   isBefore,
   addMonths,
@@ -73,6 +73,7 @@ import type { AppTimePickerInternalSettings } from '@/components/app-time-picker
 import { AppDateTimePopoverInternalSettingsProvide } from '@/const/globalProvide.const';
 import { AppDateTimePickerType } from '../../enums/dateTimePickerType';
 import { AppDateTimePickerMode } from '../../enums/dateTimePickerMode';
+import { useIsFullyVisibleRangeContent } from '@/composables/useIsFullyVisibleRangeContent';
 
 const emit = defineEmits(['update:model-value', 'changeMode']);
 const props = defineProps<{ modelValue?: (Date | null)[] }>();
@@ -89,6 +90,10 @@ const selectedStartDate = ref<Date | undefined>(
 const selectedEndDate = ref<Date | undefined>(parseModel(props.modelValue, 1));
 const hoverDateRange = ref<Date | null>(null);
 const isInternalUpdate = ref<boolean>(false);
+
+const firstSection = useTemplateRef<HTMLElement | null>('firstSection');
+
+const { isFullyVisible } = useIsFullyVisibleRangeContent(firstSection);
 
 const isTimeMode = computed(
   () =>

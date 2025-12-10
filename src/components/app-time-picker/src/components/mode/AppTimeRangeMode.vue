@@ -1,13 +1,17 @@
 <template>
-  <div class="app-time-picker-range-mode">
-    <section class="app-time-picker-range-mode__section">
+  <div :class="containerClasses">
+    <section
+      v-show="shouldShowStart"
+      ref="firstSection"
+      class="app-time-picker-range-mode__section"
+    >
       <AppTimeController
         v-model="startModel"
         :selectable-range="startSelectableRange"
       />
     </section>
 
-    <section class="app-time-picker-range-mode__section">
+    <section v-show="shouldShowEnd" class="app-time-picker-range-mode__section">
       <AppTimeController
         v-model="endModel"
         :selectable-range="endSelectableRange"
@@ -22,7 +26,7 @@ import type {
   AppTimePickerComponentData,
   AppTimePickerModel,
 } from '../../interfaces';
-import { computed, inject, ref, watch } from 'vue';
+import { computed, inject, ref, useTemplateRef, watch } from 'vue';
 import AppTimeController from '../controller/AppTimeController.vue';
 import { isDate } from '@/utils/isDate';
 import {
@@ -30,9 +34,52 @@ import {
   leadToValidDateRelativeToRange,
   parseSelectableRange,
 } from '../../utils';
-import { AppTimePickerComponentDataProvide } from '../../const';
+import {
+  AppTimePickerComponentDataProvide,
+  AppTimeRangeModeState,
+} from '../../const';
+import { useIsFullyVisibleRangeContent } from '@/composables/useIsFullyVisibleRangeContent';
 
 const model = defineModel<AppTimePickerModel>({ default: [null, null] });
+
+const firstSection = useTemplateRef<HTMLElement | null>('firstSection');
+
+const { isFullyVisible } = useIsFullyVisibleRangeContent(firstSection);
+
+const rangeModeState = inject<{
+  isCompact: boolean;
+  step: 'start' | 'end';
+  next: () => void;
+}>(AppTimeRangeModeState);
+
+watch(
+  isFullyVisible,
+  val => {
+    if (rangeModeState) {
+      rangeModeState.isCompact = !val;
+      if (val) {
+        rangeModeState.step = 'start';
+      }
+    }
+  },
+  { immediate: true }
+);
+
+if (rangeModeState) {
+  rangeModeState.next = () => {
+    rangeModeState.step = 'end';
+  };
+}
+
+const shouldShowStart = computed(() => {
+  if (!rangeModeState?.isCompact) return true;
+  return rangeModeState.step === 'start';
+});
+
+const shouldShowEnd = computed(() => {
+  if (!rangeModeState?.isCompact) return true;
+  return rangeModeState.step === 'end';
+});
 
 function prepareModel(value: AppTimePickerModel, index = 0) {
   if (Array.isArray(value) && value.length && isDate(value[index])) {
@@ -45,6 +92,11 @@ function prepareModel(value: AppTimePickerModel, index = 0) {
 const startModel = ref<Date | null>(null);
 const endModel = ref<Date | null>(null);
 const isInternalUpdate = ref<boolean>(false);
+
+const containerClasses = computed(() => ({
+  'app-time-picker-range-mode': true,
+  'app-time-picker-range-mode--min': !isFullyVisible.value,
+}));
 
 watch(
   () => model.value,
@@ -128,5 +180,9 @@ prepareModelWithDefaults();
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
+
+  &--min {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

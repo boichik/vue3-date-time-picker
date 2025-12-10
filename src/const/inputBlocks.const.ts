@@ -1,7 +1,17 @@
 import { InputBlockType } from '../enums/InputBlockType';
 import { IMask } from 'vue-imask';
 
-export const inputBlocks = {
+export interface InputBlock {
+  mask: unknown;
+  from?: number;
+  to?: number;
+  min?: number;
+  max?: number;
+  maxLength?: number;
+  enum?: string[];
+}
+
+export const inputBlocks: Record<string, InputBlock> = {
   [InputBlockType.SimpleYear]: {
     mask: IMask.MaskedRange,
     from: 0,
@@ -45,7 +55,7 @@ export const inputBlocks = {
     mask: IMask.MaskedRange,
     from: 0,
     to: 23,
-    maxLenght: 2,
+    maxLength: 2,
   },
   [InputBlockType.SimpleHour]: {
     mask: IMask.MaskedNumber,
@@ -56,7 +66,7 @@ export const inputBlocks = {
     mask: IMask.MaskedRange,
     from: 1,
     to: 12,
-    maxLenght: 2,
+    maxLength: 2,
   },
   [InputBlockType.SimpleMinute]: {
     mask: IMask.MaskedNumber,
@@ -67,7 +77,7 @@ export const inputBlocks = {
     mask: IMask.MaskedRange,
     from: 0,
     to: 59,
-    maxLenght: 2,
+    maxLength: 2,
   },
   [InputBlockType.SimpleSecond]: {
     mask: IMask.MaskedNumber,
@@ -78,13 +88,13 @@ export const inputBlocks = {
     mask: IMask.MaskedRange,
     from: 0,
     to: 59,
-    maxLenght: 2,
+    maxLength: 2,
   },
   [InputBlockType.Millisecond]: {
     mask: IMask.MaskedRange,
     from: 0,
     to: 999,
-    maxLenght: 3,
+    maxLength: 3,
   },
   [InputBlockType.AmPmLower]: {
     mask: IMask.MaskedEnum,

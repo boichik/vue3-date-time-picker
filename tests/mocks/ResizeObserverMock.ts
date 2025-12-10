@@ -1,17 +1,21 @@
-const observeFn = vi.fn();
-const disconnectFn = vi.fn();
+const { observe, disconnect, unobserve } = vi.hoisted(() => {
+  return {
+    observe: vi.fn(),
+    disconnect: vi.fn(),
+    unobserve: vi.fn(),
+  };
+});
 
-class ResizeObserver {
-  observe() {
-    return observeFn;
-  }
-  disconnect() {
-    return disconnectFn;
-  }
+class ResizeObserverMock {
+  observe = observe;
+  unobserve = unobserve;
+  disconnect = disconnect;
+  // eslint-disable-next-line no-undef
+  constructor(public callback: ResizeObserverCallback) {}
 }
 
 function initResizeObserverMock() {
-  window.ResizeObserver = ResizeObserver;
+  window.ResizeObserver = ResizeObserverMock;
 }
 
-export { observeFn, disconnectFn, initResizeObserverMock };
+export { observe, disconnect, unobserve, initResizeObserverMock };
