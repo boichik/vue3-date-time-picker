@@ -20,7 +20,11 @@ export type AppDateTimePickerMonthFormat =
 
 export type AppDateTimePickerTimeOptions = Pick<
   AppTimePickerProps,
-  'placeholder' | 'startPlaceholder' | 'endPlaceholder'
+  | 'placeholder'
+  | 'startPlaceholder'
+  | 'endPlaceholder'
+  | 'applyText'
+  | 'cancelText'
 >;
 
 export interface AppDateTimePickerShortcut {
