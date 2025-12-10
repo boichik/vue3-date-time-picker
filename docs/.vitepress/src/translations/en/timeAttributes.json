@@ -3,5 +3,6 @@
   "time_attributes__is_range_description": "whether to display the picker in the time range selection mode",
   "time_attributes__time_format_description": "the format in which the time in the picker will be displayed, as well as the corresponding panels in the popover.",
   "time_attributes__default_time_description": "the time that will be set by default.",
-  "time_attributes__selectable_range_description": "limitation for time selection. The expected format is <code>\"HH:mm:ss - HH:mm:ss\"</code> <br> <code>[\"HH:mm:ss - HH:mm:ss\",\"HH:mm:ss - HH:mm:ss\"]</code>."
+  "time_attributes__selectable_range_description": "limitation for time selection. The expected format is <code>\"HH:mm:ss - HH:mm:ss\"</code> <br> <code>[\"HH:mm:ss - HH:mm:ss\",\"HH:mm:ss - HH:mm:ss\"]</code>.",
+  "time_attributes__next_text_description": "custom text for the 'Next' button in range selection mode."
 }

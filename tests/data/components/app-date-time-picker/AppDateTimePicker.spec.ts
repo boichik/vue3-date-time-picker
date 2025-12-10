@@ -24,6 +24,12 @@ vi.mock('@/composables/useLocalization', () => ({
   useLocalization: vi.fn(),
 }));
 
+vi.mock('@/composables/useIsFullyVisibleRangeContent', () => ({
+  useIsFullyVisibleRangeContent: vi.fn().mockReturnValue({
+    isFullyVisible: { value: true },
+  }),
+}));
+
 const openPopover = async (wrapper: VueWrapper) => {
   const input = wrapper.find<HTMLInputElement>(
     '.app-datetime-picker-input__inner'

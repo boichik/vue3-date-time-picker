@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ComputedRef } from 'vue';
+import type { ComputedRef, Component } from 'vue';
 import { inject, computed, ref, onMounted, onBeforeUnmount } from 'vue';
 import type {
   AppDateTimePickerComponentData,
@@ -85,7 +85,7 @@ const contentClass = computed(() => {
   };
 });
 
-const currentComponent = computed(() => {
+const currentComponent = computed<Component>(() => {
   switch (appDateTimePickerComponentData?.value.type) {
     case AppDateTimePickerType.DateRange:
     case AppDateTimePickerType.DateTimeRange:

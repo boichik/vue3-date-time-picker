@@ -3,5 +3,6 @@
   "time_attributes__is_range_description": "чи відображати пікер у режимі вибору часового діапазону",
   "time_attributes__time_format_description": "формат, в якому буде відображатися час у пікері, а також відповідні панелі у поповері.",
   "time_attributes__default_time_description": "час, який буде встановлено за замовчуванням.",
-  "time_attributes__selectable_range_description": "обмеження на вибір часу. Очікуваний формат <code>\"HH:mm:ss - HH:mm:ss\"</code> <br> <code>[\"HH:mm:ss - HH:mm:ss\",\"HH:mm:ss - HH:mm:ss\"]</code>."
+  "time_attributes__selectable_range_description": "обмеження на вибір часу. Очікуваний формат <code>\"HH:mm:ss - HH:mm:ss\"</code> <br> <code>[\"HH:mm:ss - HH:mm:ss\",\"HH:mm:ss - HH:mm:ss\"]</code>.",
+  "time_attributes__next_text_description": "кастомний текст для кнопки 'Next' у режимі вибору діапазону."
 }

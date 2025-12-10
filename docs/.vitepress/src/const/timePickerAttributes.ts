@@ -104,6 +104,21 @@ export const timePickerAttributes: DocsTableData<AttributeColumns> = {
         value: '"',
       },
     },
+    {
+      name: {
+        value: 'next-text',
+      },
+      description: {
+        value: 'time_attributes__next_text_description',
+        needTranslate: true,
+      },
+      type: {
+        value: '<code>string</code>',
+      },
+      default: {
+        value: '"Next"',
+      },
+    },
 
     ...globalAttributes.rows,
   ],

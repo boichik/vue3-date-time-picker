@@ -1,35 +1,44 @@
 <template>
   <div class="app-time-picker-content">
-    <div ref="picker" class="app-time-picker-content__picker">
+    <div class="app-time-picker-content__picker">
       <component :is="currentComponent" v-model="model" />
     </div>
 
     <AppButtonPanel
       :disabled="appButtonData.disabledApplyButton"
       :cancel-text="appButtonData.cancelText"
-      :apply-text="appButtonData.applyText"
+      :apply-text="currentApplyText"
       class="app-time-picker-content__panel"
-      @apply="() => appButtonData.applyChange && appButtonData.applyChange()"
+      @apply="handleApply"
       @cancel="() => appButtonData.cancelChange && appButtonData.cancelChange()"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { ComputedRef } from 'vue';
+import type { ComputedRef, Component } from 'vue';
 import type {
   AppTimePickerComponentData,
   AppTimePickerModel,
 } from '../../interfaces/index';
-import { inject, computed, ref } from 'vue';
+import { inject, computed, reactive, provide } from 'vue';
 import AppButtonPanel from '@/ui/AppButtonPanel.vue';
 import AppTimeDefaultMode from '../mode/AppTimeDefaultMode.vue';
 import AppTimeRangeMode from '../mode/AppTimeRangeMode.vue';
-import { AppTimePickerComponentDataProvide } from '../../const';
-
-const picker = ref<HTMLElement | null>(null);
+import {
+  AppTimePickerComponentDataProvide,
+  AppTimeRangeModeState,
+} from '../../const';
 
 const model = defineModel<AppTimePickerModel>();
+
+const rangeModeState = reactive({
+  isCompact: false,
+  step: 'start' as 'start' | 'end',
+  next: () => {},
+});
+
+provide(AppTimeRangeModeState, rangeModeState);
 
 const appTimePickerComponentData =
   inject<ComputedRef<AppTimePickerComponentData> | null>(
@@ -55,8 +64,27 @@ const appButtonData = computed(() => {
   };
 });
 
-const currentComponent = computed(() => {
-  return appTimePickerComponentData?.value.isRange
+const isNextStep = computed(() => {
+  return rangeModeState.isCompact && rangeModeState.step === 'start';
+});
+
+const currentApplyText = computed(() => {
+  if (isNextStep.value) {
+    return appTimePickerComponentData?.value?.nextText;
+  }
+  return appButtonData.value.applyText;
+});
+
+function handleApply() {
+  if (isNextStep.value) {
+    rangeModeState.next();
+  } else {
+    appButtonData.value.applyChange && appButtonData.value.applyChange();
+  }
+}
+
+const currentComponent = computed<Component>(() => {
+  return appTimePickerComponentData?.value?.isRange
     ? AppTimeRangeMode
     : AppTimeDefaultMode;
 });
