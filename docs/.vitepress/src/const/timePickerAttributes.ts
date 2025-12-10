@@ -107,6 +107,7 @@ export const timePickerAttributes: DocsTableData<AttributeColumns> = {
     {
       name: {
         value: 'next-text',
+        version: '0.4.0',
       },
       description: {
         value: 'time_attributes__next_text_description',
