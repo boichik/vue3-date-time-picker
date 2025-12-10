@@ -2,6 +2,8 @@ name: Quality checks commit
 
 on:
   push:
+    branches:
+      - master
   pull_request:
 
 jobs:
