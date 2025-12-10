@@ -35,6 +35,7 @@
     "lint:fix": "eslint . --fix",
     "lint:style": "stylelint \"**/*.{css,scss,vue}\"",
     "lint:style:fix": "stylelint \"**/*.{css,scss,vue}\" --fix",
+    "typecheck": "vue-tsc --noEmit",
     "format": "prettier --write .",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
@@ -70,7 +71,10 @@
     "vue": "^3.5.12"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.2.0",
+    "@commitlint/config-conventional": "^20.2.0",
     "@eslint/js": "^9.18.0",
+    "@types/node": "^24.10.2",
     "@types/sanitize-html": "^2.13.0",
     "@typescript-eslint/parser": "^8.19.1",
     "@vitejs/plugin-vue": "^5.2.1",
