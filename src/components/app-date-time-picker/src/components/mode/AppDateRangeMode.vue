@@ -75,7 +75,7 @@ import { AppDateTimePickerType } from '../../enums/dateTimePickerType';
 import { AppDateTimePickerMode } from '../../enums/dateTimePickerMode';
 
 const emit = defineEmits(['update:model-value', 'changeMode']);
-const props = defineProps<{ modelValue?: undefined[] | Date[] }>();
+const props = defineProps<{ modelValue?: (Date | null)[] }>();
 
 const appDateTimePickerComponentData =
   inject<ComputedRef<AppDateTimePickerComponentData> | null>(
@@ -197,7 +197,7 @@ function getDefaultTime(index = 0) {
   return today.value;
 }
 
-function parseModel(val: undefined | undefined[] | Date[], index: number) {
+function parseModel(val: unknown, index: number) {
   if (Array.isArray(val) && val[index] && isDate(val[index])) {
     return val[index];
   }
