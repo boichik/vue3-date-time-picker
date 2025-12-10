@@ -285,13 +285,13 @@ function selectYear(date: Date) {
 
       &--selected-year {
         &.app-date-time-picker-year-table__cell--selected-year--left {
-          border-radius: var(--vpick--table-cell-border-radius) 0px 0px
+          border-radius: var(--vpick--table-cell-border-radius) 0 0
             var(--vpick--table-cell-border-radius);
         }
 
         &.app-date-time-picker-year-table__cell--selected-year--right {
-          border-radius: 0px var(--vpick--table-cell-border-radius)
-            var(--vpick--table-cell-border-radius) 0px;
+          border-radius: 0 var(--vpick--table-cell-border-radius)
+            var(--vpick--table-cell-border-radius) 0;
         }
 
         &.app-date-time-picker-year-table__cell--selected-year--center {

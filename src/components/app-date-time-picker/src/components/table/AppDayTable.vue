@@ -328,6 +328,7 @@ function selectDate(date: Date, isOtherMonth: boolean) {
 
     .app-date-time-picker-day-table__cell {
       cursor: default;
+
       @media (hover: hover) {
         &:hover .app-date-time-picker-day-table__cell-content {
           background-color: var(
@@ -378,13 +379,13 @@ function selectDate(date: Date, isOtherMonth: boolean) {
 
     &--selected:not(.app-date-time-picker-day-table__cell--other-month) {
       &.app-date-time-picker-day-table__cell--selected-left {
-        border-radius: var(--vpick--table-cell-border-radius) 0px 0px
+        border-radius: var(--vpick--table-cell-border-radius) 0 0
           var(--vpick--table-cell-border-radius);
       }
 
       &.app-date-time-picker-day-table__cell--selected-right {
-        border-radius: 0px var(--vpick--table-cell-border-radius)
-          var(--vpick--table-cell-border-radius) 0px;
+        border-radius: 0 var(--vpick--table-cell-border-radius)
+          var(--vpick--table-cell-border-radius) 0;
       }
 
       &.app-date-time-picker-day-table__cell--selected-center {
@@ -441,6 +442,7 @@ function selectDate(date: Date, isOtherMonth: boolean) {
     &--current-day:not(.app-date-time-picker-day-table__cell--other-month) {
       .app-date-time-picker-day-table__cell-content {
         position: relative;
+
         &::before {
           content: '';
           position: absolute;
