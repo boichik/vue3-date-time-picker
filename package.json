@@ -31,12 +31,30 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "lint": "eslint",
-    "lint:fix": "eslint . --ext .vue,.ts,.js --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:style": "stylelint \"**/*.{css,scss,vue}\"",
+    "lint:style:fix": "stylelint \"**/*.{css,scss,vue}\" --fix",
     "format": "prettier --write .",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
-    "pk-audit": "audit-ci --config ./audit-ci.jsonc"
+    "pk-audit": "audit-ci --config ./audit-ci.jsonc",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.vue": [
+      "eslint --fix",
+      "stylelint --fix",
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
@@ -66,12 +84,18 @@
     "eslint-plugin-vitest": "^0.5.4",
     "eslint-plugin-vue": "^9.32.0",
     "globals": "^15.14.0",
+    "husky": "^9.1.7",
     "jest-environment-jsdom": "^29.7.0",
+    "lint-staged": "^16.2.7",
+    "postcss-html": "^1.8.0",
     "prettier": "^3.4.2",
     "sanitize-html": "^2.14.0",
     "sass": "^1.80.6",
     "sass-loader": "^16.0.3",
     "style-loader": "^4.0.0",
+    "stylelint": "^16.26.1",
+    "stylelint-config-recommended-vue": "^1.6.1",
+    "stylelint-config-standard-scss": "^16.0.0",
     "ts-jest": "^29.2.5",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.19.1",

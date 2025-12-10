@@ -2,30 +2,28 @@
   /* Primary */
   --vpick--color-primary: #3a5ccc;
   --vpick--color-error: #d5393e;
-  --vpick--color-info: #dddddd;
+  --vpick--color-info: #ddd;
 
   /* Text */
   --vpick--color-text-primary: #2a2f3b;
   --vpick--color-text-regular: #656a78;
   --vpick--color-text-secondary: #c4c4c4;
-  --vpick--color-placeholder: #888888;
+  --vpick--color-placeholder: #888;
 
   /* Borders */
-  --vpick--color-border-base: #dddddd;
-  --vpick--bolor-border-regular: #cccccc;
+  --vpick--color-border-base: #ddd;
+  --vpick--bolor-border-regular: #ccc;
   --vpick--color-border-light: #ededed;
 
   /* Backgrounds */
-  --vpick--color-dark: #000000;
-  --vpick--color-white: #ffffff;
+  --vpick--color-dark: #000;
+  --vpick--color-white: #fff;
 
   /* Font */
   --vpick--font-family: 'Roboto', 'Arial', 'Helvetica', 'Segoe UI', sans-serif;
-
   --vpick--font-default-font-weight: 400;
   --vpick--font-default-font-size: 14px;
   --vpick--font-default-line-height: 24px;
-
   --vpick--font-medium-font-weight: 500;
   --vpick--font-medium-font-size: 16px;
   --vpick--font-medium-line-height: 26px;
@@ -39,41 +37,34 @@
     var(--vpick--color-text-primary) 10%,
     var(--vpick--color-white) 90%
   );
-
   --vpick--color-primary-hover: color-mix(
     in srgb,
     var(--vpick--color-primary) 90%,
     var(--vpick--color-white)
   );
-
   --vpick--color-primary-focus: color-mix(
     in srgb,
     var(--vpick--color-primary) 85%,
     var(--vpick--color-dark)
   );
-
   --vpick--color-primary-disabled: color-mix(
     in srgb,
     var(--vpick--color-primary) 40%,
     var(--vpick--color-white)
   );
-
   --vpick--color-background-blue-light: color-mix(
     in srgb,
     var(--vpick--color-primary) 20%,
     var(--vpick--color-white)
   );
-
   --vpick--color-background-blue-hover: color-mix(
     in srgb,
     var(--vpick--color-primary) 15%,
     var(--vpick--color-white)
   );
-
   --vpick--font-default: var(--vpick--font-default-font-weight)
     var(--vpick--font-default-font-size) /
     var(--vpick--font-default-line-height) var(--vpick--font-family);
-
   --vpick--font-medium: var(--vpick--font-medium-font-weight)
     var(--vpick--font-medium-font-size) / var(--vpick--font-medium-line-height)
     var(--vpick--font-family);
@@ -91,23 +82,18 @@
   --vpick--input-icon-size: 24px;
   --vpick--input-icon-color: var(--vpick--color-text-regular);
   --vpick--input-icon-hover-color: var(--vpick--color-primary);
-
   --vpick--input-readonly-bg-color: var(--vpick--input-bg-color);
   --vpick--input-readonly-color: var(--vpick--input-color);
   --vpick--input-readonly-border-color: var(--vpick--input-border-color);
-
   --vpick--input-hover-bg-color: var(--vpick--input-bg-color);
   --vpick--input-hover-color: var(--vpick--input-color);
   --vpick--input-hover-border-color: var(--vpick--color-text-secondary);
-
   --vpick--input-focus-bg-color: var(--vpick--input-bg-color);
   --vpick--input-focus-color: var(--vpick--input-color);
   --vpick--input-focus-border-color: var(--vpick--color-primary);
-
   --vpick--input-disabled-bg-color: var(--vpick--color-background-text-primary);
   --vpick--input-disabled-color: var(--vpick--input-color);
   --vpick--input-disabled-border-color: var(--vpick--color-placeholder);
-
   --vpick--input-invalid-bg-color: var(--vpick--input-bg-color);
   --vpick--input-invalid-color: var(--vpick--color-error);
   --vpick--input-invalid-border-color: var(--vpick--color-error);
@@ -115,19 +101,16 @@
   /* DATE TIME PICKER */
   --vpick--date-time-content-column-gap: 10px;
   --vpick--date-time-content-padding-bottom: 10px;
-
   --vpick--control-btn-size: 24px;
   --vpick--control-btn-bg-color: unset;
   --vpick--control-hover-btn-bg-color: unset;
   --vpick--control-focus-btn-bg-color: unset;
   --vpick--control-disabled-btn-bg-color: unset;
-
   --vpick--control-btn-icon-size: 18px;
   --vpick--control-btn-icon-color: var(--vpick--color-text-primary);
   --vpick--control-hover-btn-icon-color: var(--vpick--color-primary);
   --vpick--control-focus-btn-icon-color: var(--vpick--color-primary);
   --vpick--control-disabled-btn-icon-color: var(--vpick--color-text-primary);
-
   --vpick--panel-center-height: 35px;
   --vpick--panel-center-control-gap: 8px;
   --vpick--panel-center-control-minmax-width: minmax(130px, auto);
@@ -140,7 +123,6 @@
   );
   --vpick--panel-center-control-text-transform-month: capitalize;
   --vpick--panel-margin-bottom: 4px;
-
   --vpick--month-table-cell-size: 58px;
   --vpick--month-table-cell-today-left: calc(
     (
@@ -150,21 +132,17 @@
       2
   );
   --vpick--month-table-cell-text-transform: capitalize;
-
   --vpick--year-table-cell-size: 58px;
   --vpick--year-table-cell-today-left: calc(
     (var(--vpick--year-table-cell-size) - var(--vpick--table-cell-today-size)) /
       2
   );
-
   --vpick--table-range-gap: 10px;
-
   --vpick--table-cell-gap: 2px;
   --vpick--table-cell-today-size: 4px;
   --vpick--table-cell-today-bottom: var(--vpick--table-cell-today-size);
   --vpick--table-cell-today-color: var(--vpick--color-primary);
   --vpick--table-cell-today-selected-color: var(--vpick--color-white);
-
   --vpick--day-table-weekdays-margin-bottom: 8px;
   --vpick--day-table-weekdays-color: var(--vpick--color-text-secondary);
   --vpick--day-table-weekdays-bg-color: unset;
@@ -174,7 +152,6 @@
     (var(--vpick--day-table-cell-size) - var(--vpick--table-cell-today-size)) /
       var(--vpick--table-cell-border-width) * 2
   );
-
   --vpick--day-table-cell-other-month-color: var(
     --vpick--table-cell-disabled-color
   );
@@ -184,39 +161,28 @@
   --vpick--day-table-cell-other-month-border-color: var(
     --vpick--table-cell-disabled-border-color
   );
-
   --vpick--table-cell-font: var(--vpick--font-default);
   --vpick--table-cell-border-radius: 8px;
   --vpick--table-cell-border-width: 2px;
   --vpick--table-cell-border: var(--vpick--table-cell-border-width) solid;
-
   --vpick--table-cell-color: var(--vpick--color-text-primary);
   --vpick--table-cell-bg-color: var(--vpick--color-background-text-primary);
   --vpick--table-cell-border-color: transparent;
-
   --vpick--table-cell-hover-color: var(--vpick--color-primary-hover);
   --vpick--table-cell-hover-bg-color: var(--vpick--color-background-blue-hover);
   --vpick--table-cell-hover-border-color: var(--vpick--color-primary-hover);
-
   --vpick--table-cell-selected-color: var(--vpick--color-white);
   --vpick--table-cell-selected-bg-color: var(--vpick--color-primary-hover);
   --vpick--table-cell-selected-border-color: var(--vpick--color-primary-hover);
-
   --vpick--table-cell-disabled-color: var(--vpick--color-text-secondary);
   --vpick--table-cell-disabled-bg-color: var(--vpick--color-white);
   --vpick--table-cell-disabled-border-color: var(--vpick--color-white);
-
   --vpick--table-cell-range-color: var(--vpick--table-cell-hover-color);
-  --vpick--table-cell-range-bg-color: var(
-    --vpick--table-cell-hover-bg-color
-  );
+  --vpick--table-cell-range-bg-color: var(--vpick--table-cell-hover-bg-color);
   --vpick--table-cell-range-border-color: var(
     --vpick--table-cell-hover-bg-color
   );
-
-  --vpick--table-cell-range-hover-color: var(
-    --vpick--table-cell-hover-color
-  );
+  --vpick--table-cell-range-hover-color: var(--vpick--table-cell-hover-color);
   --vpick--table-cell-range-hover-bg-color: var(
     --vpick--table-cell-hover-bg-color
   );
@@ -226,11 +192,9 @@
 
   /* TIME PICKER */
   --vpick--time-content-margin-bottom: 8px;
-
   --vpick--time-control-btn-size: 24px;
   --vpick--time-control-btn-bg-color: unset;
   --vpick--time-control-btn-icon-color: var(--vpick--color-text-primary);
-
   --vpick--time-control-btn-hover-bg-color: var(
     --vpick--time-control-btn-hover-bg-color
   );
@@ -247,19 +211,16 @@
   --vpick--time-control-btn-disabled-icon-color: var(
     --vpick--color-placeholder
   );
-
   --vpick--time-bar-gap: 8px;
   --vpick--time-bar-content-widht: 48px;
   --vpick--time-bar-content-height: 160px;
   --vpick--time-bar-separator-width: 2px;
-
   --vpick--time-bar-item-padding-width: 16px;
   --vpick--time-bar-item-padding-height: 8px;
   --vpick--time-bar-item-font-size: 16px;
   --vpick--time-bar-item-font-weight: 400;
   --vpick--time-bar-item-color: var(--vpick--color-text-primary);
   --vpick--time-bar-item-bg-color: transparent;
-
   --vpick--time-bar-item-hover-color: var(--vpick--color-primary);
   --vpick--time-bar-item-hover-bg-color: var(--vpick--time-bar-item-bg-color);
   --vpick--time-bar-item-selected-color: var(--vpick--color-primary);
@@ -270,7 +231,6 @@
   --vpick--time-bar-item-disabled-bg-color: var(
     --vpick--time-bar-item-bg-color
   );
-
   --vpick--time-bar-list-padding: calc(
     (
         (var(--vpick--time-bar-item-padding-height) * 2) +
@@ -293,14 +253,12 @@
   --vpick--shortcut-list-bg-color: transparent;
   --vpick--shortcut-list-border-right: 1px solid var(--vpick--color-border-base);
   --vpick--shortcut-list-padding: unset;
-
   --vpick--shortcut-list-item-font: var(--vpick--font-default);
   --vpick--shortcut-list-item-text-align: center;
   --vpick--shortcut-list-item-padding: 10px 0;
   --vpick--shortcut-list-item-bg-color: transparent;
   --vpick--shortcut-list-item-color: var(--vpick--color-text-primary);
   --vpick--shortcut-list-item-border: unset;
-
   --vpick--shortcut-list-item-hover-bg-color: var(
     --vpick--shortcut-list-item-bg-color
   );
@@ -319,10 +277,8 @@
   --vpick--button-font: var(--vpick--font-default);
   --vpick--button-border-radius: 8px;
   --vpick--button-padding: 4px 24px;
-
   --vpick--button-default-bg-color: var(--vpick--color-info);
   --vpick--button-default-font-color: var(--vpick--color-text-regular);
-
   --vpick--button-default-hover-bg-color: color-mix(
     in srgb,
     var(--vpick--color-info) 85%,
@@ -331,7 +287,6 @@
   --vpick--button-default-hover-font-color: var(
     --vpick--button-default-font-color
   );
-
   --vpick--button-default-focus-bg-color: color-mix(
     in srgb,
     var(--vpick--color-info) 75%,
@@ -340,7 +295,6 @@
   --vpick--button-default-focus-font-color: var(
     --vpick--button-default-font-color
   );
-
   --vpick--button-default-active-bg-color: color-mix(
     in srgb,
     var(--vpick--color-info) 65%,
@@ -349,7 +303,6 @@
   --vpick--button-default-active-font-color: var(
     --vpick--button-default-font-color
   );
-
   --vpick--button-default-disabled-bg-color: color-mix(
     in srgb,
     var(--vpick--color-info) 50%,
@@ -360,7 +313,6 @@
     var(--vpick--button-default-font-color) 50%,
     transparent
   );
-
   --vpick--button-submit-bg-color: var(--vpick--color-primary);
   --vpick--button-submit-font-color: var(--vpick--color-white);
   --vpick--button-submit-hover-bg-color: var(--vpick--color-primary-focus);
@@ -379,13 +331,12 @@
   --vpick--popover-border: 1px solid var(--vpick--bolor-border-regular);
   --vpick--popover-border-radius: 8px;
   --vpick--popover-bg-color: var(--vpick--color-white);
-  --vpick--popover-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --vpick--popover-box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
 
   /* Scrollbar */
   --vpick--scrollbar-track-bg-color: transparent;
   --vpick--scrollbar-track-size: 15px;
   --vpick--scrollbar-active-track-opacity: 0.6;
-
   --vpick--scrollbar-track-hover-bg-color: var(--vpick--color-border-light);
   --vpick--scrollbar-track-hover-opacity: 0.9;
   --vpick--scrollbar-track-hover-thumb-size: 11px;
@@ -394,7 +345,6 @@
     var(--vpick--color-border-regular) 80%,
     var(--vpick--color-text-secondary) 20%
   );
-
   --vpick--scrollbar-track-focus-bg-color: var(
     --vpick--scrollbar-track-hover-bg-color
   );
@@ -407,7 +357,6 @@
   --vpick--scrollbar-track-focus-thumb-bg-color: var(
     --vpick--scrollbar-track-hover-thumb-bg-color
   );
-
   --vpick--scrollbar-track-active-bg-color: var(
     --vpick--scrollbar-track-hover-bg-color
   );
@@ -420,7 +369,6 @@
   --vpick--scrollbar-track-active-thumb-bg-color: var(
     --vpick--scrollbar-track-hover-thumb-bg-color
   );
-
   --vpick--scrollbar-thumb-default-size: 6px;
   --vpick--scrollbar-thumb-offset: 2px;
   --vpick--scrollbar-thumb-border-radius: 6px;

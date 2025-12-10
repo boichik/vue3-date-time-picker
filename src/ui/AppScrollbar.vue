@@ -160,6 +160,7 @@ defineExpose({ ps: exposeData });
         }
       }
     }
+
     &:focus {
       opacity: var(--vpick--scrollbar-track-focus-opacity);
       background-color: var(--vpick--scrollbar-track-focus-bg-color);
@@ -179,6 +180,7 @@ defineExpose({ ps: exposeData });
         }
       }
     }
+
     &.ps--clicking {
       opacity: var(--vpick--scrollbar-track-active-opacity);
       background-color: var(--vpick--scrollbar-track-active-bg-color);
@@ -230,8 +232,8 @@ defineExpose({ ps: exposeData });
       background-color: var(--vpick--scrollbar-thumb-bg-color);
       border-radius: var(--vpick--scrollbar-thumb-border-radius);
       transition:
-        background-color --vpick--animation-delay linear,
-        height --vpick--animation-delay ease-in-out;
+        background-color var(--vpick--animation-delay) linear,
+        height var(--vpick--animation-delay) ease-in-out;
       position: absolute;
     }
   }
