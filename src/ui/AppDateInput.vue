@@ -18,7 +18,7 @@
 import { format } from 'date-fns/format';
 import { isDate } from '../utils/isDate';
 import type { Ref } from 'vue';
-import { ref, watch, defineProps, onMounted, onBeforeUnmount } from 'vue';
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import { IMask } from 'vue-imask';
 import { getDaysInMonth, isValid, parse } from 'date-fns';
 import { getNewDate } from '../utils/getNewDate';

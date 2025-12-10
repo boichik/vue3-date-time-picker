@@ -1,17 +1,8 @@
 import { InputBlockType } from '../enums/InputBlockType';
 import { IMask } from 'vue-imask';
 
-export interface InputBlock {
-  mask: unknown;
-  from?: number;
-  to?: number;
-  min?: number;
-  max?: number;
-  maxLength?: number;
-  enum?: string[];
-}
-
-export const inputBlocks: Record<string, InputBlock> = {
+// TODO: rewrite types any to specific types
+export const inputBlocks = {
   [InputBlockType.SimpleYear]: {
     mask: IMask.MaskedRange,
     from: 0,
