@@ -338,7 +338,6 @@ onBeforeUnmount(() => {
 
       &--disabled {
         cursor: not-allowed;
-
         color: var(--vpick--time-bar-item-disabled-color);
         background-color: var(--vpick--time-bar-item-disabled-bg-color);
       }

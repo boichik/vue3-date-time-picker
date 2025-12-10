@@ -255,12 +255,15 @@ defineExpose({ handleSelectByScroll });
     &--prev-year {
       grid-area: prev-year;
     }
+
     &--prev-month {
       grid-area: prev-month;
     }
+
     &--next-month {
       grid-area: next-month;
     }
+
     &--next-year {
       grid-area: next-year;
     }

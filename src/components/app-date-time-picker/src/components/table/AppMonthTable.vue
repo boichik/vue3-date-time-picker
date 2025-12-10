@@ -272,6 +272,7 @@ function selectMonth(date: Date) {
       &--current-month {
         .app-date-time-picker-month-table__cell-content {
           position: relative;
+
           &::before {
             content: '';
             position: absolute;
@@ -287,13 +288,13 @@ function selectMonth(date: Date) {
 
       &--selected-month {
         &.app-date-time-picker-month-table__cell--selected-month--left {
-          border-radius: var(--vpick--table-cell-border-radius) 0px 0px
+          border-radius: var(--vpick--table-cell-border-radius) 0 0
             var(--vpick--table-cell-border-radius);
         }
 
         &.app-date-time-picker-month-table__cell--selected-month--right {
-          border-radius: 0px var(--vpick--table-cell-border-radius)
-            var(--vpick--table-cell-border-radius) 0px;
+          border-radius: 0 var(--vpick--table-cell-border-radius)
+            var(--vpick--table-cell-border-radius) 0;
         }
 
         &.app-date-time-picker-month-table__cell--selected-month--center {
