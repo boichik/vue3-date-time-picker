@@ -1,3 +1,21 @@
+## [0.4.1](https://github.com/boichik/vue3-date-time-picker/compare/v0.4.0...v0.4.1) (2025-12-11)
+## What's Changed
+* fix: inability to select en time in range mode on mobile by @boichik in https://github.com/boichik/vue3-date-time-picker/pull/9
+
+
+**Full Changelog**: https://github.com/boichik/vue3-date-time-picker/compare/v0.4.0...v0.4.1
+
+## [0.4.0](https://github.com/boichik/vue3-date-time-picker/compare/v0.3.0...v0.4.0) (2025-12-10)
+## What's Changed
+* feat: add applyText and cancelText props to time picker options in da… by @boichik in https://github.com/boichik/vue3-date-time-picker/pull/4
+* Feature/fix workflow triggers by @boichik in https://github.com/boichik/vue3-date-time-picker/pull/7
+* feat: improve visibility handling on mobile devices by @boichik in https://github.com/boichik/vue3-date-time-picker/pull/8
+
+## New Contributors
+* @boichik made their first contribution in https://github.com/boichik/vue3-date-time-picker/pull/4
+
+**Full Changelog**: https://github.com/boichik/vue3-date-time-picker/compare/v0.3.0...v0.4.0
+
 ## [0.3.0](https://github.com/boichik/vue3-date-time-picker/compare/v0.2.0...v0.3.0) (2025-04-26)
 
 ### Features
