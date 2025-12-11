@@ -1,9 +1,10 @@
 import saniztize from 'sanitize-html';
 
 const config = {
-  allowedTags: ['b', 'code', 'a'],
+  allowedTags: ['b', 'code', 'a', 'ul', 'li', 'div'],
   allowedAttributes: {
     a: ['href'],
+    div: ['class'],
   },
 };
 

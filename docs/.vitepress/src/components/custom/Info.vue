@@ -1,6 +1,7 @@
 <template>
   <div ref="tooltip" class="vi-tooltip">
     <AppPopover
+      v-if="mounted"
       v-model="model"
       :offset="5"
       append-to-body
@@ -27,7 +28,7 @@
 
 <script setup lang="ts">
 import { InformationCircleIcon } from '@heroicons/vue/24/outline';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useClickOutside } from '../../../../../src/composables/useClickOutside';
 import { useFocusInOutside } from '../../../../../src/composables/useFocusInOutside';
 import AppPopover from '../../../../../src/ui/AppPopover.vue';
@@ -36,6 +37,11 @@ const model = ref(false);
 const referece = ref<HTMLElement | null>(null);
 const content = ref<HTMLElement | null>(null);
 const tooltip = ref<HTMLElement | null>(null);
+const mounted = ref(false);
+
+onMounted(() => {
+  mounted.value = true;
+});
 
 useClickOutside([tooltip, content, referece], (isOutside, event) => {
   if (isOutside) {

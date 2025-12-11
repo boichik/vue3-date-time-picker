@@ -25,6 +25,7 @@ export type AppDateTimePickerTimeOptions = Pick<
   | 'endPlaceholder'
   | 'applyText'
   | 'cancelText'
+  | 'nextText'
 >;
 
 export interface AppDateTimePickerShortcut {

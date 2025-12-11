@@ -277,7 +277,7 @@ export const dateTimePickerAttributes: DocsTableData<AttributeColumns> = {
 
         infoPopover: {
           content:
-            '<code>{placeholder?: string; startPlaceholder?: string; endPlaceholder?: string; applyText?: string; cancelText?: string;}</code>',
+            '<div class="vi-tooltip-list">{<ul><li>placeholder?: string;</li><li>startPlaceholder?: string;</li><li>endPlaceholder?: string;</li><li>applyText?: string;</li><li>cancelText?: string;</li><li>nextText?: string;</li></ul>}</div>',
         },
       },
       default: {
@@ -296,7 +296,7 @@ export const dateTimePickerAttributes: DocsTableData<AttributeColumns> = {
         value: '<code>Function</code>',
 
         infoPopover: {
-          content: '(date: Date) => boolean</code>',
+          content: '<code>(date: Date) => boolean</code>',
         },
       },
       default: {

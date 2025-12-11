@@ -3,14 +3,17 @@
     <div ref="firstSection" class="ui-date-time-range-mode__section">
       <AppTimePicker
         v-if="isTimeMode"
-        v-model="selectedStartDate"
+        :model-value="modelValueStartTimePicker"
+        :is-range="!isFullyVisible"
         :clearable="timePickerOptions.clearable"
         :format="timePickerOptions.format"
         :placeholder="timePickerOptions.startPlaceholder"
         :apply-text="timePickerOptions.applyText"
         :cancel-text="timePickerOptions.cancelText"
-        :default-time="timePickerOptions.defaultTimeStart"
+        :next-text="timePickerOptions.nextText"
+        :default-time="defaultTimeStartTimePicker"
         :append-to-body="false"
+        @update:model-value="handleTimePickerUpdate"
       />
       <AppDateTimeController
         v-model="startDateDisplay"
@@ -119,7 +122,7 @@ const timePickerOptions = computed(() => {
   const { clearable, timeFormat, timeOptions } =
     appDateTimePickerComponentData?.value || {};
 
-  const { endPlaceholder, startPlaceholder, applyText, cancelText } =
+  const { endPlaceholder, startPlaceholder, applyText, cancelText, nextText } =
     timeOptions || {};
 
   return {
@@ -129,6 +132,7 @@ const timePickerOptions = computed(() => {
     endPlaceholder,
     applyText,
     cancelText,
+    nextText,
     defaultTimeStart: getDefaultTime(),
     defaultTimeEnd: getDefaultTime(1),
   };
@@ -140,6 +144,24 @@ const startDateDisplay = ref(
 const endDateDisplay = ref(
   getEndDateDisplay(selectedStartDate.value, selectedEndDate.value)
 );
+
+const modelValueStartTimePicker = computed<Date | (Date | null)[] | null>(
+  () => {
+    if (isFullyVisible.value) {
+      return selectedStartDate.value || null;
+    }
+    return [selectedStartDate.value || null, selectedEndDate.value || null];
+  }
+);
+
+const defaultTimeStartTimePicker = computed(() => {
+  return isFullyVisible.value
+    ? timePickerOptions.value.defaultTimeStart
+    : [
+        timePickerOptions.value.defaultTimeStart,
+        timePickerOptions.value.defaultTimeEnd,
+      ];
+});
 
 watch(
   () => props.modelValue,
@@ -192,6 +214,15 @@ watch(endDateDisplay, (newEndDate: Date) => {
     startDateDisplay.value = subMonthsOrYears(newEndDate);
   }
 });
+
+function handleTimePickerUpdate(val: Date | (Date | null)[] | null) {
+  if (Array.isArray(val)) {
+    selectedStartDate.value = val[0] || undefined;
+    selectedEndDate.value = val[1] || undefined;
+  } else {
+    selectedStartDate.value = val || undefined;
+  }
+}
 
 function getDefaultTime(index = 0) {
   const value = appDateTimePickerComponentData?.value?.defaultTime;
@@ -396,5 +427,9 @@ provide<AppDateTimePickerYearTableComponentData>(
   display: flex;
   justify-content: center;
   gap: var(--vpick--table-range-gap);
+
+  &__section {
+    width: min-content;
+  }
 }
 </style>
