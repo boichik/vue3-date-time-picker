@@ -22,7 +22,7 @@ import type {
   AppTimePickerModel,
 } from '../../interfaces/index';
 import { inject, computed, reactive, provide } from 'vue';
-import AppButtonPanel from '@/ui/AppButtonPanel.vue';
+import AppButtonPanel from '@/ui/AppButtonPanel/Index.vue';
 import AppTimeDefaultMode from '../mode/AppTimeDefaultMode.vue';
 import AppTimeRangeMode from '../mode/AppTimeRangeMode.vue';
 import {

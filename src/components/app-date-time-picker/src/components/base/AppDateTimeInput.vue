@@ -55,7 +55,7 @@
 
 <script setup lang="ts">
 import { computed, inject, ref } from 'vue';
-import AppDateInput from '@/ui/AppDateInput.vue';
+import AppDateInput from '@/ui/AppDateInput/Index.vue';
 import type { ComputedRef } from 'vue';
 import CalendarDaysIcon from '@heroicons/vue/16/solid/CalendarDaysIcon';
 import XMarkIcon from '@heroicons/vue/16/solid/XMarkIcon';

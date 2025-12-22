@@ -22,7 +22,7 @@ export default defineConfig({
       '**/tests/_output/**',
       '**/docs/**',
     ],
-
+    setupFiles: ['./tests/setup.ts'],
     include: ['**/*.spec.ts'],
     coverage: {
       reportsDirectory: './tests/_output',

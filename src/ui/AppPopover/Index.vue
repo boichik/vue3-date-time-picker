@@ -30,7 +30,7 @@ import {
 } from 'vue';
 import { createPopper, type Placement } from '@popperjs/core';
 import { debounce, isBoolean } from 'es-toolkit';
-import { AppDateTimePopoverInternalSettingsProvide } from '../const/globalProvide.const';
+import { AppDateTimePopoverInternalSettingsProvide } from '@/const/globalProvide.const';
 
 const props = withDefaults(
   defineProps<{

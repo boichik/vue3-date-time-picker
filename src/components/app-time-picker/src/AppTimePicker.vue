@@ -57,7 +57,7 @@ import {
   useSlots,
   watch,
 } from 'vue';
-import AppPopover from '@/ui/AppPopover.vue';
+import AppPopover from '@/ui/AppPopover/Index.vue';
 import AppTimeInput from './components/base/AppTimeInput.vue';
 import AppTimeContent from './components/base/AppTimeContent.vue';
 import { isSameModelValue } from '@/utils/isSameDateOrNullValue';

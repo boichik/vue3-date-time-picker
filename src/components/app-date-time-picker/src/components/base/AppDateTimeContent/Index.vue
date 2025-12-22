@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import type { ComputedRef, Component } from 'vue';
 import { inject, computed, ref, onMounted, onBeforeUnmount } from 'vue';
-import AppButtonPanel from '@/ui/AppButtonPanel.vue';
+import AppButtonPanel from '@/ui/AppButtonPanel/Index.vue';
 import AppDateTimeShortcutPanel from '../../panel/AppDateTimeShortcutPanel.vue';
 import AppDateMode from '../../mode/AppDateMode.vue';
 import AppDateRangeMode from '../../mode/AppDateRangeMode.vue';

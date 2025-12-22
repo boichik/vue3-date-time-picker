@@ -60,7 +60,7 @@ import { computed, inject, ref } from 'vue';
 import { convertDateToTime, parseSelectableRange } from '../../utils';
 import { isDate } from '@/utils/isDate';
 import { isBefore, isAfter } from 'date-fns';
-import AppDateInput from '@/ui/AppDateInput.vue';
+import AppDateInput from '@/ui/AppDateInput/Index.vue';
 import XMarkIcon from '@heroicons/vue/16/solid/XMarkIcon';
 import ClockIcon from '@heroicons/vue/24/outline/ClockIcon';
 import { getDateWithZeroMilliseconds } from '@/utils/getNewDate';

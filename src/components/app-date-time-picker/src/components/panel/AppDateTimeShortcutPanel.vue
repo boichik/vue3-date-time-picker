@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import AppScrollbar from '@/ui/AppScrollbar.vue';
+import AppScrollbar from '@/ui/AppScrollbar/Index.vue';
 import { inject, computed } from 'vue';
 import { AppDateTimePickerType } from '../../enums/dateTimePickerType';
 import { isValidModelValue } from '@/utils/isValidModelValue';

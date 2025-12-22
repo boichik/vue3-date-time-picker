@@ -3,17 +3,7 @@
     ref="scrollbar"
     :class="getClasses"
     class="app-scrollbar"
-    @scroll="handleScroll"
-    @ps-scroll-y="handleScrollY"
-    @ps-scroll-x="handleScrollX"
-    @ps-scroll-up="handleScrollUp"
-    @ps-scroll-down="handleScrollDown"
-    @ps-scroll-left="handleScrollLeft"
-    @ps-scroll-right="handleScrollRight"
-    @ps-y-reach-start="handleYReachStart"
-    @ps-y-reach-end="handleYReachEnd"
-    @ps-x-reach-start="handleXReachStart"
-    @ps-x-reach-end="handleXReachEnd"
+    v-on="$emit"
   >
     <div class="app-scrollbar__content">
       <slot />
@@ -26,77 +16,33 @@ import type { PerfectScrollbarExpose } from 'vue3-perfect-scrollbar';
 import { computed, ref } from 'vue';
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 
-const emit = defineEmits([
-  'scroll',
-  'scroll-y',
-  'scroll-x',
-  'scroll-up',
-  'scroll-down',
-  'scroll-left',
-  'scroll-right',
-  'y-reach-start',
-  'y-reach-end',
-  'x-reach-start',
-  'x-reach-end',
-]);
+defineEmits<{
+  (e: 'scroll', event: Event): void;
+  (e: 'scroll-y', event: Event): void;
+  (e: 'scroll-x', event: Event): void;
+  (e: 'scroll-up', event: Event): void;
+  (e: 'scroll-down', event: Event): void;
+  (e: 'scroll-left', event: Event): void;
+  (e: 'scroll-right', event: Event): void;
+  (e: 'y-reach-start', event: Event): void;
+  (e: 'y-reach-end', event: Event): void;
+  (e: 'x-reach-start', event: Event): void;
+  (e: 'x-reach-end', event: Event): void;
+}>();
 
-const props = withDefaults(defineProps<{ showVerticalScroll?: boolean }>(), {
-  showVerticalScroll: true,
-});
+const { showVerticalScroll = true } = defineProps<{
+  showVerticalScroll?: boolean;
+}>();
 
 const getClasses = computed(() => {
   return {
-    'app-scrollbar--hide-y': !props.showVerticalScroll,
+    'app-scrollbar--hide-y': !showVerticalScroll,
   };
 });
 
 const scrollbar = ref<PerfectScrollbarExpose | null>(null);
 
 const exposeData = computed(() => scrollbar.value?.ps);
-
-function handleScroll(event: Event) {
-  emit('scroll', event);
-}
-
-function handleScrollY(event: Event) {
-  emit('scroll-y', event);
-}
-
-function handleScrollX(event: Event) {
-  emit('scroll-x', event);
-}
-
-function handleScrollUp(event: Event) {
-  emit('scroll-up', event);
-}
-
-function handleScrollDown(event: Event) {
-  emit('scroll-down', event);
-}
-
-function handleScrollLeft(event: Event) {
-  emit('scroll-left', event);
-}
-
-function handleScrollRight(event: Event) {
-  emit('scroll-right', event);
-}
-
-function handleYReachStart(event: Event) {
-  emit('y-reach-start', event);
-}
-
-function handleYReachEnd(event: Event) {
-  emit('y-reach-end', event);
-}
-
-function handleXReachStart(event: Event) {
-  emit('x-reach-start', event);
-}
-
-function handleXReachEnd(event: Event) {
-  emit('x-reach-end', event);
-}
 
 defineExpose({ ps: exposeData });
 </script>

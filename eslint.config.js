@@ -50,6 +50,7 @@ export default typescriptEslint.config(
       '@typescript-eslint/no-unused-expressions': 'off',
       'vue/require-default-prop': 'off',
       'vue/no-dupe-keys': 'off',
+      'vue/multi-word-component-names': 'off',
     },
   },
   {

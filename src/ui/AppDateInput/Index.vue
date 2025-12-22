@@ -16,13 +16,13 @@
 
 <script setup lang="ts">
 import { format } from 'date-fns/format';
-import { isDate } from '../utils/isDate';
+import { isDate } from '@/utils/isDate';
 import type { Ref } from 'vue';
 import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import { IMask } from 'vue-imask';
 import { getDaysInMonth, isValid, parse } from 'date-fns';
-import { getNewDate } from '../utils/getNewDate';
-import { inputBlocks } from '../const/inputBlocks.const';
+import { getNewDate } from '@/utils/getNewDate';
+import { inputBlocks } from '@/const/inputBlocks.const';
 
 type InputMask = InstanceType<typeof IMask.InputMask>;
 
@@ -110,7 +110,6 @@ function handleBlur(event?: Event) {
     props.format,
     props.modelValue || getNewDate()
   );
-
   if (!isValid(parsed) || (props.disabledDate && props.disabledDate(parsed))) {
     if (!props.modelValue) {
       imaskInstance.value?.masked.reset();

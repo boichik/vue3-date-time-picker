@@ -12,8 +12,7 @@
 <script setup lang="ts">
 import { isBoolean } from 'es-toolkit';
 import { computed } from 'vue';
-
-export type AppButtonType = 'submit' | 'default';
+import type { AppButtonType } from './types';
 
 const DEFAULT_DISABLED = false;
 

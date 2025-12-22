@@ -43,7 +43,7 @@
 <script setup lang="ts">
 import type { ComputedRef } from 'vue';
 import type { PerfectScrollbarExpose } from 'vue3-perfect-scrollbar';
-import AppScrollbar from '@/ui/AppScrollbar.vue';
+import AppScrollbar from '@/ui/AppScrollbar/Index.vue';
 import AppTimeControlButton from '../base/AppTimeControlButton.vue';
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { debounce } from 'es-toolkit';

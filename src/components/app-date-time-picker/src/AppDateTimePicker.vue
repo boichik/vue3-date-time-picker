@@ -88,7 +88,7 @@ import type {
   AppDateTimePickerExpose,
 } from './interfaces';
 import { TimezoneConvertorImpl } from '@/services/timezone-convertor/TimezoneConvertor';
-import AppPopover from '@/ui/AppPopover.vue';
+import AppPopover from '@/ui/AppPopover/Index.vue';
 import { isValidAlign } from '@/utils/isValidAlign';
 import { useClickOutside } from '@/composables/useClickOutside';
 import { useFocusInOutside } from '@/composables/useFocusInOutside';
