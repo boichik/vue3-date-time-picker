@@ -1,24 +1,20 @@
-/* eslint-disable no-undef */
 import { onMounted, onUnmounted, ref, type Ref } from 'vue';
-
-type Target = HTMLElement | Node | null;
-
-export type EventListenerOutsideTarget = Ref<Target> | Ref<Target>[];
-
-export type EventListenerOutsideCallback = (
-  isOutside: boolean,
-  event: Event
-) => void;
+import type {
+  EventListenerOutsideTarget,
+  EventListenerOutsideCallback,
+  InternalTarget,
+} from './types';
 
 export function useEventListenerOutside<T extends Document | Window>(
   target: EventListenerOutsideTarget,
   space: T,
+  // eslint-disable-next-line no-undef
   eventName: T extends Document ? keyof DocumentEventMap : keyof WindowEventMap,
   cb: EventListenerOutsideCallback
 ) {
   const isOutside = ref(true);
 
-  function getParentElement(element: Ref<unknown>): Target {
+  function getParentElement(element: Ref<unknown>): InternalTarget {
     if (!element.value) {
       return null;
     }
@@ -27,10 +23,10 @@ export function useEventListenerOutside<T extends Document | Window>(
       typeof element.value === 'object' && '$el' in element.value
         ? element.value.$el
         : element.value
-    ) as Target;
+    ) as InternalTarget;
   }
 
-  function containsOrEqualNode(parent: Target, child: Node): boolean {
+  function containsOrEqualNode(parent: InternalTarget, child: Node): boolean {
     return (
       !!parent &&
       ((parent.isEqualNode && parent.isEqualNode(child)) ||
