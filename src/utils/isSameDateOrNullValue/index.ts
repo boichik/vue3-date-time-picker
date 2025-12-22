@@ -1,5 +1,5 @@
 import { isDate, isEqual } from 'date-fns';
-import { TimezoneConvertorImpl } from '@/services/timezone-convertor/TimezoneConvertor';
+import { TimezoneConvertor } from '@/services/timezone-convertor';
 
 type Model = null | Date | (Date | null)[];
 
@@ -8,7 +8,7 @@ export function isSameModelValue(
   newValue: Model,
   timezone?: string
 ) {
-  const timezoneConvertor = new TimezoneConvertorImpl();
+  const timezoneConvertor = new TimezoneConvertor();
 
   if (Array.isArray(oldValue) && Array.isArray(newValue)) {
     if (oldValue.length !== newValue.length) return false;

@@ -1,12 +1,12 @@
 import { format, toZonedTime } from 'date-fns-tz';
-import type { TimezoneConvertor } from './TimezoneConvertor.interface';
+import type { ITimezoneConvertor } from './types';
 import { parseISO } from 'date-fns';
 import { isValidTimeZone } from '@/utils/isValidTimeZone';
 import { isDate } from '@/utils/isDate';
 
 const template = 'yyyy-MM-dd HH:mm:ssXXX';
 
-export class TimezoneConvertorImpl implements TimezoneConvertor {
+export class TimezoneConvertor implements ITimezoneConvertor {
   private get _localTimezone() {
     return Intl.DateTimeFormat().resolvedOptions().timeZone;
   }

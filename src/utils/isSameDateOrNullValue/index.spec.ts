@@ -3,9 +3,9 @@ import { isSameModelValue, isSameDateOrNullValue } from './index';
 
 const convertToTimeZoneMock = vi.fn();
 
-vi.mock('@/services/timezone-convertor/TimezoneConvertor', () => {
+vi.mock('@/services/timezone-convertor', () => {
   return {
-    TimezoneConvertorImpl: vi.fn().mockImplementation(() => ({
+    TimezoneConvertor: vi.fn().mockImplementation(() => ({
       convertToTimeZone: convertToTimeZoneMock,
     })),
   };

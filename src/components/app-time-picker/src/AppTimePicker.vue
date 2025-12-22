@@ -66,7 +66,7 @@ import { isBoolean, isString } from 'es-toolkit';
 import { isValidTimeZone } from '@/utils/isValidTimeZone';
 import { isDate } from '@/utils/isDate';
 import { isValidModelValue } from '@/utils/isValidModelValue';
-import { TimezoneConvertorImpl } from '@/services/timezone-convertor/TimezoneConvertor';
+import { TimezoneConvertor } from '@/services/timezone-convertor';
 import { isValidAlign } from '@/utils/isValidAlign';
 import {
   AppTimePickerInternalSettingsProvide,
@@ -97,7 +97,7 @@ const DEFAULT_INPUT_READONLY = false;
 const DEFAULT_AUTO_APPLY = false;
 const DEFAULT_NEXT_TEXT = 'Next';
 
-const timezoneConvertor = new TimezoneConvertorImpl();
+const timezoneConvertor = new TimezoneConvertor();
 
 const emit = defineEmits(['update:model-value', 'change', 'focus', 'blur']);
 

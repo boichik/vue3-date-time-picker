@@ -87,7 +87,7 @@ import type {
   AppDateTimePickerComponentData,
   AppDateTimePickerExpose,
 } from './interfaces';
-import { TimezoneConvertorImpl } from '@/services/timezone-convertor/TimezoneConvertor';
+import { TimezoneConvertor } from '@/services/timezone-convertor';
 import AppPopover from '@/ui/AppPopover/Index.vue';
 import { isValidAlign } from '@/utils/isValidAlign';
 import { useClickOutside } from '@/composables/useClickOutside';
@@ -118,7 +118,7 @@ const DEFAULT_AUTO_APPLY = false;
 const DEFAULT_HIDE_OFFSET_DAY = false;
 
 const localization = useLocalization();
-const timezoneConvertor = new TimezoneConvertorImpl();
+const timezoneConvertor = new TimezoneConvertor();
 
 const emit = defineEmits(['update:model-value', 'change', 'focus', 'blur']);
 

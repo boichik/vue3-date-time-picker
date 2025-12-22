@@ -2,7 +2,7 @@ import type { AppTimePickerProps } from '@/components/app-time-picker/src/interf
 import type { Ref } from 'vue';
 import type { AppDateTimePickerType } from '../enums/dateTimePickerType';
 import type { AppPickerProps } from '@/interfaces';
-import type { TimezoneConvertor } from '@/services/timezone-convertor/TimezoneConvertor.interface';
+import type { ITimezoneConvertor } from '@/services/timezone-convertor/types';
 import { AppDateTimePickerMode } from '../enums/dateTimePickerMode';
 
 export type AppDateTimePickerModel = null | Date | (null | Date)[];
@@ -194,7 +194,7 @@ export type AppDateTimePickerComponentData = Pick<
     >
   > & {
     disabledApplyButton: boolean;
-    timezoneConvertor: TimezoneConvertor;
+    timezoneConvertor: ITimezoneConvertor;
     today: Date;
     applyChange: () => void;
     cancelChange: () => void;
