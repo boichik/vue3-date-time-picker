@@ -1,8 +1,8 @@
 import {
   MILLISECONDS_IN_DAY,
   MILLISECONDS_IN_SECOND,
-} from '../const/time.const';
-import { isDate } from './isDate';
+} from '@/const/time.const';
+import { isDate } from '@/utils/isDate';
 
 export function getNewDate() {
   const now = new Date();

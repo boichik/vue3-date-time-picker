@@ -1,5 +1,5 @@
 import { isDate, isEqual } from 'date-fns';
-import { TimezoneConvertorImpl } from '../services/timezone-convertor/TimezoneConvertor';
+import { TimezoneConvertorImpl } from '@/services/timezone-convertor/TimezoneConvertor';
 
 type Model = null | Date | (Date | null)[];
 

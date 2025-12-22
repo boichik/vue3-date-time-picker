@@ -1,6 +1,6 @@
-import { inputBlocks } from '../const/inputBlocks.const';
-import { InputBlockType } from '../enums/InputBlockType';
-import disallowedFormatTypes from '../const/disallowedFormatTypes.const';
+import { inputBlocks } from '@/const/inputBlocks.const';
+import { InputBlockType } from '@/enums/InputBlockType';
+import disallowedFormatTypes from '@/const/disallowedFormatTypes.const';
 
 const createRegExpByWord = (word: string) => new RegExp(`\\b(${word})\\b`, 'g');
 
