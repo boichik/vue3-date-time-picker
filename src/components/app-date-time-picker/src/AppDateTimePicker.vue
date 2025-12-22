@@ -62,7 +62,7 @@ import {
 } from 'vue';
 
 import AppDateTimeInput from './components/base/AppDateTimeInput.vue';
-import AppDateTimeContent from './components/base/AppDateTimeContent.vue';
+import AppDateTimeContent from './components/base/AppDateTimeContent/Index.vue';
 import {
   isValidDefaultTime,
   isValidFirstDayOfWeek,
