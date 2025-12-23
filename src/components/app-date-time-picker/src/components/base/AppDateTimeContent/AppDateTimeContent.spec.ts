@@ -1,10 +1,10 @@
 import { shallowMount } from '@vue/test-utils';
-import AppDateTimeContent from './Index.vue';
+import AppDateTimeContent from './AppDateTimeContent.vue';
 import { nextTick, ref, type Ref } from 'vue';
 import type {
   AppDateTimePickerComponentData,
   AppDateTimePickerModel,
-} from '../../../interfaces';
+} from '../../../interfaces/index.interface';
 import { AppDateTimePickerComponentDataProvide } from '../../../const';
 import { AppDateTimePickerType } from '../../../enums/dateTimePickerType';
 import {
@@ -45,6 +45,12 @@ describe('AppDateTimeContent', () => {
           [AppDateTimePickerComponentDataProvide]:
             mockAppDateTimePickerComponentData,
         },
+        stubs: {
+          AppDateMode: true,
+          AppDateRangeMode: true,
+          AppButtonPanel: true,
+          AppDateTimeShortcutPanel: true,
+        },
       },
     });
 
@@ -67,7 +73,7 @@ describe('AppDateTimeContent', () => {
       name: 'AppDateTimeShortcutPanel',
     });
     expect(AppDateTimeShortcutPanel.exists()).toBe(false);
-
+    console.log(wrapper.html());
     const AppDateMode = wrapper.findComponent({ name: 'AppDateMode' });
     expect(AppDateMode.exists()).toBe(true);
 

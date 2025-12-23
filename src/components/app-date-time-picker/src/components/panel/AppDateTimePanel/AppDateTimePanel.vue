@@ -47,34 +47,27 @@
 </template>
 
 <script setup lang="ts">
-import AppDateTimeControlButton from '../base/AppDateTimeControlButton.vue';
+import AppDateTimeControlButton from '../../base/AppDateTimeControlButton/AppDateTimeControlButton.vue';
 import type { ComputedRef } from 'vue';
 import { computed, inject } from 'vue';
-import { isDisabledMonth, isDisabledYear } from '../../utils';
+import { isDisabledMonth, isDisabledYear } from '../../../utils';
 import { addMonths, addYears, subMonths, subYears } from 'date-fns';
-import { AppDateTimePickerMode } from '../../enums/dateTimePickerMode';
-import { AppDateTimePickerComponentDataProvide } from '../../const';
-import type { AppDateTimePickerComponentData } from '../../interfaces';
+import { AppDateTimePickerMode } from '../../../enums/dateTimePickerMode';
+import { AppDateTimePickerComponentDataProvide } from '../../../const';
+import type { AppDateTimePickerComponentData } from '../../../interfaces/index.interface';
 
-const emit = defineEmits([
-  'prevYear',
-  'nextYear',
-  'prevMonth',
-  'nextMonth',
-  'changeMode',
-]);
+const emit = defineEmits<{
+  (e: 'prevYear', displacementNumber: number): void;
+  (e: 'nextYear', displacementNumber: number): void;
+  (e: 'prevMonth', displacementNumber: number): void;
+  (e: 'nextMonth', displacementNumber: number): void;
+  (e: 'changeMode', mode: AppDateTimePickerMode): void;
+}>();
 
-const props = withDefaults(
-  defineProps<{
-    value?: Date | null;
-    currentDate: Date;
-    mode: AppDateTimePickerMode;
-  }>(),
-  {
-    value: undefined,
-    currentDate: () => new Date(),
-  }
-);
+const { currentDate = new Date(), mode } = defineProps<{
+  currentDate: Date;
+  mode: AppDateTimePickerMode;
+}>();
 
 const appDateTimePickerComponentData =
   inject<ComputedRef<AppDateTimePickerComponentData> | null>(
@@ -83,7 +76,7 @@ const appDateTimePickerComponentData =
   );
 
 const displacementNumber = computed(() => {
-  if (AppDateTimePickerMode.Year === props.mode) {
+  if (AppDateTimePickerMode.Year === mode) {
     return 10;
   } else {
     return 1;
@@ -91,10 +84,10 @@ const displacementNumber = computed(() => {
 });
 
 const yearButtonContent = computed(() => {
-  if (![AppDateTimePickerMode.Year].includes(props.mode as never)) {
-    return props.currentDate.getFullYear();
+  if (![AppDateTimePickerMode.Year].includes(mode as never)) {
+    return currentDate.getFullYear();
   } else {
-    const currentYear = props.currentDate.getFullYear();
+    const currentYear = currentDate.getFullYear();
 
     const startOfDecade = Math.floor(currentYear / 10) * 10;
     const endOfDecade = startOfDecade + 9;
@@ -104,7 +97,7 @@ const yearButtonContent = computed(() => {
 });
 
 const disabledYearAndMonthButton = computed(() => {
-  return !![AppDateTimePickerMode.Year].includes(props.mode as never);
+  return !![AppDateTimePickerMode.Year].includes(mode as never);
 });
 
 const monthButtonContent = computed(() => {
@@ -112,30 +105,20 @@ const monthButtonContent = computed(() => {
     appDateTimePickerComponentData?.value || {};
 
   return Intl.DateTimeFormat(locale, { month: monthButtonFormat }).format(
-    props.currentDate
+    currentDate
   );
 });
 
 const showMonthElements = computed(() => {
-  return [AppDateTimePickerMode.Day].includes(props.mode as never);
+  return [AppDateTimePickerMode.Day].includes(mode as never);
 });
 
 const isDisabledButtonRelativeDate = computed(() => {
   return {
-    prevYear: isDisabled(
-      subYears(props.currentDate, displacementNumber.value),
-      true
-    ),
-    prevMonth: isDisabled(
-      subMonths(props.currentDate, displacementNumber.value)
-    ),
-    nextYear: isDisabled(
-      addYears(props.currentDate, displacementNumber.value),
-      true
-    ),
-    nextMonth: isDisabled(
-      addMonths(props.currentDate, displacementNumber.value)
-    ),
+    prevYear: isDisabled(subYears(currentDate, displacementNumber.value), true),
+    prevMonth: isDisabled(subMonths(currentDate, displacementNumber.value)),
+    nextYear: isDisabled(addYears(currentDate, displacementNumber.value), true),
+    nextMonth: isDisabled(addMonths(currentDate, displacementNumber.value)),
   };
 });
 
@@ -154,7 +137,7 @@ function handleSelectByScroll(event: WheelEvent) {
 
   let fn: (() => void) | null = null;
 
-  if (AppDateTimePickerMode.Day === props.mode) {
+  if (AppDateTimePickerMode.Day === mode) {
     fn = isNext ? handleNextMonth : handlePrevMonth;
   } else {
     fn = isNext ? handleNextYear : handlePrevYear;

@@ -54,17 +54,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue';
+import { computed, inject, ref, useTemplateRef } from 'vue';
 import AppDateInput from '@/ui/AppDateInput/Index.vue';
 import type { ComputedRef } from 'vue';
 import CalendarDaysIcon from '@heroicons/vue/16/solid/CalendarDaysIcon';
 import XMarkIcon from '@heroicons/vue/16/solid/XMarkIcon';
 import { isDate } from '@/utils/isDate';
-import { AppDateTimePickerComponentDataProvide } from '../../const';
+import { AppDateTimePickerComponentDataProvide } from '../../../const';
 import type {
   AppDateTimePickerComponentData,
   AppDateTimePickerModel,
-} from '../../interfaces';
+} from '../../../interfaces/index.interface';
 
 const emit = defineEmits([
   'input',
@@ -85,8 +85,9 @@ const appDateTimePickerComponentData =
     null
   );
 
-const startInput = ref<HTMLInputElement | null>();
-const endInput = ref<HTMLInputElement | null>();
+const startInput =
+  useTemplateRef<InstanceType<typeof AppDateInput>>('startInput');
+const endInput = useTemplateRef<InstanceType<typeof AppDateInput>>('endInput');
 
 const isFocused = ref(false);
 const isFocusedStartInput = ref(false);
@@ -247,8 +248,8 @@ function handleBlur(index?: number) {
 function clear() {
   const value = isDoubleInputs.value ? [null, null] : null;
 
-  startInput.value?.remove();
-  endInput.value?.remove();
+  if (startInput.value?.remove) startInput.value?.remove();
+  if (endInput.value?.remove) endInput.value?.remove();
 
   emit('update:model-value', value);
   emit('clear');

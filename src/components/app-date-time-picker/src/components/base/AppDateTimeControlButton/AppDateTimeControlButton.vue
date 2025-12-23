@@ -1,6 +1,6 @@
 <template>
   <button
-    :disabled="props.disabled"
+    :disabled="disabled"
     class="app-date-time-picker-button"
     @click="handleClick()"
   >
@@ -17,27 +17,26 @@ import ChevronRightIcon from '@heroicons/vue/16/solid/ChevronRightIcon';
 
 const emit = defineEmits(['click']);
 
-const props = withDefaults(
-  defineProps<{
-    disabled?: boolean;
-    isRightPosition?: boolean;
-    doubleArrow?: boolean;
-  }>(),
-  { disabled: false, isRightPosition: false, doubleArrow: false }
-);
+const {
+  disabled = false,
+  isRightPosition = false,
+  doubleArrow = false,
+} = defineProps<{
+  disabled?: boolean;
+  isRightPosition?: boolean;
+  doubleArrow?: boolean;
+}>();
 
 const iconComponent = computed(() => {
-  if (props.doubleArrow) {
-    return !props.isRightPosition
-      ? ChevronDoubleLeftIcon
-      : ChevronDoubleRightIcon;
+  if (doubleArrow) {
+    return !isRightPosition ? ChevronDoubleLeftIcon : ChevronDoubleRightIcon;
   }
 
-  return !props.isRightPosition ? ChevronLeftIcon : ChevronRightIcon;
+  return !isRightPosition ? ChevronLeftIcon : ChevronRightIcon;
 });
 
 function handleClick() {
-  if (!props.disabled) {
+  if (!disabled) {
     emit('click');
   }
 }

@@ -27,15 +27,15 @@
 import type { ComputedRef, Component } from 'vue';
 import { inject, computed, ref, onMounted, onBeforeUnmount } from 'vue';
 import AppButtonPanel from '@/ui/AppButtonPanel/Index.vue';
-import AppDateTimeShortcutPanel from '../../panel/AppDateTimeShortcutPanel.vue';
-import AppDateMode from '../../mode/AppDateMode.vue';
-import AppDateRangeMode from '../../mode/AppDateRangeMode.vue';
+import AppDateTimeShortcutPanel from '../../panel/AppDateTimeShortcutPanel/AppDateTimeShortcutPanel.vue';
+import AppDateMode from '../../mode/AppDateMode/AppDateMode.vue';
+import AppDateRangeMode from '../../mode/AppDateRangeMode/AppDateRangeMode.vue';
 import { AppDateTimePickerComponentDataProvide } from '@/components/app-date-time-picker/src/const';
 import { AppDateTimePickerType } from '@/components/app-date-time-picker/src/enums/dateTimePickerType';
 import type {
   AppDateTimePickerModel,
   AppDateTimePickerComponentData,
-} from '@/components/app-date-time-picker/src/interfaces';
+} from '@/components/app-date-time-picker/src/interfaces/index.interface';
 
 const picker = ref<HTMLElement | null>(null);
 const shortcuts = ref<HTMLElement | null>(null);

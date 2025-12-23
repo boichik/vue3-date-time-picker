@@ -1,6 +1,6 @@
 <template>
   <div class="ui-date-time-range-mode">
-    <div ref="firstSection" class="ui-date-time-range-mode__section">
+    <section ref="firstSection" class="ui-date-time-range-mode__section">
       <AppTimePicker
         v-if="isTimeMode"
         :model-value="modelValueStartTimePicker"
@@ -19,8 +19,8 @@
         v-model="startDateDisplay"
         :selected-date="selectedStartDate"
       />
-    </div>
-    <div v-show="isFullyVisible" class="ui-date-time-range-mode__section">
+    </section>
+    <section v-show="isFullyVisible" class="ui-date-time-range-mode__section">
       <AppTimePicker
         v-if="isTimeMode"
         v-model="selectedEndDate"
@@ -36,19 +36,19 @@
         v-model="endDateDisplay"
         :selected-date="selectedEndDate"
       />
-    </div>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import AppDateTimeController from '../controller/AppDateTimeController.vue';
+import AppDateTimeController from '../../controller/AppController.vue';
 import { AppTimePicker } from '@/components/app-time-picker';
 import type {
   AppDateTimePickerComponentData,
   AppDateTimePickerDayTableComponentData,
   AppDateTimePickerMonthTableComponentData,
   AppDateTimePickerYearTableComponentData,
-} from '../../interfaces';
+} from '../../../interfaces/index.interface';
 import type { ComputedRef } from 'vue';
 import { computed, inject, provide, ref, watch, useTemplateRef } from 'vue';
 import {
@@ -63,7 +63,7 @@ import {
   isSameMonth,
   isSameYear,
 } from 'date-fns';
-import { setTime } from '../../utils';
+import { setTime } from '../../../utils';
 import { getNewDate } from '@/utils/getNewDate';
 import { AppTimePickerInternalSettingsProvide } from '@/components/app-time-picker/src/const';
 import {
@@ -71,11 +71,11 @@ import {
   AppDateTimePickerDayTableComponentDataProvide,
   AppDateTimePickerMonthTableComponentDataProvide,
   AppDateTimePickerYearTableComponentDataProvide,
-} from '../../const';
+} from '../../../const';
 import type { AppTimePickerInternalSettings } from '@/components/app-time-picker/src/interfaces';
 import { AppDateTimePopoverInternalSettingsProvide } from '@/const/globalProvide.const';
-import { AppDateTimePickerType } from '../../enums/dateTimePickerType';
-import { AppDateTimePickerMode } from '../../enums/dateTimePickerMode';
+import { AppDateTimePickerType } from '../../../enums/dateTimePickerType';
+import { AppDateTimePickerMode } from '../../../enums/dateTimePickerMode';
 import { useIsFullyVisibleRangeContent } from '@/composables/useIsFullyVisibleRangeContent';
 
 const emit = defineEmits(['update:model-value', 'changeMode']);
@@ -193,6 +193,7 @@ watch([selectedStartDate, selectedEndDate], ([newStart, newEnd]) => {
     const value = isBefore(newEnd, newStart)
       ? [newEnd, newStart]
       : [newStart, newEnd];
+
     emit('update:model-value', value);
   }
 });

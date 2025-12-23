@@ -2,7 +2,6 @@
   <div class="ui-date-time-mode">
     <AppTimePicker
       v-if="isTimeMode"
-      ref="timePicker"
       v-model="model"
       :clearable="timePickerOptions.clearable"
       :format="timePickerOptions.format"
@@ -20,10 +19,10 @@
 </template>
 
 <script setup lang="ts">
-import AppDateTimeController from '../controller/AppDateTimeController.vue';
+import AppDateTimeController from '../../controller/AppController.vue';
 import type { ComputedRef } from 'vue';
 import { provide, ref, inject, watch, computed } from 'vue';
-import { setTime } from '../../utils';
+import { setTime } from '../../../utils';
 import { isDate } from '@/utils/isDate';
 import { AppTimePicker } from '@/components/app-time-picker';
 import { format } from 'date-fns';
@@ -31,20 +30,15 @@ import { getNewDate } from '@/utils/getNewDate';
 import {
   AppDateTimePickerComponentDataProvide,
   AppDateTimePickerGlobalTableComponentDataProvide,
-} from '../../const';
+} from '../../../const';
 import { AppTimePickerInternalSettingsProvide } from '@/components/app-time-picker/src/const';
-import type {
-  AppTimePickerExpose,
-  AppTimePickerInternalSettings,
-} from '@/components/app-time-picker/src/interfaces';
+import type { AppTimePickerInternalSettings } from '@/components/app-time-picker/src/interfaces';
 import type {
   AppDateTimePickerComponentData,
   AppDateTimePickerGlobalTableComponentData,
-} from '../../interfaces';
+} from '../../../interfaces/index.interface';
 import { AppDateTimePopoverInternalSettingsProvide } from '@/const/globalProvide.const';
-import { AppDateTimePickerType } from '../../enums/dateTimePickerType';
-
-const timePicker = ref<AppTimePickerExpose | null>(null);
+import { AppDateTimePickerType } from '../../../enums/dateTimePickerType';
 
 const model = defineModel<Date | null>({ default: null });
 

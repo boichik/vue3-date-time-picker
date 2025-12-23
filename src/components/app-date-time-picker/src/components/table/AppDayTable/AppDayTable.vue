@@ -39,7 +39,7 @@ import type {
   AppDateTimePickerComponentData,
   AppDateTimePickerDayTableComponentData,
   AppDateTimePickerGlobalTableComponentData,
-} from '../../interfaces';
+} from '../../../interfaces/index.interface';
 import { computed, inject } from 'vue';
 import {
   startOfMonth,
@@ -56,14 +56,11 @@ import {
   AppDateTimePickerComponentDataProvide,
   AppDateTimePickerDayTableComponentDataProvide,
   AppDateTimePickerGlobalTableComponentDataProvide,
-} from '../../const';
-const props = withDefaults(
-  defineProps<{ value?: Date | null; currentDate: Date }>(),
-  {
-    value: undefined,
-    currentDate: () => new Date(),
-  }
-);
+} from '../../../const';
+const { value = undefined, currentDate = new Date() } = defineProps<{
+  value?: Date | null;
+  currentDate: Date;
+}>();
 
 const appDateTimePickerDayTableComponentData =
   inject<AppDateTimePickerDayTableComponentData | null>(
@@ -113,7 +110,7 @@ const reorderedDaysOfWeek = computed(() => {
   ];
 });
 
-const calendarDays = computed(() => generateCalendarDays(props.currentDate));
+const calendarDays = computed(() => generateCalendarDays(currentDate));
 
 const weeks = computed(() => {
   {
@@ -230,7 +227,7 @@ function isSelected(date: Date, isOtherMonth: boolean) {
       isOtherMonth
     );
   }
-  if (props.value && isSameDay(props.value, date)) return 'center';
+  if (value && isSameDay(value, date)) return 'center';
 
   return null;
 }

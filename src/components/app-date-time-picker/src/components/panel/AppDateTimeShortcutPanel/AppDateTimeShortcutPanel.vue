@@ -18,13 +18,18 @@
 <script setup lang="ts">
 import AppScrollbar from '@/ui/AppScrollbar/Index.vue';
 import { inject, computed } from 'vue';
-import { AppDateTimePickerType } from '../../enums/dateTimePickerType';
+import { AppDateTimePickerType } from '../../../enums/dateTimePickerType';
 import { isValidModelValue } from '@/utils/isValidModelValue';
-import { AppDateTimePickerComponentDataProvide } from '../../const';
+import { AppDateTimePickerComponentDataProvide } from '../../../const';
 import type { ComputedRef } from 'vue';
-import type { AppDateTimePickerComponentData } from '../../interfaces';
+import type {
+  AppDateTimePickerComponentData,
+  AppDateTimePickerModel,
+} from '../../../interfaces/index.interface';
 
-const emit = defineEmits(['select']);
+const emit = defineEmits<{
+  (e: 'select', value: AppDateTimePickerModel): void;
+}>();
 
 const appDateTimePickerComponentData =
   inject<ComputedRef<AppDateTimePickerComponentData> | null>(

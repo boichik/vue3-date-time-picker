@@ -61,8 +61,8 @@ import {
   watch,
 } from 'vue';
 
-import AppDateTimeInput from './components/base/AppDateTimeInput.vue';
-import AppDateTimeContent from './components/base/AppDateTimeContent/Index.vue';
+import AppDateTimeInput from './components/base/AppDateTimeInput/AppDateTimeInput.vue';
+import AppDateTimeContent from './components/base/AppDateTimeContent/AppDateTimeContent.vue';
 import {
   isValidDefaultTime,
   isValidFirstDayOfWeek,
@@ -86,7 +86,7 @@ import type {
   AppDateTimePickerModel,
   AppDateTimePickerComponentData,
   AppDateTimePickerExpose,
-} from './interfaces';
+} from './interfaces/index.interface';
 import { TimezoneConvertor } from '@/services/timezone-convertor';
 import AppPopover from '@/ui/AppPopover/Index.vue';
 import { isValidAlign } from '@/utils/isValidAlign';
@@ -160,7 +160,7 @@ const model = ref<AppDateTimePickerModel>(null);
 const isDisplayDefaultSlot = computed(() => !!useSlots()['default']);
 
 const currentLocale = computed(() => {
-  if (localization) return localization.locale.value;
+  if (localization && localization.locale) return localization.locale.value;
 
   return isValidLocale(props.locale) ? props.locale : DEFAULT_LOCALE;
 });

@@ -25,29 +25,26 @@
 import type { ComputedRef } from 'vue';
 import { computed, inject } from 'vue';
 import { isSameYear, setYear } from 'date-fns';
-import { isDisabledYear } from '../../utils';
+import { isDisabledYear } from '../../../utils';
 import {
   AppDateTimePickerComponentDataProvide,
   AppDateTimePickerGlobalTableComponentDataProvide,
   AppDateTimePickerYearTableComponentDataProvide,
-} from '../../const';
+} from '../../../const';
 import type {
   AppDateTimePickerComponentData,
   AppDateTimePickerGlobalTableComponentData,
   AppDateTimePickerYearTableComponentData,
-} from '../../interfaces';
+} from '../../../interfaces/index.interface';
 import { getNewDate } from '@/utils/getNewDate';
-import { AppDateTimePickerMode } from '../../enums/dateTimePickerMode';
+import { AppDateTimePickerMode } from '../../../enums/dateTimePickerMode';
 
 const emit = defineEmits(['update']);
 
-const props = withDefaults(
-  defineProps<{ value?: Date | null; currentDate: Date }>(),
-  {
-    value: undefined,
-    currentDate: () => new Date(),
-  }
-);
+const { value = undefined, currentDate = new Date() } = defineProps<{
+  value?: Date | null;
+  currentDate: Date;
+}>();
 
 const appDateTimePickerComponentData =
   inject<ComputedRef<AppDateTimePickerComponentData> | null>(
@@ -68,7 +65,7 @@ const appDateTimePickerGlobalTableComponentData =
   );
 
 const yearRows = computed(() => {
-  const currentYear = props.currentDate.getFullYear();
+  const currentYear = currentDate.getFullYear();
 
   const startOfDecade = Math.floor(currentYear / 10) * 10;
 
@@ -135,11 +132,11 @@ function isSelectedYear(date: Date) {
     return appDateTimePickerYearTableComponentData.isSelected(date);
   }
 
-  if (!props.value) {
+  if (!value) {
     return false;
   }
 
-  return isSameYear(date, props.value);
+  return isSameYear(date, value);
 }
 
 function isDisabled(date: Date) {
@@ -148,7 +145,7 @@ function isDisabled(date: Date) {
 }
 
 function formattedDate(year: number) {
-  const oldDate = props.value || props.currentDate;
+  const oldDate = value || currentDate;
 
   return setYear(oldDate, year);
 }

@@ -25,29 +25,26 @@
 import type { ComputedRef } from 'vue';
 import { computed, inject } from 'vue';
 import { isSameMonth, setMonth, setYear } from 'date-fns';
-import { isDisabledMonth } from '../../utils';
+import { isDisabledMonth } from '../../../utils';
 import {
   AppDateTimePickerComponentDataProvide,
   AppDateTimePickerGlobalTableComponentDataProvide,
   AppDateTimePickerMonthTableComponentDataProvide,
-} from '../../const';
+} from '../../../const';
 import type {
   AppDateTimePickerComponentData,
   AppDateTimePickerGlobalTableComponentData,
   AppDateTimePickerMonthTableComponentData,
-} from '../../interfaces';
+} from '../../../interfaces/index.interface';
 import { getNewDate } from '@/utils/getNewDate';
-import { AppDateTimePickerMode } from '../../enums/dateTimePickerMode';
+import { AppDateTimePickerMode } from '../../../enums/dateTimePickerMode';
 
 const emit = defineEmits(['update']);
 
-const props = withDefaults(
-  defineProps<{ value?: Date | null; currentDate: Date }>(),
-  {
-    value: undefined,
-    currentDate: () => new Date(),
-  }
-);
+const { value = undefined, currentDate = new Date() } = defineProps<{
+  value?: Date | null;
+  currentDate: Date;
+}>();
 
 const appDateTimePickerComponentData =
   inject<ComputedRef<AppDateTimePickerComponentData> | null>(
@@ -72,7 +69,7 @@ const monthRows = computed(() => {
     appDateTimePickerComponentData?.value || {};
 
   const months = Array.from({ length: 12 }, (_, index) => {
-    const date = new Date(props.currentDate.getFullYear(), index, 1);
+    const date = new Date(currentDate.getFullYear(), index, 1);
 
     return {
       index,
@@ -143,11 +140,11 @@ function isSelected(date: Date) {
     return appDateTimePickerMonthTableComponentData.isSelected(date);
   }
 
-  if (!props.value) {
+  if (!value) {
     return false;
   }
 
-  return isSameMonth(date, props.value);
+  return isSameMonth(date, value);
 }
 
 function isInRange(date: Date) {
@@ -192,12 +189,12 @@ function resetHover() {
 
 function selectMonth(date: Date) {
   if (isDisabled(date)) return;
-  const oldDate = props.value || props.currentDate;
+  const oldDate = value || currentDate;
 
   const newMonth = date.getMonth();
   const newYear = date.getFullYear();
 
-  const value = setYear(setMonth(oldDate, newMonth), newYear);
+  const newValue = setYear(setMonth(oldDate, newMonth), newYear);
 
   if (
     appDateTimePickerComponentData?.value.mode !== AppDateTimePickerMode.Day
@@ -206,18 +203,18 @@ function selectMonth(date: Date) {
       appDateTimePickerGlobalTableComponentData &&
       appDateTimePickerGlobalTableComponentData.select
     ) {
-      appDateTimePickerGlobalTableComponentData.select(value);
+      appDateTimePickerGlobalTableComponentData.select(newValue);
     }
 
     if (
       appDateTimePickerMonthTableComponentData &&
       !!appDateTimePickerMonthTableComponentData.select
     ) {
-      appDateTimePickerMonthTableComponentData!.select(value);
+      appDateTimePickerMonthTableComponentData!.select(newValue);
     }
   }
 
-  emit('update', value);
+  emit('update', newValue);
 }
 </script>
 

@@ -3,7 +3,7 @@ import type {
   AppDateTimePickerProps,
   AppDateTimePickerExpose,
   AppDateTimePickerShortcut,
-} from './src/interfaces';
+} from './src/interfaces/index.interface';
 
 export { AppDateTimePicker };
 

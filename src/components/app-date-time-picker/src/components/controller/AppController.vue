@@ -1,7 +1,7 @@
 <template>
   <AppDateTimePanel
     ref="panel"
-    :value="props.selectedDate"
+    :value="selectedDate"
     :mode="mode"
     :current-date="model"
     @prev-year="prevYear"
@@ -33,17 +33,17 @@
 </template>
 
 <script setup lang="ts">
-import AppDayTable from '../table/AppDayTable.vue';
-import AppMonthTable from '../table/AppMonthTable.vue';
-import AppYearTable from '../table/AppYearTable.vue';
+import AppDayTable from '../table/AppDayTable/AppDayTable.vue';
+import AppMonthTable from '../table/AppMonthTable/AppMonthTable.vue';
+import AppYearTable from '../table/AppYearTable/AppYearTable.vue';
 import { computed, inject, ref, watch, type ComputedRef } from 'vue';
 import { AppDateTimePickerMode } from '../../enums/dateTimePickerMode';
 import { addMonths, subMonths, addYears, subYears } from 'date-fns';
-import AppDateTimePanel from '../panel/AppDateTimePanel.vue';
+import AppDateTimePanel from '../panel/AppDateTimePanel/AppDateTimePanel.vue';
 import { AppDateTimePickerComponentDataProvide } from '../../const';
-import type { AppDateTimePickerComponentData } from '../../interfaces';
+import type { AppDateTimePickerComponentData } from '../../interfaces/index.interface';
 
-const props = defineProps<{
+const { selectedDate } = defineProps<{
   selectedDate?: Date | null;
 }>();
 
@@ -67,7 +67,7 @@ const mode = ref<AppDateTimePickerMode>(
 
 const componentBinds = computed(() => {
   return {
-    value: props.selectedDate,
+    value: selectedDate,
     currentDate: model.value,
   };
 });
