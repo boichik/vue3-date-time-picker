@@ -54,7 +54,7 @@ jobs:
 
       - name: SonarCloud Scan
         if: github.ref == 'refs/heads/master'
-        uses: SonarSource/sonarcloud-github-action@e44258b109568baa0df60ed515561fc6c869efc5
+        uses: SonarSource/sonarcloud-github-action@v5.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
