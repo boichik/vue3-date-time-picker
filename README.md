@@ -1,4 +1,4 @@
-# Vue3DateTimePicker
+# Vue3DateTimePicker [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=boichik_vue3-date-time-picker&metric=coverage)](https://sonarcloud.io/summary/new_code?id=boichik_vue3-date-time-picker) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=boichik_vue3-date-time-picker&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=boichik_vue3-date-time-picker)
 
 Modern, lightweight, and flexible date and time picker for Vue 3. 🚀
 
