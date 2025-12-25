@@ -25,19 +25,19 @@ import type { ComputedRef } from 'vue';
 import type {
   AppTimePickerComponentData,
   AppTimePickerModel,
-} from '../../interfaces';
+} from '../../../interfaces/index.interface';
 import { computed, inject, ref, useTemplateRef, watch } from 'vue';
-import AppTimeController from '../controller/AppTimeController.vue';
+import AppTimeController from '../../controller/AppController.vue';
 import { isDate } from '@/utils/isDate';
 import {
   convertDateToTime,
   leadToValidDateRelativeToRange,
   parseSelectableRange,
-} from '../../utils';
+} from '../../../utils';
 import {
   AppTimePickerComponentDataProvide,
   AppTimeRangeModeState,
-} from '../../const';
+} from '../../../const';
 import { useIsFullyVisibleRangeContent } from '@/composables/useIsFullyVisibleRangeContent';
 
 const model = defineModel<AppTimePickerModel>({ default: [null, null] });

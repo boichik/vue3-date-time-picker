@@ -58,8 +58,8 @@ import {
   watch,
 } from 'vue';
 import AppPopover from '@/ui/AppPopover/Index.vue';
-import AppTimeInput from './components/base/AppTimeInput.vue';
-import AppTimeContent from './components/base/AppTimeContent.vue';
+import AppTimeInput from './components/base/AppTimeInput/AppTimeInput.vue';
+import AppTimeContent from './components/base/AppTimeContent/AppTimeContent.vue';
 import { isSameModelValue } from '@/utils/isSameDateOrNullValue';
 import { parseFormat } from '@/utils/parseFormat';
 import { isBoolean, isString } from 'es-toolkit';
@@ -78,7 +78,7 @@ import type {
   AppTimePickerInternalSettings,
   AppTimePickerComponentData,
   AppTimePickerExpose,
-} from './interfaces';
+} from './interfaces/index.interface';
 import { isValidSelectableRange } from './utils';
 import { useFocusInOutside } from '@/composables/useFocusInOutside';
 import { useClickOutside } from '@/composables/useClickOutside';

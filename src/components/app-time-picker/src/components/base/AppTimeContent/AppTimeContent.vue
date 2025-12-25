@@ -20,15 +20,15 @@ import type { ComputedRef, Component } from 'vue';
 import type {
   AppTimePickerComponentData,
   AppTimePickerModel,
-} from '../../interfaces/index';
+} from '../../../interfaces/index.interface';
 import { inject, computed, reactive, provide } from 'vue';
 import AppButtonPanel from '@/ui/AppButtonPanel/Index.vue';
-import AppTimeDefaultMode from '../mode/AppTimeDefaultMode.vue';
-import AppTimeRangeMode from '../mode/AppTimeRangeMode.vue';
+import AppTimeDefaultMode from '../../mode/AppTimeDefaultMode/AppTimeDefaultMode.vue';
+import AppTimeRangeMode from '../../mode/AppTimeRangeMode/AppTimeRangeMode.vue';
 import {
   AppTimePickerComponentDataProvide,
   AppTimeRangeModeState,
-} from '../../const';
+} from '../../../const';
 
 const model = defineModel<AppTimePickerModel>();
 

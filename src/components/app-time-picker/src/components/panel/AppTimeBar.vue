@@ -44,25 +44,22 @@
 import type { ComputedRef } from 'vue';
 import type { PerfectScrollbarExpose } from 'vue3-perfect-scrollbar';
 import AppScrollbar from '@/ui/AppScrollbar/Index.vue';
-import AppTimeControlButton from '../base/AppTimeControlButton.vue';
+import AppTimeControlButton from '../base/AppTimeControlButton/AppTimeControlButton.vue';
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { debounce } from 'es-toolkit';
 import { AppTimeBarType } from '../../enums/timeBarType';
 
 const AmPmLabels = ['AM', 'PM'];
 
-const props = withDefaults(
-  defineProps<{
-    type?: AppTimeBarType;
-    enabledAmPm?: boolean;
-    disabledValue?: (val: number) => boolean;
-  }>(),
-  {
-    type: AppTimeBarType.Hours,
-    enabledAmPm: false,
-    disabledValue: undefined,
-  }
-);
+const {
+  type = AppTimeBarType.Hours,
+  enabledAmPm = false,
+  disabledValue = undefined,
+} = defineProps<{
+  type?: AppTimeBarType;
+  enabledAmPm?: boolean;
+  disabledValue?: (val: number) => boolean;
+}>();
 
 const model = defineModel<number>();
 
@@ -88,9 +85,9 @@ const activeElement = computed({
 });
 
 const maxTime = computed(() => {
-  switch (props.type) {
+  switch (type) {
     case AppTimeBarType.Hours:
-      return props.enabledAmPm ? 12 : 24;
+      return enabledAmPm ? 12 : 24;
     case AppTimeBarType.AmPm:
       return 2;
     default:
@@ -102,13 +99,13 @@ const elements = computed<{ value: number; label: string }[]>(() => {
   const timeArray = Array.from({ length: maxTime.value }, (_, i) => {
     let value = i;
 
-    if (props.type === AppTimeBarType.Hours && props.enabledAmPm) {
+    if (type === AppTimeBarType.Hours && enabledAmPm) {
       value = i + 1;
     }
 
     let label = value < 10 ? `0${value}` : value.toString();
 
-    if (props.type === AppTimeBarType.AmPm) {
+    if (type === AppTimeBarType.AmPm) {
       label = AmPmLabels[i];
     }
 
@@ -118,7 +115,7 @@ const elements = computed<{ value: number; label: string }[]>(() => {
     };
   });
 
-  if (props.type === AppTimeBarType.Hours && props.enabledAmPm) {
+  if (type === AppTimeBarType.Hours && enabledAmPm) {
     return [timeArray[11], ...timeArray.slice(0, 11)];
   }
 
@@ -207,8 +204,8 @@ function isSelected(val: number) {
 }
 
 function isDisabled(val: number) {
-  if (props.disabledValue) {
-    return props.disabledValue(val);
+  if (disabledValue) {
+    return disabledValue(val);
   }
 
   return false;

@@ -72,7 +72,7 @@ import {
   AppDateTimePickerMonthTableComponentDataProvide,
   AppDateTimePickerYearTableComponentDataProvide,
 } from '../../../const';
-import type { AppTimePickerInternalSettings } from '@/components/app-time-picker/src/interfaces';
+import type { AppTimePickerInternalSettings } from '@/components/app-time-picker/src/interfaces/index.interface';
 import { AppDateTimePopoverInternalSettingsProvide } from '@/const/globalProvide.const';
 import { AppDateTimePickerType } from '../../../enums/dateTimePickerType';
 import { AppDateTimePickerMode } from '../../../enums/dateTimePickerMode';

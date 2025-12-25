@@ -1,5 +1,5 @@
 <template>
-  <div class="app-time-picker-controller">
+  <section class="app-time-picker-controller">
     <AppTimeBar
       v-if="showComponent.hours"
       v-model="hoursModel"
@@ -39,12 +39,12 @@
         :type="typePickerBarType.AmPm"
       />
     </template>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
 import type { ComputedRef } from 'vue';
-import type { AppTimePickerComponentData } from '../../interfaces';
+import type { AppTimePickerComponentData } from '../../interfaces/index.interface';
 import { computed, inject, ref, watch } from 'vue';
 import AppTimeBar from '../panel/AppTimeBar.vue';
 import { isAfter, isBefore, setHours, setMinutes, setSeconds } from 'date-fns';
@@ -61,7 +61,7 @@ import { AppTimePickerComponentDataProvide } from '../../const';
 
 const emit = defineEmits(['update:model-value']);
 
-const props = defineProps<{
+const { modelValue, selectableRange } = defineProps<{
   modelValue: null | Date;
   selectableRange?: string;
 }>();
@@ -75,18 +75,18 @@ const appTimePickerComponentData =
     null
   );
 
-const selectedDate = ref<Date | null>(props.modelValue);
+const selectedDate = ref<Date | null>(modelValue);
 
 const dateForCreate = computed(() => {
-  return selectedDate.value || props.modelValue || getNewDate();
+  return selectedDate.value || modelValue || getNewDate();
 });
 
-const selectableRange = computed(() =>
-  parseSelectableRange(props.selectableRange, dateForCreate.value)
+const range = computed(() =>
+  parseSelectableRange(selectableRange, dateForCreate.value)
 );
 
 watch(
-  () => props.modelValue,
+  () => modelValue,
   value => {
     if (isSameDateOrNullValue(value, selectedDate.value)) {
       return;
@@ -95,7 +95,7 @@ watch(
     let newValue = value || null;
 
     if (value && isDate(value)) {
-      newValue = leadToValidDateRelativeToRange(value, selectableRange.value);
+      newValue = leadToValidDateRelativeToRange(value, range.value);
     }
     selectedDate.value = newValue;
   }
@@ -124,7 +124,7 @@ const hoursModel = computed({
 
     const date = leadToValidDateRelativeToRange(
       setHours(selectedDate.value as Date, newValue),
-      selectableRange.value
+      range.value
     );
 
     emit('update:model-value', date);
@@ -138,7 +138,7 @@ const minutesModel = computed({
   set(value: number) {
     const date = leadToValidDateRelativeToRange(
       setMinutes(selectedDate.value as Date, value),
-      selectableRange.value
+      range.value
     );
 
     emit('update:model-value', date);
@@ -152,7 +152,7 @@ const secondsModel = computed({
   set(value: number) {
     const date = leadToValidDateRelativeToRange(
       setSeconds(selectedDate.value as Date, value),
-      selectableRange.value
+      range.value
     );
 
     emit('update:model-value', date);
@@ -176,7 +176,7 @@ const amPmModel = computed({
 
     const date = leadToValidDateRelativeToRange(
       setHours(selectedDate.value as Date, newValue),
-      selectableRange.value
+      range.value
     );
     emit('update:model-value', date);
   },
@@ -202,7 +202,7 @@ function checkIsDisabledDate(value: Date) {
     return appTimePickerComponentData.value.isDisabledDate(value);
   }
 
-  const { startTime, endTime } = selectableRange.value;
+  const { startTime, endTime } = range.value;
 
   if (!startTime || !endTime) {
     return false;

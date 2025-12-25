@@ -1,6 +1,6 @@
 <template>
   <button
-    :disabled="props.disabled"
+    :disabled="disabled"
     tabindex="-1"
     class="app-time-picker-control-button"
     @click="handleClick"
@@ -16,21 +16,21 @@ import { computed } from 'vue';
 import ChevronUpIcon from '@heroicons/vue/16/solid/ChevronUpIcon';
 import ChevronDownIcon from '@heroicons/vue/16/solid/ChevronDownIcon';
 
-const emit = defineEmits(['click']);
+const emit = defineEmits<{
+  (e: 'click'): void;
+}>();
 
-const props = withDefaults(
-  defineProps<{ disabled?: boolean; isUpType?: boolean }>(),
-  {
-    disabled: false,
-  }
-);
+const { disabled, isUpType } = defineProps<{
+  disabled?: boolean;
+  isUpType?: boolean;
+}>();
 
 const iconComponent = computed(() => {
-  return props.isUpType ? ChevronUpIcon : ChevronDownIcon;
+  return isUpType ? ChevronUpIcon : ChevronDownIcon;
 });
 
 function handleClick() {
-  if (!props.disabled) {
+  if (!disabled) {
     emit('click');
   }
 }

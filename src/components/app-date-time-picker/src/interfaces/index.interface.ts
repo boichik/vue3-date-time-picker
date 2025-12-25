@@ -1,4 +1,4 @@
-import type { AppTimePickerProps } from '@/components/app-time-picker/src/interfaces';
+import type { AppTimePickerProps } from '@/components/app-time-picker/src/interfaces/index.interface';
 import type { Ref } from 'vue';
 import type { AppDateTimePickerType } from '../enums/dateTimePickerType';
 import type { AppPickerProps } from '@/interfaces';

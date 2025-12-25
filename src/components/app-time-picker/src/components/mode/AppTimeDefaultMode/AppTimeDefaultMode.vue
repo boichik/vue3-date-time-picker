@@ -6,15 +6,15 @@
 
 <script setup lang="ts">
 import type { ComputedRef } from 'vue';
-import type { AppTimePickerComponentData } from '../../interfaces';
+import type { AppTimePickerComponentData } from '../../../interfaces/index.interface';
 import { computed, inject } from 'vue';
-import AppTimeController from '../controller/AppTimeController.vue';
+import AppTimeController from '../../controller/AppController.vue';
 import {
   leadToValidDateRelativeToRange,
   parseSelectableRange,
-} from '../../utils';
-import { isDate } from 'date-fns';
-import { AppTimePickerComponentDataProvide } from '../../const';
+} from '../../../utils';
+import { AppTimePickerComponentDataProvide } from '../../../const';
+import { isDate } from '@/utils/isDate';
 
 const model = defineModel<Date | null>({ default: null });
 
@@ -28,14 +28,19 @@ const selectableRange = computed(
   () => appTimePickerComponentData?.value.selectableRange
 );
 
-const defaultTime = computed<Date>(
-  () => appTimePickerComponentData!.value.startDefaultTime
+const defaultTime = computed<Date | undefined>(
+  () => appTimePickerComponentData?.value.startDefaultTime
 );
 
 function prepareModel() {
-  let value: Date | null = isDate(model.value)
+  let value: Date | null | undefined = isDate(model.value)
     ? model.value
     : defaultTime.value;
+
+  if (!value) {
+    model.value = null;
+    return;
+  }
 
   value = leadToValidDateRelativeToRange(
     value,
@@ -48,7 +53,6 @@ function prepareModel() {
   ) {
     value = null;
   }
-
   model.value = value;
 }
 

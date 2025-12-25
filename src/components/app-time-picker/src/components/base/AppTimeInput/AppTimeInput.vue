@@ -55,26 +55,26 @@ import type { ComputedRef } from 'vue';
 import type {
   AppTimePickerComponentData,
   AppTimePickerModel,
-} from '../../interfaces/index';
+} from '../../../interfaces/index.interface';
 import { computed, inject, ref } from 'vue';
-import { convertDateToTime, parseSelectableRange } from '../../utils';
+import { convertDateToTime, parseSelectableRange } from '../../../utils';
 import { isDate } from '@/utils/isDate';
 import { isBefore, isAfter } from 'date-fns';
 import AppDateInput from '@/ui/AppDateInput/Index.vue';
 import XMarkIcon from '@heroicons/vue/16/solid/XMarkIcon';
 import ClockIcon from '@heroicons/vue/24/outline/ClockIcon';
 import { getDateWithZeroMilliseconds } from '@/utils/getNewDate';
-import { AppTimePickerComponentDataProvide } from '../../const';
+import { AppTimePickerComponentDataProvide } from '../../../const';
 
-const emit = defineEmits([
-  'input',
-  'update:model-value',
-  'clear',
-  'focus',
-  'blur',
-]);
+const emit = defineEmits<{
+  (e: 'input'): void;
+  (e: 'update:model-value', value: AppTimePickerModel): void;
+  (e: 'clear'): void;
+  (e: 'focus'): void;
+  (e: 'blur'): void;
+}>();
 
-const props = defineProps<{
+const { modelValue, popoverVisible } = defineProps<{
   modelValue: AppTimePickerModel;
   popoverVisible?: boolean;
 }>();
@@ -94,9 +94,7 @@ const isFocusedEndInput = ref(false);
 
 const modelStart = computed<Date | null>({
   get() {
-    return Array.isArray(props.modelValue)
-      ? props.modelValue[0]
-      : props.modelValue;
+    return Array.isArray(modelValue) ? modelValue[0] : modelValue;
   },
   set(val: Date | null) {
     const value = isDoubleInputs.value
@@ -108,7 +106,7 @@ const modelStart = computed<Date | null>({
 
 const modelEnd = computed<Date | null>({
   get() {
-    return Array.isArray(props.modelValue) ? props.modelValue[1] : null;
+    return Array.isArray(modelValue) ? modelValue[1] : null;
   },
   set(val: Date | null) {
     const value = prepareArrayValue([modelStart.value, val]);
@@ -171,7 +169,7 @@ const endSelectableRange = computed(() => getSelectableRange(1));
 const getClasses = computed(() => ({
   'app-time-picker-input--disabled': disabled.value,
   'app-time-picker-input--read-only': readonly.value,
-  'app-time-picker-input--focus': !!isFocused.value || props.popoverVisible,
+  'app-time-picker-input--focus': !!isFocused.value || popoverVisible,
   'app-time-picker-input--range': !!isDoubleInputs.value,
   'app-time-picker-input--invalid': !!invalid.value,
 }));

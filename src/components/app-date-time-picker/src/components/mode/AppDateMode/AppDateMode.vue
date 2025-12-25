@@ -32,7 +32,7 @@ import {
   AppDateTimePickerGlobalTableComponentDataProvide,
 } from '../../../const';
 import { AppTimePickerInternalSettingsProvide } from '@/components/app-time-picker/src/const';
-import type { AppTimePickerInternalSettings } from '@/components/app-time-picker/src/interfaces';
+import type { AppTimePickerInternalSettings } from '@/components/app-time-picker/src/interfaces/index.interface';
 import type {
   AppDateTimePickerComponentData,
   AppDateTimePickerGlobalTableComponentData,
