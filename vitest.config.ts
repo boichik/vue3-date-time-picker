@@ -34,6 +34,8 @@ export default defineConfig({
     setupFiles: ['./tests/setup.ts'],
     include: ['**/*.spec.ts'],
     coverage: {
+      provider: 'v8',
+      reporter: ['text', 'lcov', 'html'],
       reportsDirectory: './tests/_output',
       exclude: excludePatterns,
     },

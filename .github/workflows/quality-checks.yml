@@ -45,4 +45,16 @@ jobs:
         run: pnpm typecheck
 
       - name: Run tests
+        if: github.ref != 'refs/heads/master'
         run: pnpm test
+
+      - name: Generate coverage report
+        if: github.ref == 'refs/heads/master'
+        run: pnpm test:coverage
+
+      - name: SonarCloud Scan
+        if: github.ref == 'refs/heads/master'
+        uses: SonarSource/sonarcloud-github-action@v5.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
