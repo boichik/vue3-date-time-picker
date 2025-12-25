@@ -31,7 +31,7 @@ import { InformationCircleIcon } from '@heroicons/vue/24/outline';
 import { onMounted, ref } from 'vue';
 import { useClickOutside } from '../../../../../src/composables/useClickOutside';
 import { useFocusInOutside } from '../../../../../src/composables/useFocusInOutside';
-import AppPopover from '../../../../../src/ui/AppPopover.vue';
+import AppPopover from '../../../../../src/ui/AppPopover/Index.vue';
 
 const model = ref(false);
 const referece = ref<HTMLElement | null>(null);

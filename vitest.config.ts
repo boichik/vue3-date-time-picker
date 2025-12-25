@@ -2,6 +2,21 @@ import { defineConfig } from 'vitest/config';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
 
+const excludePatterns = [
+  '**/node_modules/**',
+  '**/lib/**',
+  '**/playground/**',
+  '**/tests/**',
+  '*.config.*',
+  '**/docs/**',
+  '**/*.interface.ts',
+  '**/*.const.ts',
+  '**/*.config.ts',
+  'src/index.ts',
+  'src/components/**/index.ts',
+  'declarations',
+];
+
 export default defineConfig({
   plugins: [
     vue({
@@ -15,26 +30,12 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    exclude: [
-      '**/node_modules/**',
-      '**/lib/**',
-      '**/playground/**',
-      '**/tests/_output/**',
-      '**/docs/**',
-    ],
-
+    exclude: excludePatterns,
+    setupFiles: ['./tests/setup.ts'],
     include: ['**/*.spec.ts'],
     coverage: {
       reportsDirectory: './tests/_output',
-      exclude: [
-        '**/node_modules/**',
-        '**/lib/**',
-        '**/playground/**',
-        '**/tests/**',
-        '*.config.*',
-        '**/docs/**',
-        'declarations',
-      ],
+      exclude: excludePatterns,
     },
     env: {
       TZ: 'Europe/Kyiv',

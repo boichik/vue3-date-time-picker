@@ -1,7 +1,7 @@
 import { getDateWithZeroMilliseconds, getNewDate } from '@/utils/getNewDate';
 import { regexpValidator } from '@/utils/regexpValidator';
 import { isBefore, isAfter, parse, format } from 'date-fns';
-import type { AppTimePickerEnabledTimeTypes } from '../interfaces';
+import type { AppTimePickerEnabledTimeTypes } from '../interfaces/index.interface';
 import { InputBlockType } from '@/enums/InputBlockType';
 import { isDate } from '@/utils/isDate';
 

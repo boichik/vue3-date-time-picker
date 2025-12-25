@@ -1,6 +1,6 @@
 import DefaultTheme from 'vitepress/theme';
 import { AppDateTimePicker } from '../../../src/components/app-date-time-picker';
-import AppDateTimeContent from '../../../src/components/app-date-time-picker/src/components/base/AppDateTimeContent.vue';
+import AppDateTimeContent from '../../../src/components/app-date-time-picker/src/components/base/AppDateTimeContent/AppDateTimeContent.vue';
 import { AppTimePicker } from '../../../src/components/app-time-picker';
 import '../../../src/styles/variables.css';
 import '../src/style/index.scss';

@@ -57,16 +57,16 @@ import {
   useSlots,
   watch,
 } from 'vue';
-import AppPopover from '@/ui/AppPopover.vue';
-import AppTimeInput from './components/base/AppTimeInput.vue';
-import AppTimeContent from './components/base/AppTimeContent.vue';
+import AppPopover from '@/ui/AppPopover/Index.vue';
+import AppTimeInput from './components/base/AppTimeInput/AppTimeInput.vue';
+import AppTimeContent from './components/base/AppTimeContent/AppTimeContent.vue';
 import { isSameModelValue } from '@/utils/isSameDateOrNullValue';
 import { parseFormat } from '@/utils/parseFormat';
 import { isBoolean, isString } from 'es-toolkit';
 import { isValidTimeZone } from '@/utils/isValidTimeZone';
 import { isDate } from '@/utils/isDate';
 import { isValidModelValue } from '@/utils/isValidModelValue';
-import { TimezoneConvertorImpl } from '@/services/timezone-convertor/TimezoneConvertor';
+import { TimezoneConvertor } from '@/services/timezone-convertor';
 import { isValidAlign } from '@/utils/isValidAlign';
 import {
   AppTimePickerInternalSettingsProvide,
@@ -78,7 +78,7 @@ import type {
   AppTimePickerInternalSettings,
   AppTimePickerComponentData,
   AppTimePickerExpose,
-} from './interfaces';
+} from './interfaces/index.interface';
 import { isValidSelectableRange } from './utils';
 import { useFocusInOutside } from '@/composables/useFocusInOutside';
 import { useClickOutside } from '@/composables/useClickOutside';
@@ -97,7 +97,7 @@ const DEFAULT_INPUT_READONLY = false;
 const DEFAULT_AUTO_APPLY = false;
 const DEFAULT_NEXT_TEXT = 'Next';
 
-const timezoneConvertor = new TimezoneConvertorImpl();
+const timezoneConvertor = new TimezoneConvertor();
 
 const emit = defineEmits(['update:model-value', 'change', 'focus', 'blur']);
 
