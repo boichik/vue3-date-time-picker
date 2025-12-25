@@ -1,14 +1,36 @@
-import { computed, nextTick } from 'vue';
+import { computed, defineComponent, inject, nextTick } from 'vue';
 import { shallowMount } from '@vue/test-utils';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import AppDateMode from './AppDateMode.vue';
-import AppDateTimeController from '../../controller/AppController.vue';
 import { AppTimePicker } from '@/components/app-time-picker';
-import { AppDateTimePickerComponentDataProvide } from '../../../const';
-import type { AppDateTimePickerComponentData } from '../../../interfaces/index.interface';
+import {
+  AppDateTimePickerComponentDataProvide,
+  AppDateTimePickerGlobalTableComponentDataProvide,
+} from '../../../const';
+import type {
+  AppDateTimePickerComponentData,
+  AppDateTimePickerGlobalTableComponentData,
+} from '../../../interfaces/index.interface';
 import { AppDateTimePickerType } from '../../../enums/dateTimePickerType';
 
 describe('AppDateMode', () => {
+  let injectedGlobalTableComponentData: AppDateTimePickerGlobalTableComponentData | null;
+
+  const AppDateTimeController = defineComponent({
+    name: 'AppDateTimeController',
+    props: ['modelValue', 'selectedDate'],
+    setup() {
+      injectedGlobalTableComponentData =
+        inject<AppDateTimePickerGlobalTableComponentData | null>(
+          AppDateTimePickerGlobalTableComponentDataProvide,
+          null
+        );
+
+      return {};
+    },
+    template: '<div></div>',
+  });
+
   const createWrapper = (
     props?: Partial<InstanceType<typeof AppDateMode>['$props']>,
     provides?: {
@@ -41,12 +63,17 @@ describe('AppDateMode', () => {
             () => defaultComponentData
           ),
         },
+        stubs: {
+          AppDateTimeController,
+        },
       },
     });
   };
 
   beforeEach(() => {
     vi.clearAllMocks();
+
+    injectedGlobalTableComponentData = null;
   });
 
   describe('Component rendering', () => {
@@ -643,6 +670,410 @@ describe('AppDateMode', () => {
 
       expect(modelValue.getHours()).toBe(14);
       expect(modelValue.getMinutes()).toBe(30);
+    });
+  });
+
+  describe('GlobalTableComponentData provide/inject', () => {
+    it('should provide globalTableComponentData to child components', () => {
+      createWrapper();
+
+      expect(injectedGlobalTableComponentData).not.toBeNull();
+      expect(injectedGlobalTableComponentData?.select).toBeDefined();
+      expect(typeof injectedGlobalTableComponentData?.select).toBe('function');
+    });
+
+    it('should provide globalTableComponentData in Date mode', () => {
+      createWrapper(
+        {},
+        { componentData: { type: AppDateTimePickerType.Date } }
+      );
+
+      expect(injectedGlobalTableComponentData).not.toBeNull();
+      expect(injectedGlobalTableComponentData?.select).toBeDefined();
+    });
+
+    it('should provide globalTableComponentData in DateTime mode', () => {
+      createWrapper(
+        {},
+        { componentData: { type: AppDateTimePickerType.DateTime } }
+      );
+
+      expect(injectedGlobalTableComponentData).not.toBeNull();
+      expect(injectedGlobalTableComponentData?.select).toBeDefined();
+    });
+
+    it('should update modelValue when select is called', async () => {
+      const wrapper = createWrapper(
+        { modelValue: null },
+        {
+          componentData: {
+            defaultTime: '14:30:00',
+            today: new Date('2023-06-15T12:00:00'),
+          },
+        }
+      );
+
+      const selectedDate = new Date('2023-07-20T10:00:00');
+      injectedGlobalTableComponentData?.select(selectedDate);
+
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      expect(emitted).toBeTruthy();
+      expect(emitted?.[0]).toBeDefined();
+
+      const emittedDate = emitted?.[0][0] as Date;
+      expect(emittedDate.getFullYear()).toBe(2023);
+      expect(emittedDate.getMonth()).toBe(6);
+      expect(emittedDate.getDate()).toBe(20);
+    });
+
+    it('should apply defaultTime when select is called', async () => {
+      const wrapper = createWrapper(
+        { modelValue: null },
+        {
+          componentData: {
+            defaultTime: '14:30:45',
+            today: new Date('2023-06-15T12:00:00'),
+          },
+        }
+      );
+
+      const selectedDate = new Date('2023-07-20T10:00:00');
+      injectedGlobalTableComponentData?.select(selectedDate);
+
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      const emittedDate = emitted?.[0][0] as Date;
+
+      expect(emittedDate.getHours()).toBe(14);
+      expect(emittedDate.getMinutes()).toBe(30);
+      expect(emittedDate.getSeconds()).toBe(45);
+    });
+
+    it('should preserve selected date when applying defaultTime', async () => {
+      const wrapper = createWrapper(
+        { modelValue: null },
+        {
+          componentData: {
+            defaultTime: '09:15:30',
+            today: new Date('2023-06-15T12:00:00'),
+          },
+        }
+      );
+
+      const selectedDate = new Date('2023-12-25T23:59:59');
+      injectedGlobalTableComponentData?.select(selectedDate);
+
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      const emittedDate = emitted?.[0][0] as Date;
+
+      expect(emittedDate.getFullYear()).toBe(2023);
+      expect(emittedDate.getMonth()).toBe(11);
+      expect(emittedDate.getDate()).toBe(25);
+      expect(emittedDate.getHours()).toBe(9);
+      expect(emittedDate.getMinutes()).toBe(15);
+      expect(emittedDate.getSeconds()).toBe(30);
+    });
+
+    it('should handle select with midnight defaultTime', async () => {
+      const wrapper = createWrapper(
+        { modelValue: null },
+        {
+          componentData: {
+            defaultTime: '00:00:00',
+            today: new Date('2023-06-15T12:00:00'),
+          },
+        }
+      );
+
+      const selectedDate = new Date('2023-07-20T15:30:00');
+      injectedGlobalTableComponentData?.select(selectedDate);
+
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      const emittedDate = emitted?.[0][0] as Date;
+
+      expect(emittedDate.getHours()).toBe(0);
+      expect(emittedDate.getMinutes()).toBe(0);
+      expect(emittedDate.getSeconds()).toBe(0);
+    });
+
+    it('should handle select with end of day defaultTime', async () => {
+      const wrapper = createWrapper(
+        { modelValue: null },
+        {
+          componentData: {
+            defaultTime: '23:59:59',
+            today: new Date('2023-06-15T12:00:00'),
+          },
+        }
+      );
+
+      const selectedDate = new Date('2023-07-20T10:00:00');
+      injectedGlobalTableComponentData?.select(selectedDate);
+
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      const emittedDate = emitted?.[0][0] as Date;
+
+      expect(emittedDate.getHours()).toBe(23);
+      expect(emittedDate.getMinutes()).toBe(59);
+      expect(emittedDate.getSeconds()).toBe(59);
+    });
+
+    it('should handle select with array defaultTime', async () => {
+      const wrapper = createWrapper(
+        { modelValue: null },
+        {
+          componentData: {
+            defaultTime: ['08:30:15', '18:45:00'],
+            today: new Date('2023-06-15T12:00:00'),
+          },
+        }
+      );
+
+      const selectedDate = new Date('2023-07-20T10:00:00');
+      injectedGlobalTableComponentData?.select(selectedDate);
+
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      const emittedDate = emitted?.[0][0] as Date;
+
+      expect(emittedDate.getHours()).toBe(8);
+      expect(emittedDate.getMinutes()).toBe(30);
+      expect(emittedDate.getSeconds()).toBe(15);
+    });
+
+    it('should handle multiple select calls', async () => {
+      const wrapper = createWrapper(
+        { modelValue: null },
+        {
+          componentData: {
+            defaultTime: '12:00:00',
+            today: new Date('2023-06-15T12:00:00'),
+          },
+        }
+      );
+
+      injectedGlobalTableComponentData?.select(new Date('2023-07-20'));
+      await nextTick();
+
+      injectedGlobalTableComponentData?.select(new Date('2023-08-15'));
+      await nextTick();
+
+      injectedGlobalTableComponentData?.select(new Date('2023-09-10'));
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      expect(emitted).toHaveLength(3);
+
+      const lastEmittedDate = emitted?.[2][0] as Date;
+      expect(lastEmittedDate.getMonth()).toBe(8);
+      expect(lastEmittedDate.getDate()).toBe(10);
+    });
+
+    it('should handle select with leap year date', async () => {
+      const wrapper = createWrapper(
+        { modelValue: null },
+        {
+          componentData: {
+            defaultTime: '16:45:30',
+            today: new Date('2023-06-15T12:00:00'),
+          },
+        }
+      );
+
+      const leapDate = new Date('2024-02-29T10:00:00');
+      injectedGlobalTableComponentData?.select(leapDate);
+
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      const emittedDate = emitted?.[0][0] as Date;
+
+      expect(emittedDate.getFullYear()).toBe(2024);
+      expect(emittedDate.getMonth()).toBe(1);
+      expect(emittedDate.getDate()).toBe(29);
+      expect(emittedDate.getHours()).toBe(16);
+      expect(emittedDate.getMinutes()).toBe(45);
+    });
+
+    it('should handle select with past date', async () => {
+      const wrapper = createWrapper(
+        { modelValue: null },
+        {
+          componentData: {
+            defaultTime: '10:30:00',
+            today: new Date('2023-06-15T12:00:00'),
+          },
+        }
+      );
+
+      const pastDate = new Date('1900-01-01T00:00:00');
+      injectedGlobalTableComponentData?.select(pastDate);
+
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      const emittedDate = emitted?.[0][0] as Date;
+
+      expect(emittedDate.getFullYear()).toBe(1900);
+      expect(emittedDate.getHours()).toBe(10);
+      expect(emittedDate.getMinutes()).toBe(30);
+    });
+
+    it('should handle select with future date', async () => {
+      const wrapper = createWrapper(
+        { modelValue: null },
+        {
+          componentData: {
+            defaultTime: '20:15:45',
+            today: new Date('2023-06-15T12:00:00'),
+          },
+        }
+      );
+
+      const futureDate = new Date('2100-12-31T00:00:00');
+      injectedGlobalTableComponentData?.select(futureDate);
+
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      const emittedDate = emitted?.[0][0] as Date;
+
+      expect(emittedDate.getFullYear()).toBe(2100);
+      expect(emittedDate.getMonth()).toBe(11);
+      expect(emittedDate.getDate()).toBe(31);
+      expect(emittedDate.getHours()).toBe(20);
+      expect(emittedDate.getMinutes()).toBe(15);
+    });
+
+    it('should handle select when modelValue already exists', async () => {
+      const existingDate = new Date('2023-06-01T08:00:00');
+      const wrapper = createWrapper(
+        { modelValue: existingDate },
+        {
+          componentData: {
+            defaultTime: '14:30:00',
+            today: new Date('2023-06-15T12:00:00'),
+          },
+        }
+      );
+
+      const newDate = new Date('2023-07-20T10:00:00');
+      injectedGlobalTableComponentData?.select(newDate);
+
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      const emittedDate = emitted?.[0][0] as Date;
+
+      expect(emittedDate.getMonth()).toBe(6);
+      expect(emittedDate.getDate()).toBe(20);
+      expect(emittedDate.getHours()).toBe(14);
+      expect(emittedDate.getMinutes()).toBe(30);
+    });
+
+    it('should handle select with defaultTime from today when no explicit defaultTime', async () => {
+      const today = new Date('2023-06-15T16:45:30');
+      const wrapper = createWrapper(
+        { modelValue: null },
+        {
+          componentData: {
+            defaultTime: undefined,
+            today,
+            type: AppDateTimePickerType.DateTime,
+          },
+        }
+      );
+
+      const selectedDate = new Date('2023-07-20T10:00:00');
+      injectedGlobalTableComponentData?.select(selectedDate);
+
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      const emittedDate = emitted?.[0][0] as Date;
+
+      expect(emittedDate.getHours()).toBe(today.getHours());
+      expect(emittedDate.getMinutes()).toBe(today.getMinutes());
+      expect(emittedDate.getSeconds()).toBe(today.getSeconds());
+    });
+
+    it('should handle select in DateTime mode', async () => {
+      const wrapper = createWrapper(
+        { modelValue: null },
+        {
+          componentData: {
+            type: AppDateTimePickerType.DateTime,
+            defaultTime: '11:22:33',
+            today: new Date('2023-06-15T12:00:00'),
+          },
+        }
+      );
+
+      const selectedDate = new Date('2023-08-25T00:00:00');
+      injectedGlobalTableComponentData?.select(selectedDate);
+
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      const emittedDate = emitted?.[0][0] as Date;
+
+      expect(emittedDate.getMonth()).toBe(7);
+      expect(emittedDate.getDate()).toBe(25);
+      expect(emittedDate.getHours()).toBe(11);
+      expect(emittedDate.getMinutes()).toBe(22);
+      expect(emittedDate.getSeconds()).toBe(33);
+    });
+
+    it('should emit only once per select call', async () => {
+      const wrapper = createWrapper(
+        { modelValue: null },
+        {
+          componentData: {
+            defaultTime: '12:00:00',
+            today: new Date('2023-06-15T12:00:00'),
+          },
+        }
+      );
+
+      const selectedDate = new Date('2023-07-20T10:00:00');
+      injectedGlobalTableComponentData?.select(selectedDate);
+
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      expect(emitted).toHaveLength(1);
+    });
+
+    it('should handle rapid consecutive select calls', async () => {
+      const wrapper = createWrapper(
+        { modelValue: null },
+        {
+          componentData: {
+            defaultTime: '10:00:00',
+            today: new Date('2023-06-15T12:00:00'),
+          },
+        }
+      );
+
+      injectedGlobalTableComponentData?.select(new Date('2023-07-20'));
+      injectedGlobalTableComponentData?.select(new Date('2023-07-21'));
+      injectedGlobalTableComponentData?.select(new Date('2023-07-22'));
+
+      await nextTick();
+
+      const emitted = wrapper.emitted('update:modelValue');
+      expect(emitted).toBeTruthy();
+      expect(emitted!.length).toBeGreaterThanOrEqual(3);
     });
   });
 });

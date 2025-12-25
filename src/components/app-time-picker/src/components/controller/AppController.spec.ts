@@ -96,7 +96,6 @@ describe('AppController', () => {
     it('should render separators between time components', () => {
       const wrapper = createWrapper({}, { format: 'HH:mm:ss' });
       const separators = wrapper.findAll('div');
-      console.log(wrapper.html());
       expect(separators).toHaveLength(2);
     });
 

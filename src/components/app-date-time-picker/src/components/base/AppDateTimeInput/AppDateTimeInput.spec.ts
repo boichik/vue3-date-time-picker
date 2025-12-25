@@ -6,6 +6,12 @@ import type { AppDateTimePickerComponentData } from '../../../interfaces/index.i
 import { AppDateTimePickerType } from '../../../enums/dateTimePickerType';
 import CalendarDaysIcon from '@heroicons/vue/16/solid/CalendarDaysIcon';
 
+const { focus, blur, remove } = vi.hoisted(() => ({
+  focus: vi.fn(),
+  blur: vi.fn(),
+  remove: vi.fn(),
+}));
+
 type InternalComponentData = Partial<AppDateTimePickerComponentData>;
 
 const defaultAppDateTimePickerComponentData: InternalComponentData = {
@@ -58,6 +64,7 @@ describe('AppDateTimeInput', () => {
               'customName',
               'disabledDate',
             ],
+            methods: { focus, blur, remove },
           },
         },
       },
@@ -467,8 +474,6 @@ describe('AppDateTimeInput', () => {
       const wrapper = createWrapper({ modelValue: null }, { clearable: false });
       const icon = wrapper.findComponent(CalendarDaysIcon);
 
-      console.log(wrapper.html());
-
       expect(icon.exists()).toBe(true);
     });
 
@@ -487,19 +492,27 @@ describe('AppDateTimeInput', () => {
     it('should expose focus method', () => {
       const wrapper = createWrapper();
       expect(wrapper.vm.focus).toBeDefined();
-      expect(typeof wrapper.vm.focus).toBe('function');
+
+      wrapper.vm.focus();
+
+      expect(focus).toHaveBeenCalled();
     });
 
     it('should expose blur method', () => {
       const wrapper = createWrapper();
       expect(wrapper.vm.blur).toBeDefined();
-      expect(typeof wrapper.vm.blur).toBe('function');
+
+      wrapper.vm.blur();
+
+      expect(blur).toHaveBeenCalled();
     });
 
     it('should expose remove method', () => {
       const wrapper = createWrapper();
       expect(wrapper.vm.remove).toBeDefined();
-      expect(typeof wrapper.vm.remove).toBe('function');
+      wrapper.vm.remove();
+
+      expect(remove).toHaveBeenCalled();
     });
   });
 

@@ -73,7 +73,6 @@ describe('AppDateTimeContent', () => {
       name: 'AppDateTimeShortcutPanel',
     });
     expect(AppDateTimeShortcutPanel.exists()).toBe(false);
-    console.log(wrapper.html());
     const AppDateMode = wrapper.findComponent({ name: 'AppDateMode' });
     expect(AppDateMode.exists()).toBe(true);
 

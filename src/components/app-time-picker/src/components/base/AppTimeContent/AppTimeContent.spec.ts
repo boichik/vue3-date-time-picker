@@ -91,7 +91,6 @@ describe('AppTimeContent', () => {
     it('should render AppTimeRangeMode when isRange is true', () => {
       const wrapper = createWrapper({}, { isRange: true });
       const rangeMode = wrapper.findComponent({ name: 'AppTimeRangeMode' });
-      console.log(wrapper.html());
       expect(rangeMode.exists()).toBe(true);
     });
 
