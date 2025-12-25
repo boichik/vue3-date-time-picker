@@ -58,7 +58,7 @@ importers:
         specifier: ^5.2.1
         version: 5.2.4(vite@5.4.21(@types/node@24.10.2)(sass@1.95.1)(terser@5.44.1))(vue@3.5.25(typescript@5.6.3))
       '@vitest/coverage-v8':
-        specifier: ^3.0.3
+        specifier: ^3.2.4
         version: 3.2.4(vitest@3.2.4(@types/node@24.10.2)(jsdom@20.0.3)(sass@1.95.1)(terser@5.44.1))
       '@vue/test-utils':
         specifier: ^2.4.6
