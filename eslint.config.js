@@ -42,7 +42,7 @@ export default typescriptEslint.config(
     rules: {
       'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-      'no-unused-vars': 'off',
+      'no-unused-vars': 'error',
       '@typescript-eslint/no-unused-vars': 'warn',
       'no-undef': 'warn',
       'no-extra-boolean-cast': 'off',
@@ -55,7 +55,6 @@ export default typescriptEslint.config(
         'error',
         { boolean: true, number: false, string: false },
       ],
-      '@typescript-eslint/no-unused-vars': 'error',
     },
   },
   {
