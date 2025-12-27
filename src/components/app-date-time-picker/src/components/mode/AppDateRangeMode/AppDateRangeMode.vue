@@ -173,11 +173,11 @@ watch(
     const startDate = parseModel(val, 0);
     const endDate = parseModel(val, 1);
 
-    if (!!startDate) {
+    if (isDate(startDate)) {
       startDateDisplay.value = startDate as Date;
     }
 
-    if (!!endDate) {
+    if (isDate(endDate)) {
       endDateDisplay.value = getEndDateDisplay(startDate, endDate);
     }
 
@@ -187,7 +187,7 @@ watch(
 );
 
 watch([selectedStartDate, selectedEndDate], ([newStart, newEnd]) => {
-  if (!!newStart && !!newEnd) {
+  if (isDate(newStart) && isDate(newEnd)) {
     isInternalUpdate.value = !isBefore(newEnd, newStart);
 
     const value = isBefore(newEnd, newStart)
@@ -309,39 +309,42 @@ function selectDate(date: Date) {
 function isSameDate(
   date: Date,
   cb: (dateLeft: Date, dateRight: Date) => boolean
-) {
+): 'left' | 'center' | 'right' | false {
   const startDate = selectedStartDate.value;
   const endDate = selectedEndDate.value;
   const hoverDate = hoverDateRange.value;
 
-  if (startDate && hoverDate) {
-    if (cb(hoverDate, date)) {
-      return cb(startDate, hoverDate)
-        ? 'center'
-        : startDate > hoverDate
-          ? 'left'
-          : 'right';
-    }
-    if (cb(startDate, date) && hoverDate < date) {
-      return 'right';
-    }
-  }
+  const matchesHover = hoverDate && cb(hoverDate, date);
+  const matchesStart = startDate && cb(startDate, date);
+  const matchesEnd = endDate && cb(endDate, date);
 
-  if (startDate && endDate) {
-    if (cb(startDate, date) && cb(endDate, date)) {
+  if (startDate && matchesHover) {
+    const startMatchesHover = cb(startDate, hoverDate!);
+
+    if (startMatchesHover) {
       return 'center';
     }
+
+    return startDate > hoverDate! ? 'left' : 'right';
   }
 
-  if (startDate && cb(startDate, date)) return 'left';
-  if (endDate && cb(endDate, date)) return 'right';
+  if (startDate && hoverDate && matchesStart && hoverDate < date) {
+    return 'right';
+  }
+
+  if (matchesStart && matchesEnd) {
+    return 'center';
+  }
+
+  if (matchesStart) return 'left';
+  if (matchesEnd) return 'right';
 
   return false;
 }
 
 function isDateInRange(date: Date, isOtherMonth: boolean) {
   if (isOtherMonth) return false;
-  return !!(
+  return Boolean(
     selectedStartDate.value &&
     selectedEndDate.value &&
     date >= selectedStartDate.value &&
@@ -353,8 +356,8 @@ function isDateHoverRange(date: Date, isOtherMonth: boolean) {
   if (isOtherMonth) return false;
 
   return (
-    !!selectedStartDate.value &&
-    !!hoverDateRange.value &&
+    isDate(selectedStartDate.value) &&
+    isDate(hoverDateRange.value) &&
     ((date >= selectedStartDate.value && date <= hoverDateRange.value) ||
       (date <= selectedStartDate.value && date >= hoverDateRange.value))
   );

@@ -57,7 +57,7 @@ import {
   useSlots,
   watch,
 } from 'vue';
-import AppPopover from '@/ui/AppPopover/Index.vue';
+import AppPopover from '@/ui/AppPopover/AppPopover.vue';
 import AppTimeInput from './components/base/AppTimeInput/AppTimeInput.vue';
 import AppTimeContent from './components/base/AppTimeContent/AppTimeContent.vue';
 import { isSameModelValue } from '@/utils/isSameDateOrNullValue';
@@ -128,14 +128,14 @@ const contentVisible = ref(false);
 const model = ref<AppTimePickerModel>(null);
 
 const disallowApplyValue = computed(() => {
-  if (!!props.autoApply) {
+  if (props.autoApply) {
     return isEmptyModels(model.value, props.modelValue);
   }
 
   return isSameModelValue(model.value, props.modelValue, props.timezone);
 });
 
-const isDisplayDefaultSlot = computed(() => !!useSlots()['default']);
+const isDisplayDefaultSlot = computed(() => Boolean(useSlots()['default']));
 
 const internalSettings = inject<AppTimePickerInternalSettings | null>(
   AppTimePickerInternalSettingsProvide,
@@ -224,7 +224,7 @@ watch(
 watch(
   () => model.value,
   () => {
-    if (!!props.autoApply) {
+    if (props.autoApply) {
       handleApplyValue(false);
     }
   }
@@ -270,7 +270,7 @@ function prepareModelValue(value: unknown, forParse?: boolean) {
 
   if (
     !value ||
-    (!!forParse && !isValidModelValue(value)) ||
+    (Boolean(forParse) && !isValidModelValue(value)) ||
     (Array.isArray(value) && !value.length)
   )
     return isRange ? [null, null] : null;
@@ -385,7 +385,7 @@ function blur() {
 }
 
 useClickOutside([timePicker, input, content, referece], isOutside => {
-  if (isOutside && !!popoverVisible.value && !props.stayOpened) {
+  if (isOutside && Boolean(popoverVisible.value) && !props.stayOpened) {
     handleCancel();
   }
 });

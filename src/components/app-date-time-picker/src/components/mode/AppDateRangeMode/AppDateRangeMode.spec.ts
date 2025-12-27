@@ -1186,20 +1186,8 @@ describe('AppDateRangeMode', () => {
           mode: AppDateTimePickerMode.Day,
         }
       );
-      await flushPromises();
 
-      const componentData = computed(() => ({
-        type: AppDateTimePickerType.DateRange,
-        mode: AppDateTimePickerMode.Year,
-        today: new Date('2024-06-15T12:00:00'),
-        timeFormat: 'HH:mm:ss',
-        clearable: true,
-        timeOptions: {},
-        defaultTime: ['10:00:00', '18:00:00'],
-      }));
-
-      await wrapper.vm.$parent?.$forceUpdate();
-      await flushPromises();
+      await nextTick();
 
       const controllers = wrapper.findAllComponents(AppDateTimeController);
       expect(controllers).toHaveLength(2);

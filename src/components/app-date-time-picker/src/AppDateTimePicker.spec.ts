@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils';
 import { defineComponent, inject, nextTick, type ComputedRef } from 'vue';
 import AppDateTimePicker from './AppDateTimePicker.vue';
 import AppDateTimeInput from './components/base/AppDateTimeInput/AppDateTimeInput.vue';
-import AppPopover from '@/ui/AppPopover/Index.vue';
+import AppPopover from '@/ui/AppPopover/AppPopover.vue';
 import { AppDateTimePickerComponentDataProvide } from './const';
 import { AppDateTimePickerType } from './enums/dateTimePickerType';
 import type { AppDateTimePickerComponentData } from './interfaces/index.interface';

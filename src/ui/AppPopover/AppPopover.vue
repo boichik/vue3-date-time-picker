@@ -29,39 +29,38 @@ import {
   nextTick,
 } from 'vue';
 import { createPopper, type Placement } from '@popperjs/core';
-import { debounce, isBoolean } from 'es-toolkit';
+import { debounce } from 'es-toolkit';
 import { AppDateTimePopoverInternalSettingsProvide } from '@/const/globalProvide.const';
 
-const props = withDefaults(
-  defineProps<{
-    modelValue: boolean;
-    placement?: Placement;
-    openDelay?: number;
-    closeDelay?: number;
-    tabindex?: number;
-    appendToBody?: boolean;
-    disabled?: boolean;
-    offset?: number;
-    customAppend?: string;
-    zIndex?: number;
-    clientOnlyPopoverContent?: boolean;
-  }>(),
-  {
-    placement: 'bottom',
-    openDelay: 0,
-    closeDelay: 150,
-    tabindex: 0,
-    appendToBody: false,
-    disabled: false,
-    offset: 12,
-    zIndex: 1000,
-    clientOnlyPopoverContent: false,
-  }
-);
+const {
+  modelValue,
+  customAppend,
+  placement = 'bottom',
+  openDelay = 0,
+  closeDelay = 150,
+  tabindex = 0,
+  appendToBody = false,
+  disabled = false,
+  offset = 12,
+  zIndex = 1000,
+  clientOnlyPopoverContent = false,
+} = defineProps<{
+  modelValue: boolean;
+  placement?: Placement;
+  openDelay?: number;
+  closeDelay?: number;
+  tabindex?: number;
+  appendToBody?: boolean;
+  disabled?: boolean;
+  offset?: number;
+  customAppend?: string;
+  zIndex?: number;
+  clientOnlyPopoverContent?: boolean;
+}>();
 
 const emit = defineEmits(['update:modelValue', 'open', 'close']);
 
-const isVisible = ref(!props.disabled ? props.modelValue : false);
+const isVisible = ref(disabled ? false : modelValue);
 const id = useId();
 
 const reference = ref<HTMLElement | null>(null);
@@ -77,28 +76,24 @@ const settings = inject<{ forceUpdate?: boolean } | null>(
 
 const contentStyle = computed(() => {
   return {
-    zIndex: props.zIndex,
+    zIndex,
   };
 });
 
-const appendToBody = computed(() =>
-  isBoolean(props.appendToBody) ? props.appendToBody : false
-);
-
 const teleportTo = computed(() => {
-  return props.customAppend ? props.customAppend : 'body';
+  return customAppend || 'body';
 });
 
-const openDelay = computed(() => {
-  return getDelayValue(props.openDelay, 150);
+const preparedOpenDelay = computed(() => {
+  return getDelayValue(openDelay, 150);
 });
 
-const closeDelay = computed(() => {
-  return getDelayValue(props.closeDelay, 0);
+const preparedCloseDelay = computed(() => {
+  return getDelayValue(closeDelay, 0);
 });
 
 const showPopover = debounce(() => {
-  if (props.disabled) return;
+  if (disabled) return;
 
   isVisible.value = true;
   emit('open');
@@ -106,14 +101,14 @@ const showPopover = debounce(() => {
   nextTick(() => {
     popperInstance?.update();
   });
-}, openDelay.value);
+}, preparedOpenDelay.value);
 
 const hidePopover = debounce(() => {
-  if (!props.disabled) {
+  if (!disabled) {
     isVisible.value = false;
     emit('close');
   }
-}, closeDelay.value);
+}, preparedCloseDelay.value);
 
 function getDelayValue(value: unknown, defaultValue: number) {
   if (typeof value !== 'number' || Number.isNaN(value)) {
@@ -126,12 +121,12 @@ function getDelayValue(value: unknown, defaultValue: number) {
 function initializePopper() {
   if (reference.value && content.value) {
     popperInstance = createPopper(reference.value, content.value, {
-      placement: props.placement,
+      placement,
       modifiers: [
         {
           name: 'offset',
           options: {
-            offset: [0, props.offset],
+            offset: [0, offset],
           },
         },
       ],
@@ -140,7 +135,7 @@ function initializePopper() {
 }
 
 watch(
-  () => props.modelValue,
+  () => modelValue,
   newVal => {
     if (newVal) {
       if (!popperInstance) initializePopper();

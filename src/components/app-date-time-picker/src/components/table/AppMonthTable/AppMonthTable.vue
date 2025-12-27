@@ -201,14 +201,16 @@ function selectMonth(date: Date) {
   ) {
     if (
       appDateTimePickerGlobalTableComponentData &&
-      appDateTimePickerGlobalTableComponentData.select
+      Boolean(appDateTimePickerGlobalTableComponentData.select) &&
+      typeof appDateTimePickerGlobalTableComponentData.select === 'function'
     ) {
       appDateTimePickerGlobalTableComponentData.select(newValue);
     }
 
     if (
       appDateTimePickerMonthTableComponentData &&
-      !!appDateTimePickerMonthTableComponentData.select
+      Boolean(appDateTimePickerMonthTableComponentData.select) &&
+      typeof appDateTimePickerMonthTableComponentData.select === 'function'
     ) {
       appDateTimePickerMonthTableComponentData!.select(newValue);
     }

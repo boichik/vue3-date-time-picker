@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
-import AppPopover from './Index.vue';
+import AppPopover from './AppPopover.vue';
 import { nextTick } from 'vue';
 import { AppDateTimePopoverInternalSettingsProvide } from '@/const/globalProvide.const';
 

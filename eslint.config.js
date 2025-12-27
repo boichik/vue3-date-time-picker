@@ -42,8 +42,7 @@ export default typescriptEslint.config(
     rules: {
       'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-unused-vars': 'error',
       'no-undef': 'warn',
       'no-extra-boolean-cast': 'off',
       '@typescript-eslint/no-non-null-asserted-optional-chain': 'warn',
@@ -51,6 +50,10 @@ export default typescriptEslint.config(
       'vue/require-default-prop': 'off',
       'vue/no-dupe-keys': 'off',
       'vue/multi-word-component-names': 'off',
+      'no-implicit-coercion': [
+        'error',
+        { boolean: true, number: false, string: false },
+      ],
     },
   },
   {
