@@ -77,7 +77,7 @@
     "@types/node": "^24.10.4",
     "@types/sanitize-html": "^2.16.0",
     "@typescript-eslint/parser": "^8.19.1",
-    "@vitejs/plugin-vue": "^5.2.1",
+    "@vitejs/plugin-vue": "^5.2.4",
     "@vitest/coverage-v8": "^3.2.4",
     "@vue/test-utils": "^2.4.6",
     "audit-ci": "^7.1.0",
