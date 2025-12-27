@@ -41,7 +41,7 @@ export function useEventListenerOutside<T extends Document | Window>(
     if (Array.isArray(target)) {
       return target
         .map(el => containsOrEqualNode(getParentElement(el), element))
-        .some(el => Boolean(el));
+        .some(Boolean);
     } else {
       return containsOrEqualNode(getParentElement(target), element);
     }

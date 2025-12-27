@@ -3,9 +3,9 @@ export function isEmptyModels(startModel: unknown, endModel: unknown) {
 
   if (
     Array.isArray(startModel) &&
-    !startModel.filter(el => Boolean(el)).length &&
+    !startModel.filter(Boolean).length &&
     Array.isArray(endModel) &&
-    !endModel.filter(el => Boolean(el)).length
+    !endModel.filter(Boolean).length
   )
     return true;
 
