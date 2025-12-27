@@ -139,7 +139,7 @@ importers:
         specifier: ^8.19.1
         version: 8.49.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.6.3)
       vite:
-        specifier: ^5.4.10
+        specifier: ^5.4.21
         version: 5.4.21(@types/node@24.10.2)(sass@1.95.1)(terser@5.44.1)
       vite-plugin-dts:
         specifier: ^4.3.0
