@@ -63,7 +63,7 @@
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "es-toolkit": "^1.30.1",
-    "vue-i18n": "10",
+    "vue-i18n": "10.0.8",
     "vue-imask": "^7.6.1",
     "vue3-perfect-scrollbar": "^2.0.0"
   },
