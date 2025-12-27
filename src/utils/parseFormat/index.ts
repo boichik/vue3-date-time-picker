@@ -13,11 +13,15 @@ function removeMatches(text: string): string {
 }
 
 function parsing(value: string) {
-  const timeBlocks = [
+  const timeBlocks = new Set<string>([
     InputBlockType.MilitaryHour,
     InputBlockType.SimpleMilitaryHour,
-  ];
-  const amPmBlocks = [InputBlockType.AmPmUpper, InputBlockType.AmPmLower];
+  ]);
+
+  const amPmBlocks = new Set<string>([
+    InputBlockType.AmPmUpper,
+    InputBlockType.AmPmLower,
+  ]);
 
   let containsTimeBlock = false;
   let containsAmPm = false;
@@ -27,12 +31,10 @@ function parsing(value: string) {
     if (value.includes(block)) {
       containsSomeoneBlock = true;
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if (timeBlocks.includes(block as any)) {
+      if (timeBlocks.has(block)) {
         containsTimeBlock = true;
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if (amPmBlocks.includes(block as any)) {
+      if (amPmBlocks.has(block)) {
         containsAmPm = true;
       }
     }

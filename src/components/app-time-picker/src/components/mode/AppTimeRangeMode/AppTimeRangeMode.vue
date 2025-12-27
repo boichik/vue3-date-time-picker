@@ -111,7 +111,7 @@ watch(
 );
 
 watch([startModel, endModel], ([newStart, newEnd]) => {
-  if (!!newStart && !!newEnd) {
+  if (Boolean(newStart) && Boolean(newEnd)) {
     isInternalUpdate.value = true;
     model.value = [newStart, newEnd];
   }

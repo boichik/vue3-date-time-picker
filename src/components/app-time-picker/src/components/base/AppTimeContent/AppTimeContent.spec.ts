@@ -23,8 +23,9 @@ describe('AppTimeContent', () => {
 
   const AppTimeRangeMode = defineComponent({
     name: 'AppTimeRangeMode',
-    // @eslint-disable-next-line vue/require-prop-types
-    props: ['modelValue'],
+    props: {
+      modelValue: { type: Array as () => (Date | null)[] },
+    },
     setup() {
       injectedAppTimeRangeModeState = inject(AppTimeRangeModeState, null);
 

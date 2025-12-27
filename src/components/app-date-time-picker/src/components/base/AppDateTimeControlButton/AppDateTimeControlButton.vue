@@ -29,10 +29,10 @@ const {
 
 const iconComponent = computed(() => {
   if (doubleArrow) {
-    return !isRightPosition ? ChevronDoubleLeftIcon : ChevronDoubleRightIcon;
+    return isRightPosition ? ChevronDoubleRightIcon : ChevronDoubleLeftIcon;
   }
 
-  return !isRightPosition ? ChevronLeftIcon : ChevronRightIcon;
+  return isRightPosition ? ChevronRightIcon : ChevronLeftIcon;
 });
 
 function handleClick() {

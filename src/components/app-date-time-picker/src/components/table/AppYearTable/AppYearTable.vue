@@ -205,7 +205,8 @@ function selectYear(date: Date) {
 
     if (
       appDateTimePickerYearTableComponentData &&
-      !!appDateTimePickerYearTableComponentData.select
+      Boolean(appDateTimePickerYearTableComponentData.select) &&
+      typeof appDateTimePickerYearTableComponentData.select === 'function'
     ) {
       appDateTimePickerYearTableComponentData!.select(date);
     }

@@ -14,7 +14,7 @@ export function useEventListenerOutside<T extends Document | Window>(
 ) {
   const isOutside = ref(true);
 
-  function getParentElement(element: Ref<unknown>): InternalTarget {
+  const getParentElement = (element: Ref<unknown>): InternalTarget => {
     if (!element.value) {
       return null;
     }
@@ -24,27 +24,30 @@ export function useEventListenerOutside<T extends Document | Window>(
         ? element.value.$el
         : element.value
     ) as InternalTarget;
-  }
+  };
 
-  function containsOrEqualNode(parent: InternalTarget, child: Node): boolean {
+  const containsOrEqualNode = (
+    parent: InternalTarget,
+    child: Node
+  ): boolean => {
     return (
-      !!parent &&
-      ((parent.isEqualNode && parent.isEqualNode(child)) ||
-        (parent.contains && parent.contains(child)))
+      Boolean(parent) &&
+      ((parent!.isEqualNode && parent!.isEqualNode(child)) ||
+        (parent!.contains && parent!.contains(child)))
     );
-  }
+  };
 
-  function targetElementContainsInParent(element: Node) {
+  const targetElementContainsInParent = (element: Node) => {
     if (Array.isArray(target)) {
       return target
         .map(el => containsOrEqualNode(getParentElement(el), element))
-        .some(el => !!el);
+        .some(el => Boolean(el));
     } else {
       return containsOrEqualNode(getParentElement(target), element);
     }
-  }
+  };
 
-  function handleCheckOutsideEvent(event: Event) {
+  const handleCheckOutsideEvent = (event: Event) => {
     if (
       (Array.isArray(target) && !target.length) ||
       (!Array.isArray(target) && !target.value)
@@ -62,7 +65,7 @@ export function useEventListenerOutside<T extends Document | Window>(
       isOutside.value = true;
       if (cb) cb(isOutside.value, event);
     }
-  }
+  };
 
   onMounted(() => {
     space.addEventListener(eventName, handleCheckOutsideEvent);

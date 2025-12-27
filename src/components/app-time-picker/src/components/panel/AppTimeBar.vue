@@ -74,7 +74,7 @@ let resizeObserver: ResizeObserver | null = null;
 const activeElement = computed({
   get() {
     const index = elements.value.findIndex(el => el.value === model.value);
-    return index !== -1 ? index : 0;
+    return index === -1 ? 0 : index;
   },
   set(val: number) {
     const item = elements.value[val];
@@ -125,19 +125,19 @@ const elements = computed<{ value: number; label: string }[]>(() => {
 const listPaddingTop = computed(() => {
   if (!list.value) return 0;
   const style = window.getComputedStyle(list.value);
-  return parseInt(style.paddingTop, 10) || 0;
+  return Number.parseInt(style.paddingTop, 10) || 0;
 });
 
 const prevElement = computed(() => {
   const val = activeElement.value - 1;
 
-  return !!elements.value[val] ? val : undefined;
+  return Boolean(elements.value[val]) ? val : undefined;
 });
 
 const nextElement = computed(() => {
   const val = activeElement.value + 1;
 
-  return !!elements.value[val] ? val : undefined;
+  return Boolean(elements.value[val]) ? val : undefined;
 });
 
 const debouncedCentredScrollbar = debounce(() => {

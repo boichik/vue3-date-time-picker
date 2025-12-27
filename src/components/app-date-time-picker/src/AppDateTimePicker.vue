@@ -88,7 +88,7 @@ import type {
   AppDateTimePickerExpose,
 } from './interfaces/index.interface';
 import { TimezoneConvertor } from '@/services/timezone-convertor';
-import AppPopover from '@/ui/AppPopover/Index.vue';
+import AppPopover from '@/ui/AppPopover/AppPopover.vue';
 import { isValidAlign } from '@/utils/isValidAlign';
 import { useClickOutside } from '@/composables/useClickOutside';
 import { useFocusInOutside } from '@/composables/useFocusInOutside';
@@ -157,7 +157,7 @@ const contentVisible = ref(false);
 
 const model = ref<AppDateTimePickerModel>(null);
 
-const isDisplayDefaultSlot = computed(() => !!useSlots()['default']);
+const isDisplayDefaultSlot = computed(() => Boolean(useSlots()['default']));
 
 const currentLocale = computed(() => {
   if (localization && localization.locale) return localization.locale.value;
@@ -166,7 +166,7 @@ const currentLocale = computed(() => {
 });
 
 const disallowApplyValue = computed(() => {
-  if (!!props.autoApply) {
+  if (Boolean(props.autoApply)) {
     return isEmptyModels(model.value, props.modelValue);
   }
 
@@ -271,12 +271,13 @@ provide<ComputedRef<AppDateTimePickerComponentData>>(
   appDateTimePickerComponentData
 );
 
-const isRangeComponentType = computed(
-  () =>
-    !![
+const isRangeComponentType = computed(() =>
+  Boolean(
+    [
       AppDateTimePickerType.DateRange,
       AppDateTimePickerType.DateTimeRange,
     ].includes(appDateTimePickerComponentData.value.type as never)
+  )
 );
 
 const placement = computed<Placement>(() => getPlacementByAlign(props.align));
@@ -291,7 +292,7 @@ watch(
 watch(
   () => model.value,
   () => {
-    if (!!props.autoApply) {
+    if (Boolean(props.autoApply)) {
       handleApplyValue(false);
     }
   }
@@ -309,7 +310,7 @@ const handleClosedPopover = () => {
 function prepareModelValue(value: unknown, forParse?: boolean) {
   if (
     !value ||
-    (!!forParse && !isValidModelValue(value)) ||
+    (Boolean(forParse) && !isValidModelValue(value)) ||
     (Array.isArray(value) && !value.length)
   )
     return isRangeComponentType.value ? [null, null] : null;
@@ -418,7 +419,7 @@ function blur() {
 }
 
 useClickOutside([datetimePicker, input, content, referece], isOutside => {
-  if (isOutside && !!popoverVisible.value && !props.stayOpened) {
+  if (isOutside && popoverVisible.value && !props.stayOpened) {
     handleCancel();
   }
 });

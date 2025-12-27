@@ -141,7 +141,7 @@ const inputReadonly = computed(
 const clearable = computed(() => {
   return (
     appTimePickerComponentData?.value.clearable &&
-    (!!modelStart.value || !!modelEnd.value)
+    (Boolean(modelStart.value) || Boolean(modelEnd.value))
   );
 });
 const invalid = computed(() => appTimePickerComponentData?.value.invalid);
@@ -169,9 +169,9 @@ const endSelectableRange = computed(() => getSelectableRange(1));
 const getClasses = computed(() => ({
   'app-time-picker-input--disabled': disabled.value,
   'app-time-picker-input--read-only': readonly.value,
-  'app-time-picker-input--focus': !!isFocused.value || popoverVisible,
-  'app-time-picker-input--range': !!isDoubleInputs.value,
-  'app-time-picker-input--invalid': !!invalid.value,
+  'app-time-picker-input--focus': Boolean(isFocused.value) || popoverVisible,
+  'app-time-picker-input--range': Boolean(isDoubleInputs.value),
+  'app-time-picker-input--invalid': Boolean(invalid.value),
 }));
 
 function prepareArrayValue(value: (null | Date)[]) {
@@ -310,14 +310,6 @@ defineExpose({ focus, blur, remove });
     text-align: center !important;
   }
 
-  &__after {
-    padding-right: 14px;
-  }
-
-  &__icon {
-    padding: 4px;
-  }
-
   @media (hover: hover) {
     &:hover:not(.app-time-picker-input--focus):not(
         .app-datetime-picker-input--invalid
@@ -414,12 +406,14 @@ defineExpose({ focus, blur, remove });
     align-items: center;
     width: var(--vpick--input-icon-size);
     height: var(--vpick--input-icon-size);
+    padding-right: 14px;
   }
 
   &__icon {
     color: var(--vpick--input-icon-color);
     width: var(--vpick--input-icon-size);
     transition: color var(--vpick--animation-delay);
+    padding: 4px;
   }
 
   &__clear {

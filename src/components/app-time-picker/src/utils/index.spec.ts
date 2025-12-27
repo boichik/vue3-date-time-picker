@@ -6,7 +6,6 @@ import {
   convertDateToTime,
   getEnabledTimeTypes,
 } from './index';
-import { InputBlockType } from '@/enums/InputBlockType';
 
 vi.mock('@/utils/getNewDate', () => ({
   getNewDate: () => new Date('2024-01-15T12:00:00.000Z'),
@@ -643,15 +642,13 @@ describe('convertDateToTime', () => {
 
 describe('getEnabledTimeTypes', () => {
   describe('Hours Detection', () => {
-    it.each([
-      ['hh:mm:ss', InputBlockType.Hour],
-      ['h:mm:ss', InputBlockType.SimpleHour],
-      ['HH:mm:ss', InputBlockType.MilitaryHour],
-      ['H:mm:ss', InputBlockType.SimpleMilitaryHour],
-    ])('should detect hours for format %s', (format, type) => {
-      const result = getEnabledTimeTypes(format);
-      expect(result.hours).toBe(true);
-    });
+    it.each([['hh:mm:ss'], ['h:mm:ss'], ['HH:mm:ss'], ['H:mm:ss']])(
+      'should detect hours for format %s',
+      format => {
+        const result = getEnabledTimeTypes(format);
+        expect(result.hours).toBe(true);
+      }
+    );
 
     it('should detect hours with all hour formats combined', () => {
       const result = getEnabledTimeTypes('hh HH h H');
@@ -670,13 +667,13 @@ describe('getEnabledTimeTypes', () => {
   });
 
   describe('Minutes Detection', () => {
-    it.each([
-      ['HH:mm:ss', InputBlockType.Minute],
-      ['HH:m:ss', InputBlockType.SimpleMinute],
-    ])('should detect minutes for format %s', (format, type) => {
-      const result = getEnabledTimeTypes(format);
-      expect(result.minutes).toBe(true);
-    });
+    it.each([['HH:mm:ss'], ['HH:m:ss']])(
+      'should detect minutes for format %s',
+      format => {
+        const result = getEnabledTimeTypes(format);
+        expect(result.minutes).toBe(true);
+      }
+    );
 
     it('should detect minutes with both formats', () => {
       const result = getEnabledTimeTypes('mm m');
@@ -695,13 +692,13 @@ describe('getEnabledTimeTypes', () => {
   });
 
   describe('Seconds Detection', () => {
-    it.each([
-      ['HH:mm:ss', InputBlockType.Second],
-      ['HH:mm:s', InputBlockType.SimpleSecond],
-    ])('should detect seconds for format %s', (format, type) => {
-      const result = getEnabledTimeTypes(format);
-      expect(result.seconds).toBe(true);
-    });
+    it.each([['HH:mm:ss'], ['HH:mm:s']])(
+      'should detect seconds for format %s',
+      format => {
+        const result = getEnabledTimeTypes(format);
+        expect(result.seconds).toBe(true);
+      }
+    );
 
     it('should detect seconds with both formats', () => {
       const result = getEnabledTimeTypes('ss s');
@@ -737,13 +734,13 @@ describe('getEnabledTimeTypes', () => {
   });
 
   describe('AM/PM Detection', () => {
-    it.each([
-      ['hh:mm:ss a', InputBlockType.AmPmUpper],
-      ['hh:mm:ss aaa', InputBlockType.AmPmLower],
-    ])('should detect AM/PM for format %s', (format, type) => {
-      const result = getEnabledTimeTypes(format);
-      expect(result.amPm).toBe(true);
-    });
+    it.each([['hh:mm:ss a'], ['hh:mm:ss aaa']])(
+      'should detect AM/PM for format %s',
+      format => {
+        const result = getEnabledTimeTypes(format);
+        expect(result.amPm).toBe(true);
+      }
+    );
 
     it('should detect amPm with both formats', () => {
       const result = getEnabledTimeTypes('a aaa');

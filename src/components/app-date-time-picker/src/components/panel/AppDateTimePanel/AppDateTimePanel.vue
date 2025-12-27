@@ -7,22 +7,22 @@
       @click="handlePrevYear"
     />
     <AppDateTimeControlButton
-      v-show="showMonthElements"
+      v-show="isDayMode"
       :disabled="isDisabledButtonRelativeDate.prevMonth"
       class="app-date-time-picker-panel__button app-date-time-picker-panel__button--prev-month"
       @click="handlePrevMonth"
     />
     <div class="app-date-time-picker-panel__date">
       <button
-        :disabled="disabledYearAndMonthButton"
+        :disabled="isYearMode"
         class="app-date-time-picker-panel__date-button"
         @click="handleYearMode"
       >
         {{ yearButtonContent }}
       </button>
       <button
-        v-show="showMonthElements"
-        :disabled="disabledYearAndMonthButton"
+        v-show="isDayMode"
+        :disabled="isYearMode"
         class="app-date-time-picker-panel__date-button app-date-time-picker-panel__date-button--month"
         @click="handleMonthMode"
       >
@@ -30,7 +30,7 @@
       </button>
     </div>
     <AppDateTimeControlButton
-      v-show="showMonthElements"
+      v-show="isDayMode"
       :disabled="isDisabledButtonRelativeDate.nextMonth"
       class="app-date-time-picker-panel__button app-date-time-picker-panel__button--next-month"
       is-right-position
@@ -83,21 +83,25 @@ const displacementNumber = computed(() => {
   }
 });
 
+const isYearMode = computed(() => {
+  return [AppDateTimePickerMode.Year].includes(mode as never);
+});
+
+const isDayMode = computed(() => {
+  return [AppDateTimePickerMode.Day].includes(mode as never);
+});
+
 const yearButtonContent = computed(() => {
-  if (![AppDateTimePickerMode.Year].includes(mode as never)) {
-    return currentDate.getFullYear();
-  } else {
+  if (isYearMode.value) {
     const currentYear = currentDate.getFullYear();
 
     const startOfDecade = Math.floor(currentYear / 10) * 10;
     const endOfDecade = startOfDecade + 9;
 
     return `${startOfDecade}-${endOfDecade}`;
+  } else {
+    return currentDate.getFullYear();
   }
-});
-
-const disabledYearAndMonthButton = computed(() => {
-  return !![AppDateTimePickerMode.Year].includes(mode as never);
 });
 
 const monthButtonContent = computed(() => {
@@ -107,10 +111,6 @@ const monthButtonContent = computed(() => {
   return Intl.DateTimeFormat(locale, { month: monthButtonFormat }).format(
     currentDate
   );
-});
-
-const showMonthElements = computed(() => {
-  return [AppDateTimePickerMode.Day].includes(mode as never);
 });
 
 const isDisabledButtonRelativeDate = computed(() => {
@@ -133,7 +133,7 @@ function isDisabled(date: Date, checkYear?: boolean) {
 }
 
 function handleSelectByScroll(event: WheelEvent) {
-  const isNext = event.deltaY > 0 ? true : false;
+  const isNext = event.deltaY > 0;
 
   let fn: (() => void) | null = null;
 

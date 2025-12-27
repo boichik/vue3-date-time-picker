@@ -242,19 +242,19 @@ function isSecondDisabled(second: number) {
   return checkIsDisabledDate(secondDate);
 }
 
-function isAmPmDisabled(value: number) {
+function isAmPmDisabled(value: number): boolean {
   const currentHour = hoursModel.value;
-  const newHour =
-    value === 1
-      ? currentHour < 12
-        ? currentHour + 12
-        : currentHour
-      : currentHour >= 12
-        ? currentHour - 12
-        : currentHour;
+  const isPm = value === 1;
+
+  let newHour: number;
+
+  if (isPm) {
+    newHour = currentHour < 12 ? currentHour + 12 : currentHour;
+  } else {
+    newHour = currentHour >= 12 ? currentHour - 12 : currentHour;
+  }
 
   const dateWithNewHour = setHours(dateForCreate.value, newHour);
-
   return checkIsDisabledDate(dateWithNewHour);
 }
 </script>

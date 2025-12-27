@@ -18,7 +18,10 @@ describe('AppDateMode', () => {
 
   const AppDateTimeController = defineComponent({
     name: 'AppDateTimeController',
-    props: ['modelValue', 'selectedDate'],
+    props: {
+      modelValue: [Date, null],
+      selectedDate: [Date, null],
+    },
     setup() {
       injectedGlobalTableComponentData =
         inject<AppDateTimePickerGlobalTableComponentData | null>(

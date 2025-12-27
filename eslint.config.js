@@ -51,6 +51,11 @@ export default typescriptEslint.config(
       'vue/require-default-prop': 'off',
       'vue/no-dupe-keys': 'off',
       'vue/multi-word-component-names': 'off',
+      'no-implicit-coercion': [
+        'error',
+        { boolean: true, number: false, string: false },
+      ],
+      '@typescript-eslint/no-unused-vars': 'error',
     },
   },
   {
