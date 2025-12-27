@@ -81,7 +81,7 @@ const contentStyle = computed(() => {
 });
 
 const teleportTo = computed(() => {
-  return customAppend ? customAppend : 'body';
+  return customAppend || 'body';
 });
 
 const preparedOpenDelay = computed(() => {

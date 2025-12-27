@@ -166,7 +166,7 @@ const currentLocale = computed(() => {
 });
 
 const disallowApplyValue = computed(() => {
-  if (Boolean(props.autoApply)) {
+  if (props.autoApply) {
     return isEmptyModels(model.value, props.modelValue);
   }
 
@@ -292,7 +292,7 @@ watch(
 watch(
   () => model.value,
   () => {
-    if (Boolean(props.autoApply)) {
+    if (props.autoApply) {
       handleApplyValue(false);
     }
   }
