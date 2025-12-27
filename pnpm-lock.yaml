@@ -115,7 +115,7 @@ importers:
         specifier: ^1.80.6
         version: 1.95.1
       sass-loader:
-        specifier: ^16.0.3
+        specifier: ^16.0.6
         version: 16.0.6(sass@1.95.1)(webpack@5.103.0)
       style-loader:
         specifier: ^4.0.0
