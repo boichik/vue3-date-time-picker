@@ -74,7 +74,7 @@
     "@commitlint/cli": "^20.2.0",
     "@commitlint/config-conventional": "^20.2.0",
     "@eslint/js": "^9.39.2",
-    "@types/node": "^24.10.2",
+    "@types/node": "^24.10.4",
     "@types/sanitize-html": "^2.16.0",
     "@typescript-eslint/parser": "^8.19.1",
     "@vitejs/plugin-vue": "^5.2.1",
