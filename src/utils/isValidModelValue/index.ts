@@ -10,13 +10,14 @@ export function isValidModelValue(
     }
 
     if (value instanceof Date) {
-      return !isNaN(value.getTime());
+      return !Number.isNaN(value.getTime());
     }
   }
 
   if (!options?.onlySingle && Array.isArray(value)) {
     return value.every(
-      item => item === null || (item instanceof Date && !isNaN(item.getTime()))
+      item =>
+        item === null || (item instanceof Date && !Number.isNaN(item.getTime()))
     );
   }
 

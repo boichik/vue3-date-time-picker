@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { shallowRef, type ShallowRef } from 'vue';
 import { useIsFullyVisibleRangeContent } from './index';
 import {

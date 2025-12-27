@@ -27,7 +27,7 @@ const props = defineProps<{
   applyText?: string;
 }>();
 
-const disabled = computed(() => !!props.disabled);
+const disabled = computed(() => Boolean(props.disabled));
 
 const defaultText = computed(() => {
   const { cancelText, applyText } = props;

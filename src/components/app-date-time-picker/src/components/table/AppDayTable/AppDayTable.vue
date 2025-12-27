@@ -90,16 +90,14 @@ const firstDayOfWeek = computed(() => {
 
 const daysOfWeek = computed(() => {
   const { locale, weekdayFormat } = appDateTimePickerComponentData?.value || {};
-  return Array(7)
-    .fill('', 0, 7)
-    .map((_, index) => {
-      const monday = startOfWeek(new Date(), { weekStartsOn: 1 });
-      const date = addDays(monday, index);
+  return new Array(7).fill('', 0, 7).map((_, index) => {
+    const monday = startOfWeek(new Date(), { weekStartsOn: 1 });
+    const date = addDays(monday, index);
 
-      return Intl.DateTimeFormat(locale, {
-        weekday: weekdayFormat,
-      }).format(date);
-    });
+    return Intl.DateTimeFormat(locale, {
+      weekday: weekdayFormat,
+    }).format(date);
+  });
 });
 
 const reorderedDaysOfWeek = computed(() => {
@@ -113,13 +111,11 @@ const reorderedDaysOfWeek = computed(() => {
 const calendarDays = computed(() => generateCalendarDays(currentDate));
 
 const weeks = computed(() => {
-  {
-    const grouped = [];
-    for (let i = 0; i < calendarDays.value.length; i += 7) {
-      grouped.push(calendarDays.value.slice(i, i + 7));
-    }
-    return grouped;
+  const grouped = [];
+  for (let i = 0; i < calendarDays.value.length; i += 7) {
+    grouped.push(calendarDays.value.slice(i, i + 7));
   }
+  return grouped;
 });
 
 const today = computed(

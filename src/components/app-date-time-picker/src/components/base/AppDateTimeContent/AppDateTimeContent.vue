@@ -75,8 +75,8 @@ const appButtonData = computed(() => {
   };
 });
 
-const isAvailableShortcutsList = computed(
-  () => !!appDateTimePickerComponentData?.value.shortcuts?.length
+const isAvailableShortcutsList = computed(() =>
+  Boolean(appDateTimePickerComponentData?.value.shortcuts?.length)
 );
 
 const contentClass = computed(() => {

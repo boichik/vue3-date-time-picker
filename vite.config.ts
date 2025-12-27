@@ -53,7 +53,8 @@ export default defineConfig({
           'vue-i18n': 'VueI18n',
         },
         assetFileNames: assetInfo => {
-          if (!!assetInfo.name!.match(/.css/)) return 'assets/[name][extname]';
+          if (Boolean(assetInfo.name!.match(/.css/)))
+            return 'assets/[name][extname]';
           return '[name][extname]';
         },
       },

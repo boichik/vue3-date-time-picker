@@ -49,7 +49,7 @@ function prepareModel() {
 
   if (
     appTimePickerComponentData?.value.isDisabledDate &&
-    !!appTimePickerComponentData.value.isDisabledDate(value)
+    Boolean(appTimePickerComponentData.value.isDisabledDate(value))
   ) {
     value = null;
   }

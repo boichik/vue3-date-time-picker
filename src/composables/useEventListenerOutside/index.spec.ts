@@ -1,7 +1,7 @@
 /* eslint-disable vue/one-component-per-file */
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { mount, VueWrapper, flushPromises } from '@vue/test-utils';
-import { defineComponent, ref, h, nextTick } from 'vue';
+import { mount, VueWrapper } from '@vue/test-utils';
+import { defineComponent, ref, h } from 'vue';
 import { useEventListenerOutside } from './index';
 import type { EventListenerOutsideTarget } from './types';
 
