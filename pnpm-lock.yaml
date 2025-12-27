@@ -49,7 +49,7 @@ importers:
         specifier: ^24.10.2
         version: 24.10.2
       '@types/sanitize-html':
-        specifier: ^2.13.0
+        specifier: ^2.16.0
         version: 2.16.0
       '@typescript-eslint/parser':
         specifier: ^8.19.1
@@ -109,7 +109,7 @@ importers:
         specifier: ^3.4.2
         version: 3.7.4
       sanitize-html:
-        specifier: ^2.14.0
+        specifier: ^2.17.0
         version: 2.17.0
       sass:
         specifier: ^1.80.6
