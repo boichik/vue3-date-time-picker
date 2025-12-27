@@ -151,7 +151,7 @@ importers:
         specifier: ^3.2.4
         version: 3.2.4(@types/node@24.10.4)(jsdom@20.0.3)(sass@1.95.1)(terser@5.44.1)
       vue-tsc:
-        specifier: ^2.1.10
+        specifier: ^2.2.12
         version: 2.2.12(typescript@5.6.3)
 
 packages:
@@ -6240,9 +6240,9 @@ snapshots:
   '@vue/language-core@2.2.12(typescript@5.6.3)':
     dependencies:
       '@volar/language-core': 2.4.15
-      '@vue/compiler-dom': 3.5.25
+      '@vue/compiler-dom': 3.5.26
       '@vue/compiler-vue2': 2.7.16
-      '@vue/shared': 3.5.25
+      '@vue/shared': 3.5.26
       alien-signals: 1.0.13
       minimatch: 9.0.5
       muggle-string: 0.4.1
